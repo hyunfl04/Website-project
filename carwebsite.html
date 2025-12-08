@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Dream Car 🚘 & Add Products</title>
+    <style>
+        /* General Reset and Base Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Lighter background */
+            color: #343a40;
+        }
+
+        header {
+            background-color: #2c3e50; /* Darker header for contrast */
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex; /* Use flexbox for main content sections */
+            flex-direction: column;
+            gap: 30px; /* Space between sections */
+        }
+        
+        hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+        }
+
+        /* Grid for Car Cards */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+            gap: 25px;
+            min-height: 700px; /* Ensure space for one page (3 rows x 3 columns) */
+        }
+
+        .car-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-8px); /* More pronounced hover effect */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .car-card h2 {
+            color: #34495e;
+            margin-top: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+            text-align: left;
+            font-size: 1.8em;
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px; /* Fixed height for images */
+            object-fit: cover; /* Crop images to fit */
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .description {
+            font-size: 0.95em;
+            color: #555;
+            flex-grow: 1; /* Allow description to take available space */
+        }
+
+        .price {
+            text-align: right;
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+
+        .price strong {
+            color: #27ae60; /* Vibrant green for price */
+            font-size: 1.4em;
+        }
+        
+        .product-link a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .product-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Budget Finder Section Styling */
+        .budget-finder {
+            background-color: #ecf0f1; /* Light gray background */
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        #salary-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        #salary-form input[type="number"] {
+            padding: 12px 15px;
+            margin: 8px auto;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 60%; /* Adjust width */
+            max-width: 300px;
+            font-size: 1em;
+        }
+
+        #salary-form button {
+            background-color: #e74c3c; /* Red action color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        #salary-form button:hover {
+            background-color: #c0392b;
+        }
+
+        #suggestion-result {
+            margin-top: 25px;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #dff0d8; /* Light green for success/suggestion */
+            border-left: 5px solid #27ae60;
+            border-radius: 5px;
+            color: #2c3e50;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #suggestion-result p {
+            margin: 5px 0;
+        }
+
+        /* Product Upload Section Styling */
+        .upload-section {
+            background-color: #fdfdfd;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="url"],
+        .form-group textarea {
+            width: calc(100% - 20px); /* Adjust for padding */
+            padding: 12px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #777;
+            font-size: 0.85em;
+        }
+
+        .add-button {
+            background-color: #3498db; /* Blue for add action */
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .add-button:hover {
+            background-color: #217dbb;
+        }
+
+        #upload-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Pagination Styling */
+        .pagination-controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .page-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .page-button:hover {
+            background-color: #217dbb;
+        }
+
+        .page-button.active {
+            background-color: #e74c3c; /* Highlight active page */
+            font-weight: bold;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #34495e; /* Darker footer */
+            color: #ecf0f1;
+            margin-top: 40px;
+            font-size: 0.9em;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            main {
+                padding: 15px;
+                gap: 20px;
+            }
+            .car-image {
+                height: 180px;
+            }
+            #salary-form input[type="number"] {
+                width: 80%;
+            }
+            .form-group input, .form-group textarea {
+                width: calc(100% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            header, footer {
+                padding: 15px 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.3em;
+            }
+            main {
+                padding: 10px;
+            }
+            .car-card {
+                padding: 15px;
+            }
+            .car-image {
+                height: 150px;
+            }
+            #salary-form input[type="number"], #salary-form button {
+                width: 90%;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Welcome to CarMatch</h1>
+        <p>Explore a selection of popular cars across different budgets and find your perfect match!</p>
+    </header>
+
+    <main>
+        <section id="car-listings">
+            <h2>🚗 Car Listings</h2>
+            <div id="car-grid" class="grid-container">
+                </div>
+            <div id="pagination-controls" class="pagination-controls">
+                </div>
+        </section>
+        
+        <hr>
+
+        <section class="budget-finder">
+            <h2>💰 Find Your Car Based on Budget - Price Comparison</h2>
+            <form id="salary-form">
+                <label for="monthly-salary">Enter your estimated <b>Monthly Salary (USD)</b>:</label>
+                <input type="number" id="monthly-salary" name="monthly-salary" required min="1000" placeholder="e.g., 4000">
+                <button type="submit">Find My Car</button>
+            </form>
+            <div id="suggestion-result"></div>
+        </section>
+
+        <hr>
+
+        <section id="product-upload" class="upload-section">
+            <h2>✨ Add a New Car Listing</h2>
+            <form id="add-car-form">
+                <div class="form-group">
+                    <label for="car-name">Car Name:</label>
+                    <input type="text" id="car-name" required placeholder="e.g., Ford Mustang">
+                </div>
+                <div class="form-group">
+                    <label for="car-description">Description:</label>
+                    <textarea id="car-description" required rows="3" placeholder="A short description of the car..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="car-price">Price (USD):</label>
+                    <input type="number" id="car-price" required min="10000" placeholder="e.g., 35000">
+                </div>
+                <div class="form-group">
+                    <label for="car-image-url">Image URL:</label>
+                    <input type="url" id="car-image-url" placeholder="e.g., https://example.com/mustang.jpg">
+                    <small>*(For this demo, please use a direct image URL or leave blank for a placeholder)*</small>
+                </div>
+                <div class="form-group">
+                    <label for="car-product-link">Product Link URL:</label>
+                    <input type="url" id="car-product-link" placeholder="e.g., https://dealer.com/mustang">
+                </div>
+                <button type="submit" class="add-button">Add Car Listing</button>
+            </form>
+            <div id="upload-status"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CarMatch Project. All rights reserved.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const CARS_PER_PAGE = 9; // Số sản phẩm trên mỗi trang
+        const LOCAL_STORAGE_KEY = 'carMatchUserListings';
+
+        // --- Dữ liệu xe hơi ban đầu và bổ sung ---
+        const initialCarData = [
+            { id: 'maserati', name: 'Maserati Ghibli', price: 85000, description: 'A luxurious and sporty Italian sedan with distinctive style and powerful performance. Perfect for the executive driver.', imageUrl: 'https://giaxeoto.vn/admin/upload/images/resize/640-gia-xe-maserati-ghibli.jpg', productLink: 'https://maserati.com/ghibli' },
+            { id: 'porsche', name: 'Porsche 911', price: 120000, description: 'The iconic German sports car, offering unmatched driving dynamics, precision engineering, and timeless design. A true driver\'s machine.', imageUrl: 'https://vehicle-images.dealerinspire.com/2ae4-110004163/thumbnails/large/WP0AB2A9XTS226742/6b0ea5235e0219f2d2c04b17911c460a.jpg', productLink: 'https://porsche.com/911' },
+            { id: 'audi', name: 'Audi R8', price: 155000, description: 'A high-performance supercar featuring a V10 engine, Quattro all-wheel drive, and stunning futuristic design. The ultimate daily-driver supercar.', imageUrl: 'https://www.secret-classics.com/wp-content/uploads/2020/09/audir8decennium-01.jpg', productLink: 'https://audi.com/r8' },
+            { id: 'Rolls-Royce', name :'Rolls-Royce Cullinan Series II 2025', price: 410000, description :'The epitome of luxury SUVs, the Cullinan Series II combines opulence with off-road capability, featuring a handcrafted interior and a powerful V12 engine.', imageUrl :'https://hips.hearstapps.com/hmg-prod/images/2025-rolls-royce-cullinan-black-badge-107-663a56d913506.jpg?crop=0.834xw:0.740xh;0.0799xw,0.178xh&resize=1200:*', productLink :'https://www.rolls-roycemotorcars.com/en_GB/models/cullinan.html' },
+            { id: 'ferrari', name: 'Ferrari F8 Tributo', price: 280000, description: 'A mid-engine supercar that pays tribute to Ferrari\'s V8 heritage, delivering blistering performance and breathtaking design.', imageUrl: 'https://gcb.evs.onl/d4/3029/8482686/176535263/s/7314b0dab352498290bb442d8d0612dd.jpg?height=1000', productLink: 'https://ferrari.com/f8-tributo' },
+            { id: 'lamborghini', name: 'Lamborghini Huracán EVO', price: 261000, description: 'An Italian masterpiece combining aggressive styling with a V10 engine and advanced aerodynamics for an exhilarating driving experience.', imageUrl: 'https://www.topgear.com/sites/default/files/cars-car/carousel/2019/01/lamborghini_huracan_evo_grigio_artis_107_1.jpg', productLink: 'https://lamborghini.com/huracan-evo' },
+            { id: 'bugatti', name: 'Bugatti Chiron', price: 3000000, description: 'The pinnacle of automotive engineering, the Chiron boasts a quad-turbocharged W16 engine producing over 1500 horsepower, making it one of the fastest production cars in the world.', imageUrl: 'https://www.thedrive.com/wp-content/uploads/2022/12/21/bugatti-profilee-lead-image.jpg?quality=85', productLink: 'https://bugatti.com/chiron' },
+            { id: 'tesla', name: 'Tesla Model S Plaid', price: 135000, description: 'An all-electric luxury sedan that combines cutting-edge technology with incredible acceleration and a long electric range.', imageUrl: 'https://giaxeoto.vn/admin/upload/images/tesla-model-s-2023-thong-so-hinh-anh-gia-ban-122022-1672045756.jpg', productLink: 'https://tesla.com/models' },
+            { id: 'volvo', name:'Volvo XC60 2025 ', price: 45000, description:'A premium midsize SUV that offers a blend of Scandinavian design, advanced safety features, and efficient powertrains, making it ideal for families.', imageUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN4q1f-YY-dTnCkuc4_CWZjmtxNIse3BMwmw&s', productLink:'https://www.volvocars.com/us/cars/xc60/' },
+            { id: 'polestar', name:' Polestar 3 2025', price: 93100, description:' An all-electric SUV that combines sleek design with high performance and cutting-edge technology, representing Polestar\'s commitment to sustainable mobility.', imageUrl:'https://car-images.polestar.com/359/2025/summary/EE/71700/_/RC0000/31/001150/_/XPLUSS/XPFWHE/1/000179/default/0.jpg?auto=compress,format&quality=65&width=1920&height=1200&fit=scale-down&gravity=0.5x0.5', productLink:'https://www.polestar.https://www.polestar.com/us/preconfigured-cars/polestar-3/359EEPP0E13171700RC0000%20%20%20%20%20%2000000001150001162XPFWHEXPLUSS/?year=2025&structureweek=202425&partnerid=6US6634/us/cars/polestar-3/' },
+            { id: 'cadillac', name:' Cadillac Lyriq 2024', price: 62000, description:'A luxury electric SUV that offers a spacious interior, advanced technology, and a smooth driving experience, marking Cadillac\'s entry into the EV market.', imageUrl:'https://cms-i.autodaily.vn/du-lieu/2022/12/20/2023-cadillac-lyriq-exterior-1.webp', productLink:'https://www.cadillac.com/electric/lyriq/' }
+        ];
+
+        // Hàm lấy dữ liệu xe từ LocalStorage và gộp với dữ liệu ban đầu
+        function loadCarData() {
+            let userListings = [];
+            try {
+                const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (storedData) {
+                    userListings = JSON.parse(storedData);
+                }
+            } catch (error) {
+                console.error("Error loading data from localStorage:", error);
+            }
+            // User-added cars appear first (unshift)
+            return [...userListings, ...initialCarData]; 
+        }
+        
+        // Hàm lưu trữ dữ liệu xe do người dùng tự thêm
+        function saveUserListing(newCar) {
+            let userListings = [];
+             try {
+                const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (storedData) {
+                    userListings = JSON.parse(storedData);
+                }
+            } catch (error) {
+                console.error("Error retrieving data from localStorage for saving:", error);
+            }
+            userListings.unshift(newCar); // Thêm vào đầu danh sách
+            try {
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(userListings));
+            } catch (error) {
+                console.error("Error saving data to localStorage:", error);
+            }
+        }
+
+        let carData = loadCarData(); // Khởi tạo dữ liệu xe
+        const carGridContainer = document.getElementById('car-grid');
+        const paginationControls = document.getElementById('pagination-controls');
+        let currentPage = 1;
+
+        // --- PHÂN TRANG (PAGINATION) ---
+
+        // 1. Hàm tạo HTML cho một car card
+        function createCarCardHTML(car) {
+            const finalImageUrl = car.imageUrl || 'https://via.placeholder.com/300x200?text=No+Image+Provided';
+            const linkHTML = car.productLink ? `<p class="product-link"><a href="${car.productLink}" target="_blank">View Product Page »</a></p>` : '';
+            
+            return `
+                <div id="${car.id}" class="car-card">
+                    <h2>${car.name}</h2>
+                    <img src="${finalImageUrl}" alt="Image of ${car.name}" class="car-image">
+                    <p class="description">${car.description}</p>
+                    ${linkHTML}
+                    <p class="price">Price: <strong>$${car.price.toLocaleString()}</strong></p>
+                </div>
+            `;
+        }
+
+        // 2. Hàm hiển thị sản phẩm của trang hiện tại
+        function displayPage(page) {
+            currentPage = page;
+            const startIndex = (page - 1) * CARS_PER_PAGE;
+            const endIndex = startIndex + CARS_PER_PAGE;
+            const pageCars = carData.slice(startIndex, endIndex);
+
+            carGridContainer.innerHTML = ''; // Xóa các card cũ
+
+            pageCars.forEach(car => {
+                carGridContainer.innerHTML += createCarCardHTML(car);
+            });
+            
+            // Cập nhật nút phân trang
+            setupPaginationControls();
+            
+            // Đảm bảo nút active được tô sáng
+            document.querySelectorAll('.page-button').forEach(button => {
+                button.classList.remove('active');
+                if (parseInt(button.dataset.page) === currentPage) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        // 3. Hàm tạo các nút phân trang
+        function setupPaginationControls() {
+            const totalPages = Math.ceil(carData.length / CARS_PER_PAGE);
+            paginationControls.innerHTML = '';
+            
+            if (totalPages <= 1) return; // Không cần phân trang nếu chỉ có 1 trang
+
+            // Nút Previous
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '« Prev';
+            prevButton.classList.add('page-button');
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    displayPage(currentPage - 1);
+                }
+            });
+            paginationControls.appendChild(prevButton);
+
+            // Các nút số trang
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.classList.add('page-button');
+                button.dataset.page = i; // Lưu số trang vào data attribute
+                
+                if (i === currentPage) {
+                    button.classList.add('active');
+                }
+
+                button.addEventListener('click', () => displayPage(i));
+                paginationControls.appendChild(button);
+            }
+            
+            // Nút Next
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next »';
+            nextButton.classList.add('page-button');
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    displayPage(currentPage + 1);
+                }
+            });
+            paginationControls.appendChild(nextButton);
+        }
+
+        // Khởi tạo hiển thị trang đầu tiên
+        displayPage(1); 
+
+
+        // --- 1. Budget Finder Feature (Tính năng tìm xe theo ngân sách) ---
+        const salaryForm = document.getElementById('salary-form');
+        const monthlySalaryInput = document.getElementById('monthly-salary');
+        const suggestionResultDiv = document.getElementById('suggestion-result');
+
+        salaryForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn tải lại trang
+
+            const salary = parseFloat(monthlySalaryInput.value);
+
+            if (isNaN(salary) || salary <= 0) {
+                suggestionResultDiv.innerHTML = '<span style="color: red;">Please enter a valid monthly salary.</span>';
+                return;
+            }
+
+            // Ước tính mức giá xe tối đa có thể mua được: 1 năm lương (có thể điều chỉnh)
+            const purchaseBudget = salary * 12; 
+            let suggestedCar = null;
+            let minPriceDiff = Infinity;
+
+            // Tìm xe có giá GẦN NHẤT VÀ KHÔNG VƯỢT QUÁ ngân sách
+            const affordableCars = carData.filter(car => car.price <= purchaseBudget);
+
+            if (affordableCars.length > 0) {
+                 // Sắp xếp các xe có giá trong ngân sách theo giá giảm dần
+                affordableCars.sort((a, b) => b.price - a.price);
+                
+                // Chọn xe đắt nhất trong ngân sách (hoặc xe gần sát ngân sách nhất)
+                suggestedCar = affordableCars[0]; 
+            } else {
+                // Nếu không có xe nào nằm trong ngân sách (mua trong 1 năm), đề xuất xe rẻ nhất
+                suggestedCar = carData.slice().sort((a, b) => a.price - b.price)[0];
+            }
+
+
+            const monthsToAfford = Math.ceil(suggestedCar.price / salary);
+            const purchaseBudgetDisplay = purchaseBudget.toLocaleString();
+
+
+            suggestionResultDiv.innerHTML = `
+                <p>Your estimated 1-year purchase budget is **$${purchaseBudgetDisplay}**.</p>
+                <p>We suggest the **${suggestedCar.name}**.</p>
+                <p>Its approximate price is **$${suggestedCar.price.toLocaleString()}**.</p>
+                <p style="font-size:0.9em;">*At your current salary, it would take you about **${monthsToAfford} months** to save the full price (excluding financing/living costs).</p>
+            `;
+
+            // Highlight the suggested car card visually
+            document.querySelectorAll('.car-card').forEach(card => {
+                card.style.border = '1px solid #e0e0e0'; // Reset border
+            });
+
+            // Tìm trang chứa xe được đề xuất và hiển thị nó
+            const suggestedCarIndex = carData.findIndex(car => car.id === suggestedCar.id);
+            if (suggestedCarIndex !== -1) {
+                const targetPage = Math.floor(suggestedCarIndex / CARS_PER_PAGE) + 1;
+                if (targetPage !== currentPage) {
+                    displayPage(targetPage); // Chuyển sang trang chứa xe đó
+                }
+                // Highlight sau khi chuyển trang
+                setTimeout(() => {
+                     const suggestedCard = document.getElementById(suggestedCar.id);
+                     if (suggestedCard) {
+                         suggestedCard.style.border = '3px solid #3498db'; // Highlight with a blue color
+                     }
+                }, 50);
+               
+            }
+        });
+
+        // --- 2. Add New Car Listing Feature (Tính năng thêm sản phẩm) ---
+        const addCarForm = document.getElementById('add-car-form');
+        const uploadStatusDiv = document.getElementById('upload-status');
+
+        addCarForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn tải lại trang
+
+            // Get values from the form inputs
+            const name = document.getElementById('car-name').value.trim();
+            const description = document.getElementById('car-description').value.trim();
+            const price = parseFloat(document.getElementById('car-price').value);
+            const imageUrl = document.getElementById('car-image-url').value.trim();
+            const productLink = document.getElementById('car-product-link').value.trim();
+
+            // Basic validation
+            if (!name || !description || isNaN(price) || price < 10000) {
+                displayUploadStatus('Please fill in all required fields and ensure price is a valid number (min $10,000).', 'error');
+                return;
+            }
+
+            // Create a new car object
+            const newCar = {
+                id: 'user-car-' + Date.now(), // Simple unique ID
+                name: name,
+                price: price,
+                description: description,
+                imageUrl: imageUrl || 'https://via.placeholder.com/300x200?text=New+Listing',
+                productLink: productLink || ''
+            };
+            
+            // Lưu vào Local Storage
+            saveUserListing(newCar);
+            
+            // Cập nhật lại dữ liệu và hiển thị trang đầu tiên
+            carData = loadCarData();
+            displayPage(1); 
+            
+            // Display success message
+            displayUploadStatus('Car listing added successfully! It is now shown on the first page.', 'success');
+
+            // Clear the form after successful submission
+            addCarForm.reset();
+        });
+
+        // Helper function to display upload status messages
+        function displayUploadStatus(message, type) {
+            uploadStatusDiv.textContent = message;
+            uploadStatusDiv.className = ''; // Clear previous classes
+            uploadStatusDiv.classList.add(type === 'success' ? 'success-message' : 'error-message');
+
+            // Hide message after a few seconds
+            setTimeout(() => {
+                uploadStatusDiv.textContent = '';
+                uploadStatusDiv.className = '';
+            }, 5000);
+        }
+    });
+    </script>
+</body>
+</html>
