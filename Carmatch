@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarMatch - Dream Car & Product Listings 🚘</title>
+    <style>
+        /* General Reset and Base Styles */
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5; 
+            color: #343a40;
+        }
+
+        /* --- Global Components & Aesthetics --- */
+        .card-style {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03); 
+            padding: 30px;
+            transition: box-shadow 0.3s ease;
+        }
+        .card-style:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+        
+        button, input[type="submit"] {
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            border-radius: 6px;
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        input[type="text"], input[type="number"], input[type="url"], input[type="password"], textarea {
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            padding: 12px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            width: calc(100% - 24px); 
+        }
+        input:focus, textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 0; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-text {
+            flex-grow: 1;
+            text-align: left; 
+            margin-left: 10px;
+        }
+        .header-text h1 {
+            font-size: 1.8em;
+            margin: 0;
+            cursor: pointer;
+        }
+        .menu-icon {
+            font-size: 1.8em;
+            cursor: pointer;
+            color: white;
+            padding: 5px 10px;
+            z-index: 1001; 
+        }
+
+        /* --- Hamburger Menu (Slide-in Effect) --- */
+        .menu-overlay {
+            height: 100%;
+            width: 280px; 
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            background-color: #2c3e50;
+            overflow-x: hidden;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            transform: translateX(-280px); 
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+            padding-top: 60px;
+        }
+
+        .menu-overlay.open {
+            transform: translateX(0); 
+        }
+
+        .menu-overlay-content {
+            padding: 20px 0;
+        }
+
+        .menu-overlay a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.1em;
+            color: #bdc3c7;
+            display: block;
+            transition: 0.3s;
+            border-left: 5px solid transparent;
+        }
+
+        .menu-overlay a:hover, .menu-overlay a.active {
+            color: white;
+            background-color: #34495e;
+            border-left: 5px solid #3498db;
+        }
+
+        .menu-overlay .closebtn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 40px;
+            color: white;
+            line-height: 1;
+        }
+
+        /* --- Search Bar --- */
+        .header-search-box {
+            flex-grow: 0;
+        }
+        #header-search-input {
+            width: 200px; 
+            padding: 8px 12px;
+            font-size: 0.9em;
+            margin-left: 20px;
+            box-sizing: border-box; 
+            background-color: #34495e;
+            color: white;
+            border: 1px solid #4a637a;
+        }
+        #header-search-input::placeholder {
+            color: #bdc3c7;
+        }
+        
+        @media (max-width: 500px) {
+             #header-search-input {
+                width: 150px; 
+                margin-left: 10px;
+            }
+        }
+
+        /* --- Main Content & View Switching --- */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-view {
+            min-height: 70vh; 
+            display: none;
+            padding-top: 10px; 
+        }
+        .page-view.active {
+            display: block;
+        }
+
+        /* --- Section Titles --- */
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        /* --- Car Listings Grid --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .car-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer; 
+            position: relative;
+        }
+        .car-card h3 {
+            color: #34495e;
+            margin-top: 0;
+            font-size: 1.4em;
+            text-align: left;
+        }
+        /* --- IMAGE DISPLAY FIX --- */
+        .car-image {
+            width: 100%;
+            height: 200px; 
+            object-fit: contain; /* Ensures the full product image is visible */
+            border-radius: 8px;
+            margin: 15px 0;
+            background-color: #f7f7f7; 
+        }
+        /* ------------------------- */
+
+        .price strong {
+            color: #27ae60; 
+            font-size: 1.5em;
+        }
+        .like-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            font-size: 1.8em;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            padding: 0;
+            color: #ccc; 
+            border: none;
+        }
+        .like-button.liked {
+            color: #e74c3c; 
+        }
+        .car-card[data-compare="true"] {
+            outline: 3px dashed #3498db;
+            outline-offset: -3px;
+        }
+        
+        /* Budget Finder List Style */
+        .affordable-list-item {
+            border: 1px solid #dcdfe6;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+        
+        /* Specific Styles for Liked and Cart Views */
+        .liked-detail-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .liked-detail-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .liked-detail-card h4 {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .liked-detail-card .affordability-info {
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+        
+        /* --- Form/Button Styles --- */
+        .add-button, .form-section button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+        }
+        #salary-form button {
+            background-color: #27ae60;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #34495e; 
+            color: #ecf0f1;
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body onclick="closeNav()">
+
+    <header>
+        <div class="menu-overlay" id="myNav" onclick="event.stopPropagation()">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="menu-overlay-content">
+                <a href="#" class="nav-link active" data-view="home" onclick="showView('home');">🏠 Home</a>
+                <a href="#" class="nav-link" data-view="budget" onclick="showView('budget');">💰 Budget & Affordability</a>
+                <a href="#" class="nav-link" data-view="compare" onclick="showView('compare');">⚖️ Compare Products</a>
+                <a href="#" class="nav-link" data-view="liked" onclick="showView('liked');">❤️ Liked Products</a>
+                <a href="#" class="nav-link" data-view="cart" onclick="showView('cart');">🛒 Shopping Cart</a>
+                
+                <hr style="margin: 20px 25px; border-color: #34495e;">
+                
+                <a href="#" class="nav-link" data-view="upload" onclick="showView('upload');" style="display:none;" id="nav-upload">✨ Post New Product</a>
+                <a href="#" class="nav-link" data-view="login" onclick="showView('login');" id="nav-login">👤 Login</a>
+                <a href="#" class="nav-link" data-view="register" onclick="showView('register');" style="display:none;" id="nav-register">✍️ Register</a>
+                <a href="#" class="nav-link" data-view="logout" onclick="handleLogout();" style="display:none; color:#e74c3c;" id="nav-logout">🚪 Logout</a>
+            </div>
+        </div>
+        
+        <div class="header-content">
+            <span class="menu-icon" onclick="openNav(event)">&#9776;</span>
+            <div class="header-text">
+                <h1 onclick="showView('home')">CarMatch 🏎️</h1>
+            </div>
+            <div class="header-search-box">
+                <input type="text" id="header-search-input" onkeyup="filterCars()" placeholder="🔍 Search cars...">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="view-home" class="page-view active">
+            <h2>🏠 Car Listings</h2>
+            <div id="car-grid" class="grid-container">
+                </div>
+            <div id="pagination-controls" class="pagination-controls">
+                </div>
+        </div>
+
+        <div id="view-budget" class="page-view form-section card-style">
+            <h2>💰 Budget & Affordability</h2>
+            <form id="salary-form">
+                <div class="form-group">
+                    <label for="monthly-salary">Enter <b>Monthly Income (USD)</b>:</label>
+                    <input type="number" id="monthly-salary" name="monthly-salary" required min="1000" placeholder="Ex: 4000">
+                </div>
+                <button type="submit">Calculate Budget & Find Match</button>
+            </form>
+            <div id="suggestion-result" class="card-style" style="margin-top: 25px; border-left: 5px solid #27ae60; background-color: #f6fff6;">
+                <h3>Affordability Estimation Results</h3>
+                <p>Enter your income to see cars matching your 1-year budget.</p>
+            </div>
+            
+            <section class="random-car-section" style="margin-top: 40px; text-align: center;">
+                <h3>🎲 Random Car Suggestion</h3>
+                <p>Last entered salary: <b><span id="last-salary-display">0</span> USD/month</b>.</p>
+                <button id="random-car-button" class="add-button" style="background-color: #e67e22;">Select Random & Estimate</button>
+                <div id="random-result" style="margin-top: 20px;">
+                    <p>Click the button above to discover a random car.</p>
+                </div>
+            </section>
+        </div>
+        
+        <div id="view-compare" class="page-view form-section card-style">
+            <h2 style="border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">⚖️ Product Price Comparison (Max 3 Cars)</h2>
+            <div class="compare-selection">
+                <p style="text-align: center; color: #555;">Click on car cards on the home page to select up to **3** cars for comparison.</p>
+                <div id="compare-cards-container" class="grid-container" style="margin-top: 20px;">
+                    </div>
+            </div>
+        </div>
+
+        <div id="view-liked" class="page-view">
+            <h2>❤️ Your Liked Products</h2>
+            <div class="card-style" style="padding-bottom: 50px;">
+                <p style="text-align: center; margin-bottom: 20px;">
+                    Total liked cars: **<span id="liked-count">0</span>** cars. (Click on a car to estimate ownership time)
+                </p>
+                <div id="liked-cars-container" class="grid-container">
+                    </div>
+            </div>
+        </div>
+
+        <div id="view-cart" class="page-view">
+            <h2>🛒 Shopping Cart</h2>
+            <div class="card-style" style="padding-bottom: 50px;">
+                <p style="text-align: center; margin-bottom: 20px; color: #555;">Products added to your cart:</p>
+                <div id="cart-cars-container">
+                    </div>
+            </div>
+        </div>
+        
+        <div id="view-upload" class="page-view form-section card-style">
+            <h2>✨ Post New Product</h2>
+            <form id="add-car-form">
+                <div class="form-group">
+                    <label for="car-name">Car Name:</label>
+                    <input type="text" id="car-name" required placeholder="Ex: Ford Mustang">
+                </div>
+                <div class="form-group">
+                    <label for="car-description">Description:</label>
+                    <textarea id="car-description" required rows="3" placeholder="Short description of the car..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="car-price">Price (USD):</label>
+                    <input type="number" id="car-price" required min="10000" placeholder="Ex: 35000">
+                </div>
+                <div class="form-group">
+                    <label for="car-image-url">Image URL (optional):</label>
+                    <input type="url" id="car-image-url" placeholder="Ex: https://example.com/mustang.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="car-product-link">Product URL (optional):</label>
+                    <input type="url" id="car-product-link" placeholder="Ex: https://dealer.com/mustang">
+                </div>
+                <button type="submit" class="add-button">Add Product</button>
+            </form>
+            <div id="upload-status" class="card-style" style="margin-top: 20px; text-align: center;"></div>
+        </div>
+
+        <div id="view-login" class="page-view form-section card-style" style="max-width: 450px; margin: 50px auto;">
+            <h2>👤 Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="text" id="login-email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" required placeholder="Password (Hint: 123456)">
+                </div>
+                <button type="submit" class="add-button" style="background-color: #e67e22;">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px;">
+                Don't have an account? <a href="#" onclick="showView('register'); return false;">Register now</a>
+            </p>
+        </div>
+
+        <div id="view-register" class="page-view form-section card-style" style="max-width: 450px; margin: 50px auto;">
+            <h2>✍️ Register Account</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-email">Email:</label>
+                    <input type="text" id="reg-email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password:</label>
+                    <input type="password" id="reg-password" required placeholder="Minimum 6 characters">
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm-password">Confirm Password:</label>
+                    <input type="password" id="reg-confirm-password" required placeholder="Re-enter password">
+                </div>
+                <button type="submit" class="add-button">Register</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px;">
+                Already have an account? <a href="#" onclick="showView('login'); return false;">Login</a>
+            </p>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CarMatch Project. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // --- CONSTANTS ---
+        const CARS_PER_PAGE = 9;
+        const LOCAL_STORAGE_KEY = 'carMatchUserListings';
+        const LIKED_CARS_KEY = 'carMatchLikedCars';
+        const COMPARE_CARS_KEY = 'carMatchCompareCars';
+        const CART_CARS_KEY = 'carMatchCartCars';
+        const LOGGED_IN_KEY = 'isLoggedIn';
+
+        // Initial Car Data (Translated descriptions)
+        const initialCarData = [
+            { id: 'maserati', name: 'Maserati Ghibli', price: 85000, description: 'A luxury Italian sedan with powerful performance and distinct style.', imageUrl: 'https://giaxeoto.vn/admin/upload/images/resize/640-gia-xe-maserati-ghibli.jpg', productLink: 'https://maserati.com/ghibli' },
+            { id: 'porsche', name: 'Porsche 911', price: 120000, description: 'An iconic German sports car, offering precise handling and timeless design.', imageUrl: 'https://vehicle-images.dealerinspire.com/2ae4-110004163/thumbnails/large/WP0AB2A9XTS226742/6b0ea5235e0219f2d2c04b17911c460a.jpg', productLink: 'https://porsche.com/911' },
+            { id: 'audi', name: 'Audi R8', price: 155000, description: 'A high-performance supercar with a V10 engine, Quattro all-wheel drive, and an impressive futuristic design.', imageUrl: 'https://www.secret-classics.com/wp-content/uploads/2020/09/audir8decennium-01.jpg', productLink: 'https://audi.com/r8' },
+            { id: 'Rolls-Royce', name :'Rolls-Royce Cullinan Series II 2025', price: 410000, description :'The pinnacle of luxury SUVs, combining extravagance with off-road capability.', imageUrl :'https://hips.hearstapps.com/hmg-prod/images/2025-rolls-royce-cullinan-black-badge-107-663a56d913506.jpg?crop=0.834xw:0.740xh;0.0799xw,0.178xh&resize=1200:*', productLink :'https://www.rolls-roycemotorcars.com/en_GB/models/cullinan.html' },
+            { id: 'ferrari', name: 'Ferrari F8 Tributo', price: 280000, description: 'A mid-engine supercar, a tribute to Ferrari\'s V8 heritage, delivering peak performance.', imageUrl: 'https://gcb.evs.onl/d4/3029/8482686/176535263/s/7314b0dab352498290bb442d8d0612dd.jpg?height=1000', productLink: 'https://ferrari.com/f8-tributo' },
+            { id: 'lamborghini', name: 'Lamborghini Huracán EVO', price: 261000, description: 'An Italian masterpiece with aggressive styling, a V10 engine, and advanced aerodynamics.', imageUrl: 'https://www.topgear.com/sites/default/files/cars-car/carousel/2019/01/lamborghini_huracan_evo_grigio_artis_107_1.jpg', productLink: 'https://lamborghini.com/huracan-evo' },
+            { id: 'bugatti', name: 'Bugatti Chiron', price: 3000000, description: 'The pinnacle of automotive engineering, the Chiron features a quad-turbo W16 engine and is one of the fastest cars in the world.', imageUrl: 'https://www.thedrive.com/wp-content/uploads/2022/12/21/bugatti-profilee-lead-image.jpg?quality=85', productLink: 'https://bugatti.com/chiron' },
+            { id: 'tesla', name: 'Tesla Model S Plaid', price: 135000, description: 'A luxury electric sedan combining cutting-edge technology with incredible acceleration capabilities.', imageUrl: 'https://giaxeoto.vn/admin/upload/images/tesla-model-s-2023-thong-so-hinh-anh-gia-ban-122022-1672045756.jpg', productLink: 'https://tesla.com/models' },
+            { id: 'volvo', name:'Volvo XC60 2025 ', price: 45000, description:'A premium mid-size SUV with Scandinavian design and advanced safety features, ideal for families.', imageUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN4q1f-YY-dTnCkuc4_CWZjmtxNIse3BMwmw&s', productLink:'https://www.volvocars.com/us/cars/xc60/' },
+            { id: 'polestar', name:' Polestar 3 2025', price: 93100, description:'A pure electric SUV combining sleek design with high performance and advanced technology.', imageUrl:'https://car-images.polestar.com/359/2025/summary/EE/71700/_/RC0000/31/001150/_/XPLUSS/XPFWHE/1/000179/default/0.jpg?auto=compress,format&quality=65&width=1920&height=1200&fit=scale-down&gravity=0.5x0.5', productLink:'https://www.polestar.https://www.polestar.com/us/preconfigured-cars/polestar-3/359EEPP0E13171700RC0000%20%20%20%20%20%2000000001150001162XPFWHEXPLUSS/?year=2025&structureweek=202425&partnerid=6US6634/us/cars/polestar-3/' },
+            { id: 'cadillac', name:' Cadillac Lyriq 2024', price: 62000, description:'A luxury electric SUV with a spacious interior and cutting-edge technology, marking Cadillac\'s entry into the EV market.', imageUrl:'https://cms-i.autodaily.vn/du-lieu/2022/12/20/2023-cadillac-lyriq-exterior-1.webp', productLink:'https://www.cadillac.com/electric/lyriq/' }
+        ];
+
+        // --- GLOBAL STATE ---
+        let carData;
+        let likedCars;
+        let compareCars;
+        let cartCars;
+        let currentPage = 1;
+        let lastEnteredSalary = parseFloat(localStorage.getItem('lastEnteredSalary') || 0);
+
+        // --- AUTH & MENU HELPERS ---
+        function getLoginStatus() {
+            return localStorage.getItem(LOGGED_IN_KEY) === 'true';
+        }
+
+        function setLoginStatus(status) {
+            localStorage.setItem(LOGGED_IN_KEY, status ? 'true' : 'false');
+            updateMenuLinks();
+        }
+
+        function updateMenuLinks() {
+            const isLoggedIn = getLoginStatus();
+            const navUpload = document.getElementById('nav-upload');
+            const navLogin = document.getElementById('nav-login');
+            const navLogout = document.getElementById('nav-logout');
+            const navRegister = document.getElementById('nav-register');
+
+            if (navUpload) navUpload.style.display = isLoggedIn ? 'block' : 'none';
+            if (navLogin) navLogin.style.display = isLoggedIn ? 'none' : 'block';
+            if (navRegister) navRegister.style.display = isLoggedIn ? 'none' : 'block';
+            if (navLogout) navLogout.style.display = isLoggedIn ? 'block' : 'none';
+            
+            document.getElementById('last-salary-display').textContent = lastEnteredSalary.toLocaleString() || '0';
+        }
+
+        function handleLogout() {
+            setLoginStatus(false);
+            alert('Logged out successfully.');
+            showView('home');
+        }
+        window.handleLogout = handleLogout; 
+        
+        function openNav(event) {
+            event.stopPropagation();
+            document.getElementById("myNav").classList.add("open");
+        }
+        window.openNav = openNav; 
+
+        function closeNav() {
+            document.getElementById("myNav").classList.remove("open");
+        }
+        window.closeNav = closeNav; 
+
+        function showView(viewId) {
+            if (viewId === 'upload' && !getLoginStatus()) {
+                alert('You need to LOGIN to POST a product.');
+                viewId = 'login';
+            }
+            
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active');
+            });
+
+            const targetView = document.getElementById('view-' + viewId);
+            if (targetView) {
+                targetView.classList.add('active');
+            }
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-view') === viewId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            if (viewId === 'liked') {
+                renderLikedCars();
+            } else if (viewId === 'cart') {
+                renderCartCars();
+            }
+
+            closeNav();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        window.showView = showView; 
+
+        // --- DATA STORAGE & LOADING HELPERS ---
+
+        function loadData(key, defaultValue = []) {
+            try {
+                const stored = localStorage.getItem(key);
+                return stored ? JSON.parse(stored) : defaultValue;
+            } catch (error) {
+                console.error(`Error loading ${key}:`, error);
+                return defaultValue;
+            }
+        }
+        
+        function saveData(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (error) {
+                console.error(`Error saving ${key}:`, error);
+            }
+        }
+
+        function loadCarData() {
+            const userListings = loadData(LOCAL_STORAGE_KEY);
+            return [...userListings, ...initialCarData];
+        }
+        window.loadCarData = loadCarData; 
+
+        function loadLikedCars() { return loadData(LIKED_CARS_KEY); }
+        function saveLikedCars(arr) { saveData(LIKED_CARS_KEY, arr); }
+
+        function loadCompareCars() { return loadData(COMPARE_CARS_KEY); }
+        function saveCompareCars(arr) { saveData(COMPARE_CARS_KEY, arr); }
+        
+        function loadCartCars() { return loadData(CART_CARS_KEY); }
+        function saveCartCars(arr) { saveData(CART_CARS_KEY, arr); }
+
+        // --- CAR CARD RENDERING ---
+
+        function createCarCardHTML(car) {
+            const finalImageUrl = car.imageUrl || 'https://via.placeholder.com/300x200?text=No+Image+Provided';
+            const linkHTML = car.productLink ? `<p class="product-link" style="margin-top:10px;"><a href="${car.productLink}" target="_blank">View Product Page »</a></p>` : '';
+            const isLiked = likedCars.includes(car.id) ? 'liked' : '';
+            const isCompared = compareCars.includes(car.id) ? 'true' : 'false';
+            const isAddedToCart = cartCars.includes(car.id) ? 'Added 🛒' : 'Add to Cart 🛒';
+            
+            return `
+                <div id="${car.id}" class="car-card card-style" data-compare="${isCompared}">
+                    <button class="like-button ${isLiked}" data-car-id="${car.id}" title="Favorite" onclick="event.stopPropagation(); toggleLike('${car.id}');">♥</button>
+                    <h3>${car.name}</h3>
+                    <img src="${finalImageUrl}" alt="Image of ${car.name}" class="car-image">
+                    <p class="description">${car.description.substring(0, 100)}...</p>
+                    ${linkHTML}
+                    <p class="price">Price: <strong>$${car.price.toLocaleString()}</strong></p>
+                    <button class="add-to-cart-button" data-car-id="${car.id}" onclick="event.stopPropagation(); toggleCart('${car.id}');" style="background-color: ${cartCars.includes(car.id) ? '#2ecc71' : '#f39c12'}; color: white; border: none; padding: 8px; border-radius: 6px; margin-top: 10px; width: 100%;">
+                        ${isAddedToCart}
+                    </button>
+                </div>
+            `;
+        }
+        
+        // --- DISPLAY & PAGINATION ---
+        const carGridContainer = document.getElementById('car-grid');
+        const paginationControls = document.getElementById('pagination-controls');
+
+        function displayPage(page) {
+            currentPage = page;
+            const startIndex = (page - 1) * CARS_PER_PAGE;
+            const endIndex = startIndex + CARS_PER_PAGE;
+            const pageCars = carData.slice(startIndex, endIndex);
+
+            carGridContainer.innerHTML = '';
+
+            if (carData.length === 0) {
+                carGridContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #e74c3c; padding: 50px 0;">No products matching the keyword found.</p>';
+            } else {
+                pageCars.forEach(car => {
+                    carGridContainer.innerHTML += createCarCardHTML(car);
+                });
+            }
+            
+            setupPaginationControls();
+            attachCarCardListeners(); 
+        }
+
+        function setupPaginationControls() {
+            const totalPages = Math.ceil(carData.length / CARS_PER_PAGE);
+            paginationControls.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            const controls = document.createElement('div');
+            controls.style.cssText = 'display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;';
+
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '« Prev';
+            prevButton.classList.add('page-button');
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    displayPage(currentPage - 1);
+                }
+            });
+            controls.appendChild(prevButton);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.classList.add('page-button');
+                button.style.cssText = 'background-color: #3498db; color: white; border: none; padding: 8px 12px; font-size: 1em;';
+                
+                if (i === currentPage) {
+                    button.classList.add('active');
+                    button.style.backgroundColor = '#e74c3c'; 
+                }
+
+                button.addEventListener('click', () => displayPage(i));
+                controls.appendChild(button);
+            }
+            
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next »';
+            nextButton.classList.add('page-button');
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    displayPage(currentPage + 1);
+                }
+            });
+            controls.appendChild(nextButton);
+            
+            paginationControls.appendChild(controls);
+        }
+
+        function filterCars() {
+            const filterValue = document.getElementById('header-search-input').value.toLowerCase().trim();
+            
+            showView('home'); 
+
+            let fullCarData = window.loadCarData();
+
+            if (filterValue === '') {
+                carData = fullCarData;
+            } else {
+                carData = fullCarData.filter(car => 
+                    car.name.toLowerCase().includes(filterValue) || 
+                    car.description.toLowerCase().includes(filterValue)
+                );
+            }
+
+            currentPage = 1;
+            displayPage(currentPage); 
+        }
+        window.filterCars = filterCars; 
+
+        // --- FEATURE LOGIC: LIKE, COMPARE, CART ---
+        
+        function toggleLike(carId) {
+            const index = likedCars.indexOf(carId);
+            const button = document.querySelector(`.like-button[data-car-id="${carId}"]`);
+
+            if (index === -1) {
+                likedCars.push(carId); 
+                if (button) button.classList.add('liked');
+            } else {
+                likedCars.splice(index, 1);
+                if (button) button.classList.remove('liked');
+            }
+            saveLikedCars(likedCars);
+        }
+        window.toggleLike = toggleLike;
+
+        function toggleCompare(carId) {
+            const index = compareCars.indexOf(carId);
+            const cardElement = document.getElementById(carId);
+
+            if (index === -1) {
+                if (compareCars.length < 3) {
+                    compareCars.push(carId);
+                    if(cardElement) cardElement.setAttribute('data-compare', 'true');
+                } else {
+                    alert('You can only compare a maximum of 3 cars at once. Please remove one first.');
+                    return;
+                }
+            } else {
+                compareCars.splice(index, 1);
+                if(cardElement) cardElement.setAttribute('data-compare', 'false');
+            }
+
+            saveCompareCars(compareCars);
+            renderCompareCards();
+        }
+        
+        function attachCarCardListeners() {
+            document.querySelectorAll('.car-card').forEach(card => {
+                if (card.dataset.listenersAttached) return; 
+                
+                card.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'A' || event.target.classList.contains('like-button') || event.target.classList.contains('add-to-cart-button')) {
+                        return;
+                    }
+                    toggleCompare(card.id);
+                });
+                
+                card.dataset.listenersAttached = true; 
+            });
+        }
+        
+        function toggleCart(carId) {
+            const index = cartCars.indexOf(carId);
+            const button = document.querySelector(`.add-to-cart-button[data-car-id="${carId}"]`);
+
+            if (index === -1) {
+                cartCars.push(carId); 
+                if (button) {
+                    button.textContent = 'Added 🛒';
+                    button.style.backgroundColor = '#2ecc71';
+                }
+                alert('Product added to Cart.');
+            } else {
+                cartCars.splice(index, 1);
+                if (button) {
+                    button.textContent = 'Add to Cart 🛒';
+                    button.style.backgroundColor = '#f39c12';
+                }
+                alert('Product removed from Cart.');
+            }
+            saveCartCars(cartCars);
+        }
+        window.toggleCart = toggleCart;
+
+        function removeCartCar(carId) {
+            cartCars = cartCars.filter(id => id !== carId);
+            saveCartCars(cartCars);
+            renderCartCars();
+            const homeButton = document.querySelector(`.add-to-cart-button[data-car-id="${carId}"]`);
+            if (homeButton) {
+                homeButton.textContent = 'Add to Cart 🛒';
+                homeButton.style.backgroundColor = '#f39c12';
+            }
+        }
+        window.removeCartCar = removeCartCar;
+
+        // --- RENDERING DYNAMIC VIEWS ---
+
+        function renderLikedCars() {
+            const likedContainer = document.getElementById('liked-cars-container');
+            const fullCarData = loadCarData();
+            const currentLikedCars = loadLikedCars();
+            
+            document.getElementById('liked-count').textContent = currentLikedCars.length;
+            
+            likedContainer.innerHTML = ''; 
+
+            if (currentLikedCars.length === 0) {
+                likedContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777; padding: 20px;">You haven\'t liked (clicked Heart) any cars yet.</p>';
+                return;
+            }
+            
+            likedContainer.className = 'grid-container'; 
+            
+            currentLikedCars.forEach(carId => {
+                const car = fullCarData.find(c => c.id === carId);
+                if (car) {
+                    const likedCard = document.createElement('div');
+                    likedCard.className = 'car-card card-style liked-detail-card'; 
+                    likedCard.id = `liked-${car.id}`; 
+                    likedCard.innerHTML = `
+                        <img src="${car.imageUrl || 'https://via.placeholder.com/150x100?text=No+Image'}" alt="Image of ${car.name}" class="car-image" style="height: 150px; margin-top: 0;">
+                        <h4 style="color: #34495e; text-align: center;">${car.name}</h4>
+                        <p class="price" style="text-align: center;">Price: <b>$${car.price.toLocaleString()}</b></p>
+                        <div class="affordability-info" style="margin-top: 10px; padding: 10px; border-radius: 6px; background-color: #f7f7f7;">
+                            Click here to estimate ownership time.
+                        </div>
+                    `;
+                    
+                    likedCard.addEventListener('click', (event) => {
+                        const salary = lastEnteredSalary;
+                        const infoDiv = likedCard.querySelector('.affordability-info');
+                        
+                        if (salary === 0) {
+                            infoDiv.innerHTML = '<b style="color: #e74c3c;">Please enter your monthly salary on the Budget page first.</b>';
+                            infoDiv.style.backgroundColor = '#f8d7da';
+                        } else {
+                            const monthsToAfford = Math.ceil(car.price / salary);
+                            infoDiv.innerHTML = `<b style="color: #27ae60;">Time to Ownership: ${monthsToAfford} months</b>`;
+                            infoDiv.style.backgroundColor = '#d4edda';
+                        }
+                    });
+                    
+                    likedContainer.appendChild(likedCard);
+                }
+            });
+        }
+        
+        function renderCartCars() {
+            const cartContainer = document.getElementById('cart-cars-container');
+            const fullCarData = loadCarData();
+            const currentCartCars = loadCartCars();
+            
+            cartContainer.innerHTML = '';
+            
+            if (currentCartCars.length === 0) {
+                cartContainer.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Your shopping cart is empty.</p>';
+                return;
+            }
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'grid-container'; 
+            let totalCartPrice = 0;
+
+            currentCartCars.forEach(carId => {
+                const car = fullCarData.find(c => c.id === carId);
+                if (car) {
+                    totalCartPrice += car.price;
+                    const cartCard = document.createElement('div');
+                    cartCard.className = 'car-card card-style'; 
+                    cartCard.innerHTML = `
+                        <img src="${car.imageUrl || 'https://via.placeholder.com/150x100?text=No+Image'}" alt="Image of ${car.name}" class="car-image" style="height: 150px; margin-top: 0;">
+                        <h4 style="color: #34495e; text-align: center;">${car.name}</h4>
+                        <p class="price" style="text-align: center;">Price: <b>$${car.price.toLocaleString()}</b></p>
+                        <button onclick="removeCartCar('${car.id}')" style="background-color: #e74c3c; color: white; border: none; padding: 8px; border-radius: 6px; margin-top: 10px; width: 100%;">
+                            Remove from Cart
+                        </button>
+                    `;
+                    
+                    wrapper.appendChild(cartCard);
+                }
+            });
+
+            const summaryCard = document.createElement('div');
+            summaryCard.style.cssText = 'grid-column: 1 / -1; text-align: right; margin-top: 20px; padding: 20px; border-top: 2px solid #e0e0e0;';
+            summaryCard.innerHTML = `<h3 style="color: #27ae60;">Total Cart Value: <b>$${totalCartPrice.toLocaleString()}</b></h3>
+                                    <button class="add-button" style="width: auto; margin-top: 10px; display: inline-block;">Checkout (Demo)</button>`;
+            
+            cartContainer.appendChild(wrapper);
+            cartContainer.appendChild(summaryCard);
+        }
+
+        function renderCompareCards() {
+            const compareContainer = document.getElementById('compare-cards-container');
+            compareContainer.innerHTML = '';
+            
+            if (compareCars.length === 0) {
+                compareContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777; padding: 20px;">No cars selected for comparison. (Max 3 cars)</p>';
+                return;
+            }
+
+            const carsToCompare = loadCarData().filter(car => compareCars.includes(car.id));
+
+            carsToCompare.forEach(car => {
+                const cardHTML = `
+                    <div class="compare-card card-style">
+                        <h4>${car.name}</h4>
+                        <img src="${car.imageUrl || 'https://via.placeholder.com/150x100?text=No+Image'}" alt="Image of ${car.name}" style="width: 100%; height: 100px; object-fit: contain; border-radius: 6px; margin-bottom: 10px; background-color: #f7f7f7;">
+                        <span class="price-tag"><b>$${car.price.toLocaleString()}</b></span>
+                        <p style="font-size:0.9em; margin-top:5px;">Value: ${car.price.toLocaleString()} USD</p>
+                        <button onclick="window.removeCompareCar('${car.id}')" style="background-color: #e74c3c;">Remove</button>
+                    </div>
+                `;
+                compareContainer.innerHTML += cardHTML;
+            });
+        }
+        
+        function removeCompareCar(carId) {
+            compareCars = compareCars.filter(id => id !== carId);
+            saveCompareCars(compareCars);
+            renderCompareCards();
+            
+            const cardElement = document.getElementById(carId);
+            if(cardElement) cardElement.setAttribute('data-compare', 'false');
+        }
+        window.removeCompareCar = removeCompareCar; 
+
+
+        // --- BUDGET FINDER LOGIC ---
+        const salaryForm = document.getElementById('salary-form');
+        const monthlySalaryInput = document.getElementById('monthly-salary');
+        const suggestionResultDiv = document.getElementById('suggestion-result');
+
+        salaryForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const salary = parseFloat(monthlySalaryInput.value);
+
+            if (isNaN(salary) || salary <= 0) {
+                suggestionResultDiv.innerHTML = '<h3>Affordability Estimation Results</h3><span style="color: red;">Please enter a valid monthly income.</span>';
+                lastEnteredSalary = 0;
+                localStorage.setItem('lastEnteredSalary', 0);
+                updateMenuLinks();
+                return;
+            }
+            
+            lastEnteredSalary = salary; 
+            localStorage.setItem('lastEnteredSalary', salary);
+            updateMenuLinks(); 
+
+            const purchaseBudget = salary * 12; 
+            const fullCarData = loadCarData();
+            
+            const affordableCars = fullCarData
+                .filter(car => car.price <= purchaseBudget)
+                .sort((a, b) => b.price - a.price); 
+
+            let resultHtml = `<h3>Affordability Estimation Results</h3>
+                              <p style="font-weight: bold; font-size: 1.1em;">Your estimated 1-year car purchase budget is: $${purchaseBudget.toLocaleString()}.</p>`;
+
+            if (affordableCars.length > 0) {
+                const closestCar = affordableCars[0]; 
+                
+                resultHtml += `<div style="padding: 15px; background-color: #d4edda; border-radius: 8px; margin: 20px 0;">
+                                  <h4>🚀 Closest Car to Budget: <b>${closestCar.name}</b></h4>
+                                  <p>Price: <b>$${closestCar.price.toLocaleString()}</b> (Remaining: $${(purchaseBudget - closestCar.price).toLocaleString()})</p>
+                               </div>`;
+
+                const listHtml = affordableCars.map(car => `
+                    <div class="affordable-list-item">
+                        <b>${car.name}</b> - Price: $${car.price.toLocaleString()}
+                    </div>
+                `).join('');
+
+                resultHtml += `
+                    <p><b>List of ${affordableCars.length} other suitable cars:</b></p>
+                    <div style="max-height: 300px; overflow-y: auto; margin-top: 10px; padding-right: 15px;">${listHtml}</div>
+                `;
+            } else {
+                const cheapestCar = fullCarData.slice().sort((a, b) => a.price - b.price)[0];
+                resultHtml += `
+                    <p style="color: #e74c3c; margin-top: 15px;">No cars found suitable for the 1-year budget ($${purchaseBudget.toLocaleString()}).</p>
+                    <p>The cheapest car is $${cheapestCar.price.toLocaleString()}.</p>
+                `;
+            }
+            
+            suggestionResultDiv.innerHTML = resultHtml;
+        });
+        
+        // --- Random Car Feature (Uses lastEnteredSalary) ---
+        const randomCarButton = document.getElementById('random-car-button');
+        const randomResultDiv = document.getElementById('random-result');
+        
+        randomCarButton.addEventListener('click', () => {
+            const fullCarData = loadCarData();
+            if (fullCarData.length === 0) {
+                randomResultDiv.innerHTML = '<p style="color: red;">No cars to select.</p>';
+                return;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * fullCarData.length); 
+            const randomCar = fullCarData[randomIndex];
+            
+            let resultHTML = `<p>Randomly selected car: <b>${randomCar.name}</b>.</p>
+                            <p>Price: <b>$${randomCar.price.toLocaleString()}</b>.</p>`;
+                            
+            if (lastEnteredSalary > 0) {
+                const monthsToAfford = Math.ceil(randomCar.price / lastEnteredSalary);
+                resultHTML += `<p style="margin-top: 10px;">With monthly income ($${lastEnteredSalary.toLocaleString()}), you need about <strong>${monthsToAfford} months</strong> to save for this car.</p>`;
+            } else {
+                resultHTML += `<p style="color: #e74c3c; margin-top: 10px;">*Please enter income above to estimate savings time.</p>`;
+            }
+            
+            randomResultDiv.innerHTML = resultHTML;
+        });
+
+        // --- ADD NEW CAR LISTING ---
+        const addCarForm = document.getElementById('add-car-form');
+        const uploadStatusDiv = document.getElementById('upload-status');
+        
+        addCarForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const newCar = {
+                id: 'user-car-' + Date.now(),
+                name: document.getElementById('car-name').value.trim(),
+                price: parseFloat(document.getElementById('car-price').value),
+                description: document.getElementById('car-description').value.trim(),
+                imageUrl: document.getElementById('car-image-url').value.trim() || 'https://via.placeholder.com/300x200?text=New+Listing',
+                productLink: document.getElementById('car-product-link').value.trim() || ''
+            };
+            
+            let userListings = loadData(LOCAL_STORAGE_KEY);
+            userListings.unshift(newCar); 
+            saveData(LOCAL_STORAGE_KEY, userListings);
+            
+            carData = loadCarData();
+            displayPage(1); 
+            
+            uploadStatusDiv.innerHTML = '<p style="color: #155724;">Product added successfully! Now displaying on home page.</p>';
+
+            addCarForm.reset();
+            setTimeout(() => { showView('home'); uploadStatusDiv.innerHTML = ''; }, 2000);
+        });
+        
+        // --- AUTHENTICATION HANDLERS ---
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value; 
+            
+            if (email && password) {
+                setLoginStatus(true);
+                alert('Login successful! You can now post products.');
+                showView('home');
+            } else {
+                alert('Please enter your email and password.');
+            }
+        });
+
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('Confirmation password does not match.');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return;
+            }
+
+            setLoginStatus(true);
+            alert('Registration successful and logged in! You can now post products.');
+            showView('home');
+        });
+
+
+        // --- Initial Setup ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load initial state
+            carData = loadCarData();
+            likedCars = loadLikedCars();
+            compareCars = loadCompareCars();
+            cartCars = loadCartCars();
+
+            updateMenuLinks(); 
+            displayPage(1);
+            renderCompareCards(); 
+        });
+    </script>
+</body>
+</html>
