@@ -12,127 +12,99 @@
             --bg-color: #000000;
             --card-bg: #111;
             --text-white: #ffffff;
-            --gold: #D4AF37;
+            --gold: #D4AF37; /* Màu vàng Gold chuẩn */
             --font-main: 'Montserrat', sans-serif;
             --font-serif: 'Playfair Display', serif;
         }
         
         body { margin: 0; background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
-        /* --- 1. MENU TRONG SUỐT (GIỐNG HÌNH BÀ GỬI) --- */
+        /* 1. MENU THANH NGANG */
         nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: 90px; z-index: 1000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 50px;
-            /* Hiệu ứng chuyển màu từ đen mờ sang trong suốt -> Giúp chữ dễ đọc nhưng vẫn nhìn xuyên thấu */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
-            transition: 0.3s;
+            padding: 0 40px; background: rgba(0,0,0,0.9); border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-sizing: border-box;
         }
-        
-        /* Logo X-CAR Vàng Gold */
-        .logo { 
-            font-family: var(--font-serif); font-size: 2em; color: var(--gold); 
-            letter-spacing: 3px; cursor: pointer; font-weight: bold; text-transform: uppercase;
-        }
-
-        .nav-links { display: flex; gap: 40px; list-style: none; margin:0; padding:0; }
-        .nav-links li a { 
-            color: #ddd; text-decoration: none; text-transform: uppercase; 
-            font-size: 0.85em; transition: 0.3s; cursor: pointer; font-weight: 500; letter-spacing: 1px;
-        }
+        .logo { font-family: var(--font-serif); font-size: 1.8em; color: var(--gold); letter-spacing: 2px; cursor: pointer; font-weight: bold; }
+        .nav-links { display: flex; gap: 30px; list-style: none; margin:0; padding:0; }
+        .nav-links li a { color: #eee; text-decoration: none; text-transform: uppercase; font-size: 0.9em; transition: 0.3s; cursor: pointer; font-weight: 600; letter-spacing: 1px; }
         .nav-links li a:hover { color: var(--gold); }
-        
-        /* Nút Login viền vàng */
-        .auth-btn { 
-            background: transparent; border: 1px solid var(--gold); color: var(--gold); 
-            padding: 10px 30px; cursor: pointer; font-weight: 600; 
-            text-transform: uppercase; font-size: 0.8em; letter-spacing: 1px; transition: 0.3s;
-        }
+        .auth-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 25px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.9em; transition: 0.3s; }
         .auth-btn:hover { background: var(--gold); color: #000; }
 
-        /* --- 2. HERO SECTION --- */
+        /* 2. HERO SECTION (CHỈNH LẠI CHO VIDEO ĐẸP HƠN) */
         .hero { 
             height: 100vh; position: relative; display: flex; flex-direction: column; 
             align-items: center; justify-content: center;
-            overflow: hidden; margin-top: 0;
+            overflow: hidden; margin-top: 0; box-sizing: border-box;
+            background: #000; /* Nền đen khi video chưa load kịp */
         }
+        /* CSS CHO VIDEO NỀN CHẠY ĐỘNG */
         .hero video { 
-            position: absolute; top: 50%; left: 50%; 
+            position: absolute; 
+            top: 50%; left: 50%; 
             min-width: 100%; min-height: 100%; 
             width: auto; height: auto; 
             transform: translate(-50%, -50%); 
-            z-index: -1; opacity: 0.6; object-fit: cover;
+            z-index: 0; /* Nằm dưới chữ */
+            opacity: 0.6; /* Độ mờ để nổi bật chữ */
+            object-fit: cover;
+        }
+        /* Lớp phủ màu tối lên video để chữ dễ đọc hơn */
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); z-index: 1;
         }
         
-        .hero-text { text-align: center; z-index: 10; margin-top: 50px; } /* Đẩy chữ xuống xíu cho thoáng menu */
-        
+        .hero-text { text-align: center; z-index: 10; position: relative; top: -20px; }
         .hero-text h1 { 
-            font-family: var(--font-serif); font-size: 6em; color: #fff; 
-            text-transform: uppercase; margin: 0; letter-spacing: 15px; line-height: 1; font-weight: 400; 
+            font-family: var(--font-serif); font-size: 5.5em; color: #fff; 
+            text-transform: uppercase; margin: 0; letter-spacing: 10px; line-height: 1; font-weight: 700; 
             text-shadow: 0 10px 30px rgba(0,0,0,0.9);
         }
         .hero-text p { 
-            color: var(--gold); font-family: var(--font-main); font-size: 1.1em; 
-            font-weight: 400; text-transform: uppercase; letter-spacing: 6px; 
-            margin-top: 25px; text-shadow: 0 5px 15px rgba(0,0,0,1);
+            color: var(--gold); font-family: var(--font-main); font-size: 1.2em; 
+            font-weight: 400; text-transform: uppercase; letter-spacing: 5px; 
+            margin-top: 20px; text-shadow: 0 5px 15px rgba(0,0,0,1);
         }
-        
         .explore-btn { 
-            margin-top: 50px; padding: 15px 40px; background-color: var(--gold); 
-            color: #000; border: none; font-weight: 700; letter-spacing: 2px; 
-            cursor: pointer; text-transform: uppercase; font-size: 0.8em; transition: 0.3s;
+            margin-top: 40px; padding: 15px 40px; background-color: var(--gold); 
+            color: #000; border: none; font-weight: 800; letter-spacing: 2px; 
+            cursor: pointer; text-transform: uppercase; font-size: 0.9em; transition: 0.3s;
         }
         .explore-btn:hover { background-color: #fff; transform: translateY(-3px); }
         
-        /* --- 3. CÁC SECTION CHUNG --- */
+        /* 3. CẤU TRÚC TRANG */
         .section { padding: 100px 50px; display: none; min-height: 100vh; animation: fadeIn 0.5s; }
         .active-section { display: block; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
-        .sec-title { 
-            font-family: var(--font-serif); font-size: 3em; color: var(--gold); 
-            border-bottom: 1px solid #333; margin-bottom: 60px; padding-bottom: 15px; text-align: center;
-        }
+        .sec-title { font-family: var(--font-serif); font-size: 3em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 50px; padding-bottom: 15px; }
 
-        /* --- 4. LƯỚI XE (GRID) --- */
+        /* 4. LƯỚI XE (GRID) */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
         .card { background: var(--card-bg); border: 1px solid #222; transition: 0.4s; position: relative; }
-        .card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card:hover { border-color: var(--gold); transform: translateY(-10px); }
         .card-img { height: 240px; width: 100%; object-fit: cover; background: #000; border-bottom: 1px solid #222; }
-        .card-body { padding: 30px; }
+        .card-body { padding: 25px; }
         .card-brand { color: var(--gold); font-size: 0.8em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
         .card-name { font-size: 1.5em; margin: 5px 0 15px; font-weight: 700; color: white; }
         .card-price { font-size: 1.2em; color: var(--gold); font-weight: bold; }
         .view-btn { width: 100%; padding: 12px; background: transparent; border: 1px solid #444; color: #fff; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 20px; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1px; }
         .view-btn:hover { border-color: var(--gold); color: var(--gold); }
 
-        /* --- 5. FORM ADD VEHICLE (CHUẨN MẪU HÌNH ẢNH) --- */
-        .form-box { max-width: 800px; margin: 0 auto; border: 1px solid var(--gold); padding: 50px; background: #0a0a0a; }
-        
-        .form-section-title { 
-            color: var(--gold); font-size: 1.1em; margin-bottom: 20px; 
-            padding-bottom: 10px; border-bottom: 1px solid #333; 
-            text-transform: uppercase; letter-spacing: 2px; margin-top: 40px; 
-        }
+        /* 5. FORM ADD VEHICLE */
+        .form-box { max-width: 700px; margin: 0 auto; border: 1px solid var(--gold); padding: 50px; background: #0a0a0a; }
+        .form-section-title { color: var(--gold); font-size: 1.1em; margin-bottom: 20px; padding-bottom: 5px; border-bottom: 1px solid #333; text-transform: uppercase; letter-spacing: 1px; margin-top: 30px; }
         .form-section-title:first-child { margin-top: 0; }
-        
-        input, textarea { 
-            width: 100%; background: #111; border: 1px solid #333; 
-            padding: 15px; margin-bottom: 20px; color: #fff; 
-            box-sizing: border-box; font-family: var(--font-main); font-size: 1em; 
-        }
-        input:focus, textarea:focus { border-color: var(--gold); outline: none; background: #1a1a1a; }
-        
-        .btn-gold { 
-            width: 100%; background: var(--gold); color: #000; padding: 15px; 
-            border: none; font-weight: 800; cursor: pointer; 
-            font-size: 1em; text-transform: uppercase; margin-top: 30px; letter-spacing: 1px; transition: 0.3s;
-        }
+        input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; margin-bottom: 15px; color: #fff; box-sizing: border-box; font-family: var(--font-main); font-size: 1em; }
+        input:focus, textarea:focus { border-color: var(--gold); outline: none; }
+        .btn-gold { width: 100%; background: var(--gold); color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; font-size: 1em; text-transform: uppercase; margin-top: 20px; }
         .btn-gold:hover { background: #fff; }
-        
         .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 
-        /* --- 6. POPUP & DETAIL --- */
+        /* 6. POPUP & DETAIL */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
         .close-overlay { position: fixed; top:30px; right:50px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; transition: 0.3s; }
@@ -164,16 +136,16 @@
             <button class="auth-btn" onclick="openLogin()">LOGIN</button>
         </div>
         <div id="user-ui" style="display:none; color: var(--gold); font-weight: bold;">
-            <span id="user-display" style="margin-right: 15px; text-transform: uppercase; letter-spacing: 1px;">Admin</span>
+            <span id="user-display" style="margin-right: 15px;">Admin</span>
             <button class="auth-btn" onclick="logout()">LOGOUT</button>
         </div>
     </nav>
 
     <div id="hero" class="hero active-section">
         <video autoplay muted loop playsinline>
-            <source src="https://videos.pexels.com/video-files/5046270/5046270-hd_1920_1080_30fps.mp4" type="video/mp4">
+            <source src="https://cdn.pixabay.com/video/2020/04/18/36556-415369670_large.mp4" type="video/mp4">
         </video>
-        <div class="hero-text">
+        <div class="video-overlay"></div> <div class="hero-text">
             <h1>THE COLLECTION</h1>
             <p>Pinnacle of Automotive Engineering</p>
             <button class="explore-btn" onclick="showSection('inventory')">EXPLORE MODELS</button>
@@ -188,10 +160,9 @@
     <div id="budget" class="section">
         <h2 class="sec-title">Financial Services</h2>
         <div class="form-box">
-            <p style="color:#888; margin-bottom:20px">Calculate your eligibility for our exclusive collection.</p>
+            <p style="color:#888; margin-bottom:20px">Calculate your eligibility.</p>
             <form id="salary-form">
-                <label style="color:var(--gold); display:block; margin-bottom:10px">Monthly Income (USD)</label>
-                <input type="number" id="salary" placeholder="e.g. 5000" required>
+                <input type="number" id="salary" placeholder="Monthly Income (USD)" required>
                 <button type="submit" class="btn-gold">Calculate Eligibility</button>
             </form>
             <div id="budget-result" style="margin-top:30px; padding:20px; border:1px solid #333; display:none; background:#111"></div>
@@ -200,34 +171,28 @@
 
     <div id="add-vehicle" class="section">
         <h2 class="sec-title">Add Vehicle to Fleet</h2>
-        
         <div id="add-login-req" class="form-box" style="text-align: center;">
             <h3 style="color:#888;">Restricted Access</h3>
             <p>Please authorize to access the fleet management system.</p>
             <button class="btn-gold" onclick="openLogin()">LOGIN TO SYSTEM</button>
         </div>
-
         <div id="add-form-area" style="display:none;">
             <div class="form-box">
                 <form id="add-car-form">
-                    
                     <div class="form-section-title">Vehicle Information</div>
                     <div class="form-grid-2">
                         <input type="text" id="c-brand" placeholder="Brand (e.g. Porsche)" required>
                         <input type="text" id="c-name" placeholder="Model Name (e.g. 911 GT3)" required>
                     </div>
                     <input type="number" id="c-price" placeholder="Price (USD)" required>
-                    
                     <div class="form-section-title">Description</div>
                     <textarea id="c-desc" rows="4" placeholder="Detailed vehicle description..." required></textarea>
-                    
                     <div class="form-section-title">Technical Specifications</div>
                     <div class="form-grid-3">
                         <input type="text" id="c-accel" placeholder="0-100 km/h (e.g. 3.2s)">
                         <input type="text" id="c-power" placeholder="Power (e.g. 518 HP)">
                         <input type="text" id="c-speed" placeholder="Top Speed (e.g. 296 km/h)">
                     </div>
-
                     <div class="form-section-title">Vehicle Gallery (Max 4 Images)</div>
                     <div class="form-grid-2">
                         <input type="url" id="c-img-1" placeholder="Image URL 1 (Cover)" required>
@@ -235,7 +200,6 @@
                         <input type="url" id="c-img-3" placeholder="Image URL 3">
                         <input type="url" id="c-img-4" placeholder="Image URL 4">
                     </div>
-
                     <button type="submit" class="btn-gold">Publish Vehicle</button>
                 </form>
             </div>
@@ -245,13 +209,13 @@
     <div id="auth-modal" class="modal">
         <div class="form-box" style="position: relative; width: 400px; border-color: #333;">
             <span style="position: absolute; top:15px; right:20px; color:#fff; cursor:pointer; font-size: 24px;" onclick="closeModal()">×</span>
-            <h3 style="color:var(--gold); text-align:center; margin-bottom: 30px; font-family: var(--font-serif); font-size: 2em;">Client Access</h3>
+            <h3 style="color:var(--gold); text-align:center; margin-bottom: 30px;">Client Access</h3>
             <form id="auth-form">
                 <input type="text" id="u-name" placeholder="Username" required>
                 <input type="password" id="u-pass" placeholder="Password" required>
                 <button type="submit" class="btn-gold" id="auth-submit">LOGIN</button>
             </form>
-            <p style="text-align:center; color:#666; cursor:pointer; margin-top:20px;" onclick="toggleAuth()">New? <span style="color:var(--gold)">Register Interest</span></p>
+            <p style="text-align:center; color:#666; cursor:pointer; margin-top:20px;" onclick="toggleAuth()">New? <span style="color:var(--gold)">Register</span></p>
         </div>
     </div>
 
@@ -261,17 +225,17 @@
     </div>
 
     <script>
-        // Dữ liệu mẫu (Khởi đầu)
+        // Dữ liệu mẫu
         const initialCars = [
-            { id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine designed for cornering.", imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg", "https://upload.wikimedia.org/wikipedia/commons/6/66/Bugatti_Chiron_Pur_Sport_IMG_3655.jpg"], specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} },
-            { id: "c2", brand: "Porsche", name: "911 GT3 RS", price: 223800, description: "Road-legal motorsport technology.", imageUrls: ["https://files.porsche.com/filestore/image/multimedia/none/992-gt3-rs-modelimage-sideshot/model/cfbb8ed3-1a15-11ed-80f5-005056bbdc38/porsche-model.png", "https://newsroom.porsche.com/.imaging/mte/porsche-newsroom/image_original/dam/pnr/2022/Products_NP/911-GT3-RS/gallery/P22_0436_a4_rgb.jpg/jcr:content/P22_0436_a4_rgb.jpg"], specs: {accel: "3.2s", power: "518 HP", speed: "296 km/h"} }
+            { id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine.", imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg"], specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} },
+            { id: "c2", brand: "Porsche", name: "911 GT3 RS", price: 223800, description: "Road-legal motorsport technology.", imageUrls: ["https://files.porsche.com/filestore/image/multimedia/none/992-gt3-rs-modelimage-sideshot/model/cfbb8ed3-1a15-11ed-80f5-005056bbdc38/porsche-model.png"], specs: {accel: "3.2s", power: "518 HP", speed: "296 km/h"} }
         ];
         
         let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
         let currentUser = localStorage.getItem('user');
         let isRegister = false;
 
-        // Chuyển Tab
+        // Chuyển trang
         function showSection(id) {
             document.querySelectorAll('.active-section').forEach(el => el.classList.remove('active-section'));
             document.querySelectorAll('.section, .hero').forEach(el => el.style.display = 'none');
@@ -280,7 +244,7 @@
             window.scrollTo(0,0);
         }
 
-        // Vẽ danh sách xe
+        // Vẽ lưới xe
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
@@ -289,7 +253,7 @@
             });
         }
 
-        // Mở trang chi tiết
+        // Mở chi tiết xe
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
@@ -300,7 +264,7 @@
         }
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
 
-        // Logic thêm xe
+        // Logic Thêm Xe
         document.getElementById('add-car-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const imgs = [document.getElementById('c-img-1').value, document.getElementById('c-img-2').value, document.getElementById('c-img-3').value, document.getElementById('c-img-4').value].filter(u => u.trim() !== '');
@@ -309,7 +273,7 @@
             alert("Vehicle published!"); renderGrid(); e.target.reset(); showSection('inventory');
         });
 
-        // Logic tính tiền
+        // Tính tiền
         document.getElementById('salary-form').addEventListener('submit', (e)=>{
             e.preventDefault(); const s=parseFloat(document.getElementById('salary').value);
             const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0];
@@ -317,18 +281,15 @@
             div.innerHTML = best ? `Based on your profile, we recommend the <strong style="color:var(--gold); font-size:1.2em">${best.name}</strong> ($${best.price.toLocaleString()}). <br><br> <a onclick="openDetail('${best.id}')" style="color:#fff; text-decoration:underline; cursor:pointer">View Details</a>` : `Please increase your budget to access our exclusive collection.`;
         });
 
-        // Kiểm tra Login
+        // Xử lý Login -> Ẩn/Hiện nút Add Car
         function checkLogin() {
             document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block';
             document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none';
-            // Ẩn/Hiện nút Add Car trên menu
             document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none';
-            // Ẩn/Hiện form
             document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block';
             document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none';
             if(currentUser) document.getElementById('user-display').innerText = currentUser;
         }
-        
         document.getElementById('auth-form').addEventListener('submit', (e) => { e.preventDefault(); const u=document.getElementById('u-name').value; if(isRegister){alert("Registered!"); toggleAuth();}else{currentUser=u; localStorage.setItem('user',u); checkLogin(); closeModal(); alert("Welcome back, "+u);} });
         function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
         function openLogin(){document.getElementById('auth-modal').style.display='flex';}
@@ -339,7 +300,3 @@
     </script>
 </body>
 </html>
-    </script>
-</body>
-</html>
-
