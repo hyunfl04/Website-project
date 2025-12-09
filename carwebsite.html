@@ -19,14 +19,19 @@
         
         body { margin: 0; background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
-        /* MENU TRONG SUỐT */
+        /* --- 1. MENU TRONG SUỐT (ĐÃ SỬA) --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 90px; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 50px;
-            /* Hiệu ứng trong suốt chuyển màu */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
-            transition: 0.3s;
+            /* Ban đầu trong suốt hoàn toàn để nhìn thấy video */
+            background: transparent; 
+            transition: background 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+        }
+        /* Class này sẽ được thêm vào bằng JS khi cuộn xuống */
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.9); /* Chuyển sang đen mờ khi cuộn */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         
         .logo { 
@@ -48,15 +53,17 @@
         }
         .auth-btn:hover { background: var(--gold); color: #000; }
 
-        /* HERO SECTION */
+        /* --- 2. HERO SECTION & VỊ TRÍ CHỮ (ĐÃ SỬA CĂN GIỮA) --- */
         .hero { 
             height: 100vh; position: relative; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center;
+            /* Căn giữa tuyệt đối cả chiều dọc và ngang */
+            justify-content: center; 
+            align-items: center;
             overflow: hidden; margin-top: 0;
             background: #000;
+            padding-top: 90px; /* Bù trừ chiều cao menu để nội dung chính thực sự ở giữa */
         }
         
-        /* VIDEO NỀN (ĐÃ CHỈNH) */
         .hero video { 
             position: absolute; top: 50%; left: 50%; 
             min-width: 100%; min-height: 100%; 
@@ -65,13 +72,13 @@
             z-index: 0; opacity: 1; object-fit: cover;
         }
         
-        /* Lớp phủ đen mờ để chữ dễ đọc hơn trên nền video */
         .video-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.4); z-index: 1;
         }
         
-        .hero-text { text-align: center; z-index: 10; margin-top: 50px; position: relative; }
+        /* Đã bỏ margin-top để căn giữa chuẩn hơn */
+        .hero-text { text-align: center; z-index: 10; position: relative; } 
         
         .hero-text h1 { 
             font-family: var(--font-serif); font-size: 6em; color: #fff; 
@@ -112,7 +119,7 @@
         .view-btn { width: 100%; padding: 12px; background: transparent; border: 1px solid #444; color: #fff; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 20px; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1px; }
         .view-btn:hover { border-color: var(--gold); color: var(--gold); }
 
-        /* FORM */
+        /* FORM ADD VEHICLE (CHUẨN MẪU) */
         .form-box { max-width: 800px; margin: 0 auto; border: 1px solid var(--gold); padding: 50px; background: #0a0a0a; }
         .form-section-title { 
             color: var(--gold); font-size: 1.1em; margin-bottom: 20px; 
@@ -149,7 +156,7 @@
 </head>
 <body>
 
-    <nav>
+    <nav id="main-nav">
         <div class="logo" onclick="showSection('hero')">X-CAR</div>
         <ul class="nav-links">
             <li><a onclick="showSection('hero')">Home</a></li>
@@ -189,7 +196,7 @@
     <div id="budget" class="section">
         <h2 class="sec-title">Financial Services</h2>
         <div class="form-box">
-            <p style="color:#888; margin-bottom:20px">Calculate your eligibility.</p>
+            <p style="color:#888; margin-bottom:20px">Calculate your eligibility for our exclusive collection.</p>
             <form id="salary-form">
                 <label style="color:var(--gold); display:block; margin-bottom:10px">Monthly Income (USD)</label>
                 <input type="number" id="salary" placeholder="e.g. 5000" required>
@@ -201,13 +208,11 @@
 
     <div id="add-vehicle" class="section">
         <h2 class="sec-title">Add Vehicle to Fleet</h2>
-        
         <div id="add-login-req" class="form-box" style="text-align: center;">
             <h3 style="color:#888;">Restricted Access</h3>
             <p>Please authorize to access the fleet management system.</p>
             <button class="btn-gold" onclick="openLogin()">LOGIN TO SYSTEM</button>
         </div>
-
         <div id="add-form-area" style="display:none;">
             <div class="form-box">
                 <form id="add-car-form">
@@ -217,17 +222,14 @@
                         <input type="text" id="c-name" placeholder="Model Name (e.g. 911 GT3)" required>
                     </div>
                     <input type="number" id="c-price" placeholder="Price (USD)" required>
-                    
                     <div class="form-section-title">Description</div>
                     <textarea id="c-desc" rows="4" placeholder="Detailed description..." required></textarea>
-                    
                     <div class="form-section-title">Technical Specifications</div>
                     <div class="form-grid-3">
-                        <input type="text" id="c-accel" placeholder="0-100 km/h">
-                        <input type="text" id="c-power" placeholder="Power">
-                        <input type="text" id="c-speed" placeholder="Top Speed">
+                        <input type="text" id="c-accel" placeholder="0-100 km/h (e.g. 3.2s)">
+                        <input type="text" id="c-power" placeholder="Power (e.g. 518 HP)">
+                        <input type="text" id="c-speed" placeholder="Top Speed (e.g. 296 km/h)">
                     </div>
-
                     <div class="form-section-title">Vehicle Gallery (Max 4 Images)</div>
                     <div class="form-grid-2">
                         <input type="url" id="c-img-1" placeholder="Image URL 1 (Cover)" required>
@@ -235,7 +237,6 @@
                         <input type="url" id="c-img-3" placeholder="Image URL 3">
                         <input type="url" id="c-img-4" placeholder="Image URL 4">
                     </div>
-
                     <button type="submit" class="btn-gold">Publish Vehicle</button>
                 </form>
             </div>
@@ -261,6 +262,17 @@
     </div>
 
     <script>
+        // --- 1. XỬ LÝ MENU TRONG SUỐT KHI CUỘN ---
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50) { // Nếu cuộn xuống quá 50px
+                nav.classList.add('scrolled'); // Thêm class để làm tối menu
+            } else {
+                nav.classList.remove('scrolled'); // Trở lại trong suốt khi ở trên cùng
+            }
+        });
+
+        // --- 2. CÁC LOGIC KHÁC (GIỮ NGUYÊN) ---
         const initialCars = [
             { id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine designed for cornering.", imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg"], specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} },
             { id: "c2", brand: "Porsche", name: "911 GT3 RS", price: 223800, description: "Road-legal motorsport technology.", imageUrls: ["https://files.porsche.com/filestore/image/multimedia/none/992-gt3-rs-modelimage-sideshot/model/cfbb8ed3-1a15-11ed-80f5-005056bbdc38/porsche-model.png"], specs: {accel: "3.2s", power: "518 HP", speed: "296 km/h"} }
