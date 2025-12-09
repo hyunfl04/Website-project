@@ -1,1 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-CAR | Luxury Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- GỘP CSS VÀO ĐÂY --- */
+        :root {
+            --bg-color: #000000;
+            --card-bg: #111;
+            --text-white: #ffffff;
+            --gold: #D4AF37;
+            --font-main: 'Montserrat', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+        }
+        body { margin: 0; background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
+        
+        /* MENU */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 40px; background: rgba(0,0,0,0.8); border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-sizing: border-box; backdrop-filter: blur(10px);
+        }
+        .logo { font-family: var(--font-serif); font-size: 1.8em; color: var(--gold); letter-spacing: 2px; cursor: pointer; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links li a { color: #eee; text-decoration: none; text-transform: uppercase; font-size: 0.9em; transition: 0.3s; cursor: pointer; font-weight: 500; }
+        .nav-links li a:hover { color: var(--gold); }
+        .auth-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 20px; cursor: pointer; font-weight: bold; }
 
+        /* HERO SECTION */
+        .hero { 
+            height: 100vh; position: relative; display: flex; flex-direction: column; 
+            align-items: center; justify-content: flex-start; 
+            padding-top: 250px; overflow: hidden; margin-top: 0; box-sizing: border-box;
+        }
+        .hero video { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; z-index: -1; opacity: 0.6; }
+        .hero-text { text-align: center; z-index: 10; }
+        .hero-text h1 { font-family: var(--font-serif); font-size: 6em; color: #fff; text-transform: uppercase; margin: 0; letter-spacing: 5px; line-height: 1; font-weight: 700; }
+        .hero-text p { color: var(--gold); font-family: var(--font-main); font-size: 1.2em; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; margin-top: 15px; text-shadow: 1px 1px 10px rgba(0,0,0,0.8); }
+        .explore-btn { margin-top: 30px; padding: 12px 30px; background-color: var(--gold); color: #000; border: none; font-weight: bold; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; font-size: 0.9em; }
+        .explore-btn:hover { background-color: #b59025; }
+        
+        /* SECTIONS */
+        .section { padding: 100px 40px; display: none; min-height: 100vh; }
+        .active-section { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
+        .sec-title { font-family: var(--font-serif); font-size: 3em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 40px; padding-bottom: 10px; }
+
+        /* GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+        .card { background: var(--card-bg); border: 1px solid #222; transition: 0.4s; position: relative; }
+        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .card-img { height: 220px; width: 100%; object-fit: cover; background: #000; }
+        .card-body { padding: 20px; }
+        .card-brand { color: var(--gold); font-size: 0.8em; text-transform: uppercase; }
+        .card-name { font-size: 1.5em; margin: 5px 0 10px; font-weight: 600; }
+        .view-btn { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .view-btn:hover { background: var(--gold); color: #000; }
+
+        /* FORMS */
+        .form-box { max-width: 700px; margin: 0 auto; border: 1px solid var(--gold); padding: 40px; background: #111; }
+        .form-section-title { color: var(--gold); font-size: 1.2em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #333; text-transform: uppercase; letter-spacing: 1px; }
+        input, textarea { width: 100%; background: #000; border: 1px solid #333; padding: 15px; margin-bottom: 15px; color: #fff; box-sizing: border-box; font-family: var(--font-main); }
+        input:focus, textarea:focus { border-color: var(--gold); outline: none; }
+        .btn-gold { width: 100%; background: var(--gold); color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; font-size: 1.1em; text-transform: uppercase; }
+        .btn-gold:hover { background-color: #b59025; }
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+        /* MODAL & OVERLAY */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
+        .close-overlay { position: fixed; top:20px; right:40px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; }
+        
+        /* DETAIL PAGE */
+        .detail-flex { display: flex; min-height: 90vh; border-bottom: 1px solid #333; margin-top: 80px; }
+        .detail-info { width: 40%; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .detail-img { width: 60%; background: #111; }
+        .detail-img img { width: 100%; height: 100%; object-fit: cover; }
+        .spec-big { font-size: 4em; font-weight: 300; line-height: 1; margin-top: 20px; color: #fff; }
+        .spec-label { color: #888; font-size: 0.9em; margin-bottom: 30px; display: block; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 40px; }
+        .gallery-box { height: 200px; border: 1px solid #333; overflow: hidden; }
+        .gallery-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .gallery-box img:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="showSection('hero')">X-CAR</div>
+        <ul class="nav-links">
+            <li><a onclick="showSection('hero')">Home</a></li>
+            <li><a onclick="showSection('inventory')">Discover Models</a></li>
+            <li><a onclick="showSection('budget')">Budget Finder</a></li>
+            <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
+        </ul>
+        <div id="auth-ui">
+            <button class="auth-btn" onclick="openLogin()">LOGIN</button>
+        </div>
+        <div id="user-ui" style="display:none; color: var(--gold); font-weight: bold;">
+            <span id="user-display" style="margin-right: 15px;">User</span>
+            <button class="auth-btn" onclick="logout()">LOGOUT</button>
+        </div>
+    </nav>
+
+    <div id="hero" class="hero active-section">
+        <video autoplay muted loop playsinline>
+            <source src="https://videos.pexels.com/video-files/3859032/3859032-uhd_2560_1440_30fps.mp4" type="video/mp4">
+        </video>
+        <div class="hero-text">
+            <h1>THE COLLECTION</h1>
+            <p>Pinnacle of Automotive Engineering</p>
+            <button class="explore-btn" onclick="showSection('inventory')">EXPLORE MODELS</button>
+        </div>
+    </div>
+
+    <div id="inventory" class="section">
+        <h2 class="sec-title">All Models</h2>
+        <div id="car-grid" class="grid"></div>
+    </div>
+
+    <div id="budget" class="section">
+        <h2 class="sec-title">Budget Finder</h2>
+        <div class="form-box">
+            <form id="salary-form">
+                <input type="number" id="salary" placeholder="Monthly Income (USD)" required>
+                <button type="submit" class="btn-gold">Calculate</button>
+            </form>
+            <div id="budget-result" style="margin-top:20px; padding:15px; border:1px solid #333; display:none;"></div>
+        </div>
+    </div>
+
+    <div id="add-vehicle" class="section">
+        <h2 class="sec-title">Add Vehicle to Fleet</h2>
+        <div id="add-login-req" class="form-box" style="text-align: center;">
+            <h3 style="color:#888;">Authorized Access Only</h3>
+            <p>Please login to access the vehicle submission portal.</p>
+            <button class="btn-gold" onclick="openLogin()">LOGIN NOW</button>
+        </div>
+        <div id="add-form-area" style="display:none;">
+            <div class="form-box">
+                <form id="add-car-form">
+                    <div class="form-section-title">Vehicle Information</div>
+                    <div class="form-grid-2">
+                        <input type="text" id="c-brand" placeholder="Brand (e.g. Porsche)" required>
+                        <input type="text" id="c-name" placeholder="Model Name (e.g. 911 GT3)" required>
+                    </div>
+                    <input type="number" id="c-price" placeholder="Price (USD)" required>
+                    <div class="form-section-title" style="margin-top: 30px;">Description</div>
+                    <textarea id="c-desc" rows="5" placeholder="Detailed vehicle description..." required></textarea>
+                    <div class="form-section-title" style="margin-top: 30px;">Technical Specifications</div>
+                    <div class="form-grid-3">
+                        <input type="text" id="c-accel" placeholder="0-100 km/h (e.g. 3.2s)">
+                        <input type="text" id="c-power" placeholder="Power (e.g. 518 HP)">
+                        <input type="text" id="c-speed" placeholder="Top Speed (e.g. 296 km/h)">
+                    </div>
+                    <div class="form-section-title" style="margin-top: 30px;">Vehicle Gallery (Max 4 Images)</div>
+                    <div class="form-grid-2">
+                        <input type="url" id="c-img-1" placeholder="Image URL 1 (Cover)" required>
+                        <input type="url" id="c-img-2" placeholder="Image URL 2">
+                        <input type="url" id="c-img-3" placeholder="Image URL 3">
+                        <input type="url" id="c-img-4" placeholder="Image URL 4">
+                    </div>
+                    <button type="submit" class="btn-gold" style="margin-top: 30px;">Publish Vehicle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="modal">
+        <div class="form-box" style="position: relative;">
+            <span style="position: absolute; top:10px; right:20px; color:#fff; cursor:pointer; font-size: 20px;" onclick="closeModal()">✕</span>
+            <h3 style="color:var(--gold); text-align:center" id="auth-title">Login</h3>
+            <form id="auth-form">
+                <input type="text" id="u-name" placeholder="Username" required>
+                <input type="password" id="u-pass" placeholder="Password" required>
+                <button type="submit" class="btn-gold" id="auth-submit">LOGIN</button>
+            </form>
+            <p style="text-align:center; color:#888; cursor:pointer; margin-top:15px" onclick="toggleAuth()">New? Register</p>
+        </div>
+    </div>
+
+    <div id="product-overlay" class="overlay">
+        <div class="close-overlay" onclick="closeDetail()">&times;</div>
+        <div id="detail-content"></div>
+    </div>
+
+    <script>
+        // --- DATA MẶC ĐỊNH (Vì ko có file json) ---
+        const initialCars = [
+            {
+                id: "c_bugatti", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, 
+                description: "The ultimate driving machine designed for cornering.", 
+                imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg"],
+                specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"}
+            },
+            {
+                id: "c_porsche", brand: "Porsche", name: "911 GT3 RS", price: 223800, 
+                description: "Road-legal motorsport technology.", 
+                imageUrls: ["https://files.porsche.com/filestore/image/multimedia/none/992-gt3-rs-modelimage-sideshot/model/cfbb8ed3-1a15-11ed-80f5-005056bbdc38/porsche-model.png"],
+                specs: {accel: "3.2s", power: "518 HP", speed: "296 km/h"}
+            }
+        ];
+
+        // Lấy dữ liệu từ LocalStorage hoặc dùng mặc định
+        let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
+        let currentUser = localStorage.getItem('user');
+        let isRegister = false;
+
+        // --- NAVIGATION ---
+        function showSection(id) {
+            document.querySelectorAll('.active-section').forEach(el => el.classList.remove('active-section'));
+            document.querySelectorAll('.section, .hero').forEach(el => el.style.display = 'none');
+            
+            if(id === 'hero') document.getElementById('hero').style.display = 'flex';
+            else {
+                document.getElementById(id).style.display = 'block';
+                document.getElementById(id).classList.add('active-section');
+            }
+            window.scrollTo(0,0);
+        }
+
+        // --- RENDER GRID ---
+        function renderGrid() {
+            const container = document.getElementById('car-grid');
+            container.innerHTML = '';
+            cars.forEach(item => {
+                const cover = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : 'https://via.placeholder.com/400';
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${cover}" class="card-img" onerror="this.src='https://via.placeholder.com/400'">
+                        <div class="card-body">
+                            <div class="card-brand">${item.brand || 'Luxury'}</div>
+                            <div class="card-name">${item.name}</div>
+                            <div style="color:var(--gold); font-weight:bold">$${item.price.toLocaleString()}</div>
+                            <button class="view-btn" onclick="openDetail('${item.id}')">View Product Page »</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // --- DETAIL PAGE ---
+        window.openDetail = (id) => {
+            const c = cars.find(x => x.id === id);
+            if(!c) return;
+            const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
+            
+            const images = c.imageUrls || [];
+            let galleryHTML = '';
+            if (images.length > 0) {
+                images.forEach(imgUrl => { if(imgUrl) galleryHTML += `<div class="gallery-box"><img src="${imgUrl}"></div>`; });
+            } else { galleryHTML = '<p style="color:#888;">No images.</p>'; }
+
+            const coverImage = images.length > 0 ? images[0] : 'https://via.placeholder.com/800';
+
+            document.getElementById('detail-content').innerHTML = `
+                <div class="detail-flex">
+                    <div class="detail-info">
+                        <div style="font-family:var(--font-serif); color:var(--gold); font-size:3em; margin-bottom:20px">${c.name}</div>
+                        <div class="spec-big">${s.accel}</div><span class="spec-label">0 - 100 km/h</span>
+                        <div class="spec-big">${s.power}</div><span class="spec-label">Power</span>
+                        <div class="spec-big">${s.speed}</div><span class="spec-label">Top Speed</span>
+                        <p style="margin-top:30px; line-height:1.6; color:#ccc">${c.description}</p>
+                        <h2 style="color:var(--gold); margin-top:20px">$${c.price.toLocaleString()}</h2>
+                    </div>
+                    <div class="detail-img"><img src="${coverImage}"></div>
+                </div>
+                <div style="padding:60px">
+                    <h2 class="sec-title">Vehicle Gallery</h2>
+                    <div class="gallery-grid">${galleryHTML}</div>
+                </div>
+            `;
+            document.getElementById('product-overlay').style.display = 'block';
+        }
+        function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
+
+        // --- ADD CAR (LOGIC JS THAY PYTHON) ---
+        document.getElementById('add-car-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const imgs = [
+                document.getElementById('c-img-1').value,
+                document.getElementById('c-img-2').value,
+                document.getElementById('c-img-3').value,
+                document.getElementById('c-img-4').value
+            ].filter(u => u.trim() !== '');
+
+            const newCar = {
+                id: 'c_' + Date.now(),
+                brand: document.getElementById('c-brand').value,
+                name: document.getElementById('c-name').value,
+                price: parseFloat(document.getElementById('c-price').value),
+                description: document.getElementById('c-desc').value,
+                imageUrls: imgs,
+                specs: {
+                    accel: document.getElementById('c-accel').value || "TBD",
+                    power: document.getElementById('c-power').value || "TBD",
+                    speed: document.getElementById('c-speed').value || "TBD"
+                }
+            };
+
+            // Lưu vào mảng và LocalStorage
+            cars.unshift(newCar);
+            localStorage.setItem('cars', JSON.stringify(cars));
+            
+            alert("Vehicle published successfully!");
+            renderGrid();
+            e.target.reset();
+            showSection('inventory');
+        });
+
+        // --- BUDGET FINDER ---
+        document.getElementById('salary-form').addEventListener('submit', (e)=>{
+            e.preventDefault(); const s=parseFloat(document.getElementById('salary').value);
+            const r=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0] || cars[0];
+            const d=document.getElementById('budget-result'); d.style.display='block';
+            d.innerHTML=`Recommended: <strong style="color:var(--gold)">${r.name}</strong>`;
+        });
+
+        // --- AUTH (GIẢ LẬP) ---
+        function checkLogin() {
+            document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block';
+            document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none';
+            document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none';
+            document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block';
+            document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none';
+            if(currentUser) document.getElementById('user-display').innerText = currentUser;
+        }
+
+        document.getElementById('auth-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('u-name').value;
+            const p = document.getElementById('u-pass').value;
+            
+            // Logic đăng nhập đơn giản (Ai đăng nhập cũng đc)
+            if(isRegister) {
+                alert("Registered! You can login now.");
+                toggleAuth();
+            } else {
+                // Chấp nhận mọi user nếu pass đúng (ví dụ giả lập) hoặc cứ cho vào
+                currentUser = u;
+                localStorage.setItem('user', u);
+                checkLogin();
+                closeModal();
+            }
+        });
+
+        function logout() { localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero'); }
+        function openLogin() { document.getElementById('auth-modal').style.display='flex'; }
+        function closeModal() { document.getElementById('auth-modal').style.display='none'; }
+        function toggleAuth() { isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN'; document.getElementById('auth-title').innerText=isRegister?'Register':'Login';}
+
+        // INIT
+        renderGrid(); checkLogin();
+    </script>
+</body>
+</html>
