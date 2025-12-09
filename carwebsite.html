@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CẤU HÌNH CHUNG --- */
+        /* --- CẤU HÌNH CƠ BẢN --- */
         :root {
             --bg-color: #000000;
             --text-white: #ffffff;
@@ -19,15 +19,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
-        /* --- 1. MENU TRONG SUỐT (FIXED) --- */
+        /* --- 1. MENU TRONG SUỐT (NẰM ĐÈ LÊN TRÊN) --- */
         nav {
-            position: fixed; /* Ghim chặt trên cùng */
+            position: fixed; /* Ghim cứng, không chiếm diện tích */
             top: 0; left: 0; width: 100%; height: 90px; 
-            z-index: 9999; /* Luôn nằm trên cùng */
+            z-index: 9999; /* Luôn nổi trên cùng */
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 50px;
-            
-            /* HIỆU ỨNG TRONG SUỐT (Gradient đen mờ dần xuống trong suốt) */
+            /* Gradient đen mờ nhẹ ở trên để dễ đọc menu, dưới trong suốt */
             background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
         }
         
@@ -39,8 +38,8 @@
         .nav-links { display: flex; gap: 40px; list-style: none; }
         .nav-links li a { 
             color: #fff; text-decoration: none; text-transform: uppercase; 
-            font-size: 0.85em; font-weight: 500; letter-spacing: 1px; transition: 0.3s;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Bóng chữ để dễ đọc trên nền video */
+            font-size: 0.85em; font-weight: 600; letter-spacing: 1px; transition: 0.3s;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
         .nav-links li a:hover { color: var(--gold); }
         
@@ -53,45 +52,46 @@
 
         /* --- 2. HERO SECTION (CĂN GIỮA TUYỆT ĐỐI) --- */
         .hero { 
-            height: 100vh; /* Chiều cao bằng đúng màn hình */
+            height: 100vh; /* Full màn hình */
             width: 100%;
             position: relative; 
+            /* CÔNG THỨC CĂN GIỮA CHUẨN KHÔNG CẦN CHỈNH */
             display: flex; 
-            justify-content: center; /* Căn giữa NGANG */
-            align-items: center;     /* Căn giữa DỌC */
-            overflow: hidden;
+            flex-direction: column;
+            justify-content: center; /* Căn giữa chiều dọc */
+            align-items: center;     /* Căn giữa chiều ngang */
+            padding: 0; /* XÓA SẠCH PADDING ĐỂ KHÔNG BỊ LỆCH */
         }
         
         /* VIDEO NỀN */
         .hero video { 
-            position: absolute; top: 50%; left: 50%; 
-            min-width: 100%; min-height: 100%; 
-            width: auto; height: auto; 
-            transform: translate(-50%, -50%); 
-            z-index: -2; object-fit: cover;
+            position: absolute; top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            object-fit: cover; /* Phủ kín màn hình */
+            z-index: -2;
         }
         
-        /* LỚP PHỦ ĐEN MỜ (Giúp chữ nổi bật hơn) */
+        /* Lớp phủ đen mờ 40% để chữ nổi bật */
         .overlay-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.4); 
             z-index: -1;
         }
         
-        /* NỘI DUNG CHÍNH (THE COLLECTION) */
+        /* NỘI DUNG CHÍNH */
         .hero-text { 
             text-align: center; 
             z-index: 10; 
-            position: relative; 
-            /* Không dùng margin-top để đảm bảo nó nằm chính giữa */
+            /* Đảm bảo không bị margin lạ đẩy đi */
+            margin: 0; transform: translateY(0);
         }
         
         .hero-text h1 { 
             font-family: var(--font-serif); 
-            font-size: 6vw; /* Chữ to tự động theo màn hình */
+            font-size: 5.5em; /* Kích thước chữ to */
             color: #fff; 
             text-transform: uppercase; margin: 0; 
-            letter-spacing: 0.15em; line-height: 1.1; 
+            letter-spacing: 15px; line-height: 1; 
             font-weight: 400;
             text-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
@@ -102,14 +102,14 @@
             font-size: 1.2em; 
             font-weight: 400; 
             text-transform: uppercase; 
-            letter-spacing: 0.3em; 
-            margin-top: 20px; 
-            text-shadow: 0 2px 10px rgba(0,0,0,1);
+            letter-spacing: 5px; 
+            margin-top: 25px; 
+            text-shadow: 0 5px 15px rgba(0,0,0,1);
         }
         
         .explore-btn { 
             margin-top: 50px; 
-            padding: 15px 40px; 
+            padding: 15px 45px; 
             background-color: var(--gold); 
             color: #000; border: none; font-weight: 700; 
             letter-spacing: 2px; text-transform: uppercase; 
@@ -122,7 +122,6 @@
         .active-section { display: block; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
         
-        /* GRID XE */
         .sec-title { font-family: var(--font-serif); font-size: 3em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 50px; text-align: center; padding-bottom: 20px;}
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
         .card { background: #111; border: 1px solid #222; transition: 0.4s; }
@@ -136,10 +135,13 @@
 
         /* FORM */
         .form-box { max-width: 700px; margin: 0 auto; border: 1px solid var(--gold); padding: 50px; background: #0a0a0a; }
+        .form-section-title { color: var(--gold); font-size: 1.1em; margin-bottom: 20px; padding-bottom: 5px; border-bottom: 1px solid #333; text-transform: uppercase; letter-spacing: 1px; margin-top: 30px; }
         input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; color: #fff; margin-bottom: 15px; }
         .btn-gold { width: 100%; background: var(--gold); padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 
-        /* POPUP */
+        /* POPUP & DETAIL */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
         .close-overlay { position: fixed; top:30px; right:50px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; }
@@ -147,6 +149,12 @@
         .detail-info { width: 40%; padding: 80px; }
         .detail-img { width: 60%; }
         .detail-img img { width: 100%; height: 100%; object-fit: cover; }
+        .spec-big { font-size: 4.5em; font-weight: 300; line-height: 1; margin-top: 20px; color: #fff; }
+        .spec-label { color: #888; font-size: 0.9em; margin-bottom: 30px; display: block; border-bottom: 1px solid #333; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;}
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 60px 80px; }
+        .gallery-box { height: 220px; border: 1px solid #333; overflow: hidden; }
+        .gallery-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; opacity: 0.8; }
+        .gallery-box img:hover { transform: scale(1.1); opacity: 1; }
     </style>
 </head>
 <body>
@@ -169,12 +177,12 @@
     </nav>
 
     <div id="hero" class="hero active-section">
+        
         <video autoplay muted loop playsinline>
             <source src="intro.mp4" type="video/mp4">
         </video>
-        <div class="overlay-bg"></div>
         
-        <div class="hero-text">
+        <div class="overlay-bg"></div> <div class="hero-text">
             <h1>THE COLLECTION</h1>
             <p>Pinnacle of Automotive Engineering</p>
             <button class="explore-btn" onclick="showSection('inventory')">EXPLORE MODELS</button>
@@ -187,37 +195,48 @@
     </div>
 
     <div id="budget" class="section">
-        <h2 class="sec-title">Budget Finder</h2>
+        <h2 class="sec-title">Financial Services</h2>
         <div class="form-box">
+            <p style="color:#888; margin-bottom:20px">Calculate your eligibility.</p>
             <form id="salary-form">
                 <input type="number" id="salary" placeholder="Monthly Income (USD)" required>
-                <button type="submit" class="btn-gold">Calculate</button>
+                <button type="submit" class="btn-gold">Calculate Eligibility</button>
             </form>
             <div id="budget-result" style="margin-top:30px; padding:20px; border:1px solid #333; display:none;"></div>
         </div>
     </div>
 
     <div id="add-vehicle" class="section">
-        <h2 class="sec-title">Add Vehicle</h2>
+        <h2 class="sec-title">Add Vehicle to Fleet</h2>
         <div id="add-login-req" class="form-box" style="text-align: center;">
             <h3 style="color:#888;">Restricted Access</h3>
-            <button class="btn-gold" onclick="openLogin()">LOGIN NOW</button>
+            <button class="btn-gold" onclick="openLogin()">LOGIN TO SYSTEM</button>
         </div>
         <div id="add-form-area" style="display:none;">
             <div class="form-box">
                 <form id="add-car-form">
-                    <input type="text" id="c-brand" placeholder="Brand" required>
-                    <input type="text" id="c-name" placeholder="Model Name" required>
+                    <div class="form-section-title">Vehicle Information</div>
+                    <div class="form-grid-2">
+                        <input type="text" id="c-brand" placeholder="Brand" required>
+                        <input type="text" id="c-name" placeholder="Model Name" required>
+                    </div>
                     <input type="number" id="c-price" placeholder="Price (USD)" required>
-                    <textarea id="c-desc" rows="4" placeholder="Description" required></textarea>
-                    <input type="text" id="c-accel" placeholder="0-100 km/h">
-                    <input type="text" id="c-power" placeholder="Power">
-                    <input type="text" id="c-speed" placeholder="Top Speed">
-                    <input type="url" id="c-img-1" placeholder="Image URL (Cover)" required>
-                    <input type="url" id="c-img-2" placeholder="Image URL 2">
-                    <input type="url" id="c-img-3" placeholder="Image URL 3">
-                    <input type="url" id="c-img-4" placeholder="Image URL 4">
-                    <button type="submit" class="btn-gold">Publish</button>
+                    <div class="form-section-title">Description</div>
+                    <textarea id="c-desc" rows="4" placeholder="Detailed description..." required></textarea>
+                    <div class="form-section-title">Technical Specifications</div>
+                    <div class="form-grid-3">
+                        <input type="text" id="c-accel" placeholder="0-100 km/h">
+                        <input type="text" id="c-power" placeholder="Power">
+                        <input type="text" id="c-speed" placeholder="Top Speed">
+                    </div>
+                    <div class="form-section-title">Vehicle Gallery</div>
+                    <div class="form-grid-2">
+                        <input type="url" id="c-img-1" placeholder="Image URL 1 (Cover)" required>
+                        <input type="url" id="c-img-2" placeholder="Image URL 2">
+                        <input type="url" id="c-img-3" placeholder="Image URL 3">
+                        <input type="url" id="c-img-4" placeholder="Image URL 4">
+                    </div>
+                    <button type="submit" class="btn-gold">Publish Vehicle</button>
                 </form>
             </div>
         </div>
