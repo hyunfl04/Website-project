@@ -3,138 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X-CAR | The Collection</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>X-CAR | Luxury Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= CẤU HÌNH CHUNG ================= */
+        /* --- CẤU HÌNH CHUNG --- */
         :root {
             --bg-color: #000000;
             --text-white: #ffffff;
-            --gold: #D4AF37; /* VÀNG GOLD CHUẨN HÌNH MẪU */
-            /* Font không chân cho văn bản thường */
-            --font-main: 'Montserrat', sans-serif; 
-            /* Font CÓ CHÂN SANG TRỌNG cho tiêu đề lớn */
-            --font-serif: 'Playfair Display', serif; 
+            --gold: #D4AF37;
+            --font-main: 'Montserrat', sans-serif;
+            --font-serif: 'Playfair Display', serif;
         }
         
-        body { margin: 0; background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
-        /* --- 1. MENU THANH NGANG (NỀN ĐEN GIỐNG HÌNH) --- */
+        /* --- 1. MENU TRONG SUỐT (FIXED) --- */
         nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: 90px; z-index: 1000;
+            position: fixed; /* Ghim chặt trên cùng */
+            top: 0; left: 0; width: 100%; height: 90px; 
+            z-index: 9999; /* Luôn nằm trên cùng */
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 50px;
-            background: #000000; /* NỀN ĐEN TUYỀN */
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            box-sizing: border-box;
+            
+            /* HIỆU ỨNG TRONG SUỐT (Gradient đen mờ dần xuống trong suốt) */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
         }
         
-        /* LOGO X-CAR: Font có chân, màu vàng */
         .logo { 
             font-family: var(--font-serif); font-size: 2em; color: var(--gold); 
-            letter-spacing: 2px; cursor: pointer; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; font-weight: bold; cursor: pointer;
         }
 
-        .nav-links { display: flex; gap: 40px; list-style: none; margin:0; padding:0; }
-        /* Link menu: Font không chân, màu trắng */
+        .nav-links { display: flex; gap: 40px; list-style: none; }
         .nav-links li a { 
-            color: #ffffff; text-decoration: none; text-transform: uppercase; 
-            font-size: 0.9em; transition: 0.3s; cursor: pointer; font-weight: 500; letter-spacing: 1px;
+            color: #fff; text-decoration: none; text-transform: uppercase; 
+            font-size: 0.85em; font-weight: 500; letter-spacing: 1px; transition: 0.3s;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Bóng chữ để dễ đọc trên nền video */
         }
         .nav-links li a:hover { color: var(--gold); }
         
         .auth-btn { 
             background: transparent; border: 1px solid var(--gold); color: var(--gold); 
-            padding: 10px 30px; cursor: pointer; font-weight: 600; 
-            text-transform: uppercase; font-size: 0.85em; letter-spacing: 1px; transition: 0.3s;
+            padding: 10px 25px; font-weight: bold; text-transform: uppercase; 
+            font-size: 0.8em; letter-spacing: 1px; cursor: pointer; transition: 0.3s;
         }
         .auth-btn:hover { background: var(--gold); color: #000; }
 
-        /* --- 2. PHẦN HERO CHÍNH (CĂN GIỮA TUYỆT ĐỐI) --- */
+        /* --- 2. HERO SECTION (CĂN GIỮA TUYỆT ĐỐI) --- */
         .hero { 
             height: 100vh; /* Chiều cao bằng đúng màn hình */
-            position: relative; display: flex; flex-direction: column; 
-            /* Căn giữa dọc và ngang chuẩn xác */
-            justify-content: center; 
-            align-items: center;
-            overflow: hidden; background: #000;
-            padding-top: 0; /* Bỏ padding thừa để căn giữa chuẩn */
+            width: 100%;
+            position: relative; 
+            display: flex; 
+            justify-content: center; /* Căn giữa NGANG */
+            align-items: center;     /* Căn giữa DỌC */
+            overflow: hidden;
         }
         
+        /* VIDEO NỀN */
         .hero video { 
             position: absolute; top: 50%; left: 50%; 
             min-width: 100%; min-height: 100%; 
             width: auto; height: auto; 
             transform: translate(-50%, -50%); 
-            z-index: 0; opacity: 0.7; object-fit: cover;
+            z-index: -2; object-fit: cover;
         }
         
-        .hero-text { text-align: center; z-index: 10; position: relative; }
+        /* LỚP PHỦ ĐEN MỜ (Giúp chữ nổi bật hơn) */
+        .overlay-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); 
+            z-index: -1;
+        }
         
-        /* CHỮ "THE COLLECTION": Font có chân, To, Trắng */
+        /* NỘI DUNG CHÍNH (THE COLLECTION) */
+        .hero-text { 
+            text-align: center; 
+            z-index: 10; 
+            position: relative; 
+            /* Không dùng margin-top để đảm bảo nó nằm chính giữa */
+        }
+        
         .hero-text h1 { 
-            font-family: var(--font-serif); /* DÙNG FONT SANG TRỌNG */
-            font-size: 6.5em; /* Kích thước lớn */
-            color: #ffffff; 
+            font-family: var(--font-serif); 
+            font-size: 6vw; /* Chữ to tự động theo màn hình */
+            color: #fff; 
             text-transform: uppercase; margin: 0; 
-            letter-spacing: 12px; /* Khoảng cách chữ rộng */
-            line-height: 1; font-weight: 700; 
+            letter-spacing: 0.15em; line-height: 1.1; 
+            font-weight: 400;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
         
-        /* CHỮ PHỤ "PINNACLE...": Font không chân, Nhỏ, Vàng */
         .hero-text p { 
             color: var(--gold); 
-            font-family: var(--font-main); /* Dùng font thường */
+            font-family: var(--font-main); 
             font-size: 1.2em; 
-            font-weight: 500; text-transform: uppercase; 
-            letter-spacing: 6px; /* Khoảng cách chữ rất rộng */
-            margin-top: 25px; margin-bottom: 0;
+            font-weight: 400; 
+            text-transform: uppercase; 
+            letter-spacing: 0.3em; 
+            margin-top: 20px; 
+            text-shadow: 0 2px 10px rgba(0,0,0,1);
         }
         
-        /* NÚT BẤM: Nền vàng, chữ đen */
         .explore-btn { 
-            margin-top: 50px; padding: 18px 50px; background-color: var(--gold); 
-            color: #000; border: none; font-weight: 700; letter-spacing: 3px; 
-            cursor: pointer; text-transform: uppercase; font-size: 0.9em; transition: 0.3s;
-            font-family: var(--font-main);
+            margin-top: 50px; 
+            padding: 15px 40px; 
+            background-color: var(--gold); 
+            color: #000; border: none; font-weight: 700; 
+            letter-spacing: 2px; text-transform: uppercase; 
+            font-size: 0.9em; cursor: pointer; transition: 0.3s;
         }
         .explore-btn:hover { background-color: #fff; transform: translateY(-3px); }
-        
-        /* --- CÁC PHẦN CÒN LẠI (ẨN ĐI) --- */
-        .section { padding: 100px 50px; display: none; min-height: 100vh; background: #000;}
+
+        /* --- 3. CÁC PHẦN KHÁC (ẨN/HIỆN) --- */
+        .section { padding: 100px 50px; display: none; min-height: 100vh; background: #000; animation: fadeIn 0.5s; }
         .active-section { display: block; }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
+        
+        /* GRID XE */
+        .sec-title { font-family: var(--font-serif); font-size: 3em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 50px; text-align: center; padding-bottom: 20px;}
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
+        .card { background: #111; border: 1px solid #222; transition: 0.4s; }
+        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .card-img { height: 240px; width: 100%; object-fit: cover; }
+        .card-body { padding: 25px; }
+        .card-name { font-size: 1.5em; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .card-price { color: var(--gold); font-size: 1.2em; font-weight: bold; }
+        .view-btn { width: 100%; padding: 12px; background: transparent; border: 1px solid #444; color: #fff; margin-top: 15px; cursor: pointer; }
+        .view-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* FORM */
+        .form-box { max-width: 700px; margin: 0 auto; border: 1px solid var(--gold); padding: 50px; background: #0a0a0a; }
+        input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; color: #fff; margin-bottom: 15px; }
+        .btn-gold { width: 100%; background: var(--gold); padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; }
+
+        /* POPUP */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
+        .close-overlay { position: fixed; top:30px; right:50px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; }
+        .detail-flex { display: flex; min-height: 90vh; }
+        .detail-info { width: 40%; padding: 80px; }
+        .detail-img { width: 60%; }
+        .detail-img img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">X-CAR</div>
+        <div class="logo" onclick="showSection('hero')">X-CAR</div>
         <ul class="nav-links">
-            <li><a>Home</a></li>
-            <li><a>Discover Models</a></li>
-            <li><a>Budget Finder</a></li>
-            <li><a style="color: var(--gold);">+ ADD CAR</a></li>
+            <li><a onclick="showSection('hero')">Home</a></li>
+            <li><a onclick="showSection('inventory')">Discover Models</a></li>
+            <li><a onclick="showSection('budget')">Budget Finder</a></li>
+            <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
         </ul>
-        <div>
-            <span style="color:var(--gold); font-weight:bold; margin-right:20px; letter-spacing:1px">123</span>
-            <button class="auth-btn">LOGOUT</button>
+        <div id="auth-ui">
+            <button class="auth-btn" onclick="openLogin()">LOGIN</button>
+        </div>
+        <div id="user-ui" style="display:none;">
+            <span id="user-display" style="color:var(--gold); font-weight:bold; margin-right: 15px;">Admin</span>
+            <button class="auth-btn" onclick="logout()">LOGOUT</button>
         </div>
     </nav>
 
-    <div class="hero active-section">
+    <div id="hero" class="hero active-section">
         <video autoplay muted loop playsinline>
             <source src="intro.mp4" type="video/mp4">
         </video>
+        <div class="overlay-bg"></div>
         
         <div class="hero-text">
             <h1>THE COLLECTION</h1>
             <p>Pinnacle of Automotive Engineering</p>
-            <button class="explore-btn">EXPLORE MODELS</button>
+            <button class="explore-btn" onclick="showSection('inventory')">EXPLORE MODELS</button>
         </div>
     </div>
 
-    </body>
+    <div id="inventory" class="section">
+        <h2 class="sec-title">The Fleet</h2>
+        <div id="car-grid" class="grid"></div>
+    </div>
+
+    <div id="budget" class="section">
+        <h2 class="sec-title">Budget Finder</h2>
+        <div class="form-box">
+            <form id="salary-form">
+                <input type="number" id="salary" placeholder="Monthly Income (USD)" required>
+                <button type="submit" class="btn-gold">Calculate</button>
+            </form>
+            <div id="budget-result" style="margin-top:30px; padding:20px; border:1px solid #333; display:none;"></div>
+        </div>
+    </div>
+
+    <div id="add-vehicle" class="section">
+        <h2 class="sec-title">Add Vehicle</h2>
+        <div id="add-login-req" class="form-box" style="text-align: center;">
+            <h3 style="color:#888;">Restricted Access</h3>
+            <button class="btn-gold" onclick="openLogin()">LOGIN NOW</button>
+        </div>
+        <div id="add-form-area" style="display:none;">
+            <div class="form-box">
+                <form id="add-car-form">
+                    <input type="text" id="c-brand" placeholder="Brand" required>
+                    <input type="text" id="c-name" placeholder="Model Name" required>
+                    <input type="number" id="c-price" placeholder="Price (USD)" required>
+                    <textarea id="c-desc" rows="4" placeholder="Description" required></textarea>
+                    <input type="text" id="c-accel" placeholder="0-100 km/h">
+                    <input type="text" id="c-power" placeholder="Power">
+                    <input type="text" id="c-speed" placeholder="Top Speed">
+                    <input type="url" id="c-img-1" placeholder="Image URL (Cover)" required>
+                    <input type="url" id="c-img-2" placeholder="Image URL 2">
+                    <input type="url" id="c-img-3" placeholder="Image URL 3">
+                    <input type="url" id="c-img-4" placeholder="Image URL 4">
+                    <button type="submit" class="btn-gold">Publish</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="modal">
+        <div class="form-box" style="width: 400px; position:relative;">
+            <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeModal()">×</span>
+            <h3 style="color:var(--gold); text-align:center; margin-bottom:30px;">Login</h3>
+            <form id="auth-form">
+                <input type="text" id="u-name" placeholder="Username" required>
+                <input type="password" id="u-pass" placeholder="Password" required>
+                <button type="submit" class="btn-gold" id="auth-submit">LOGIN</button>
+            </form>
+            <p style="text-align:center; color:#666; margin-top:20px; cursor:pointer;" onclick="toggleAuth()">Register</p>
+        </div>
+    </div>
+
+    <div id="product-overlay" class="overlay">
+        <div class="close-overlay" onclick="closeDetail()">×</div>
+        <div id="detail-content"></div>
+    </div>
+
+    <script>
+        const initialCars = [{ id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine.", imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg"], specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} }];
+        let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
+        let currentUser = localStorage.getItem('user');
+        let isRegister = false;
+
+        function showSection(id) {
+            document.querySelectorAll('.active-section').forEach(el => el.classList.remove('active-section'));
+            document.querySelectorAll('.section, .hero').forEach(el => el.style.display = 'none');
+            if(id === 'hero') { document.getElementById('hero').style.display = 'flex'; document.getElementById('hero').classList.add('active-section'); } 
+            else { document.getElementById(id).style.display = 'block'; document.getElementById(id).classList.add('active-section'); }
+            window.scrollTo(0,0);
+        }
+
+        function renderGrid() {
+            const container = document.getElementById('car-grid'); container.innerHTML = '';
+            cars.forEach(item => {
+                const cover = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : 'https://via.placeholder.com/400';
+                container.innerHTML += `<div class="card"><img src="${cover}" class="card-img"><div class="card-body"><div class="card-brand">${item.brand}</div><div class="card-name">${item.name}</div><div class="card-price">$${item.price.toLocaleString()}</div><button class="view-btn" onclick="openDetail('${item.id}')">View Details »</button></div></div>`;
+            });
+        }
+
+        window.openDetail = (id) => {
+            const c = cars.find(x => x.id === id); if(!c) return;
+            const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
+            let gallery = ''; (c.imageUrls || []).forEach(u => { if(u) gallery += `<img src="${u}" style="height:100px; border:1px solid #333; margin:5px;">`; });
+            const cover = (c.imageUrls && c.imageUrls.length > 0) ? c.imageUrls[0] : 'https://via.placeholder.com/800';
+            document.getElementById('detail-content').innerHTML = `<div class="detail-flex"><div class="detail-info"><h1 style="color:var(--gold); font-size:3em">${c.name}</h1><p style="color:#888; font-size:1.2em; margin-bottom:30px">${c.brand}</p><div class="spec-big">${s.accel}</div><span class="spec-label">0-100 km/h</span><div class="spec-big">${s.power}</div><span class="spec-label">Power</span><p style="margin-top:30px; line-height:1.6; color:#ccc">${c.description}</p><h2 style="color:var(--gold); margin-top:30px">$${c.price.toLocaleString()}</h2><div style="margin-top:30px">${gallery}</div></div><div class="detail-img"><img src="${cover}"></div></div>`;
+            document.getElementById('product-overlay').style.display = 'block';
+        }
+        function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
+
+        document.getElementById('add-car-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const imgs = [document.getElementById('c-img-1').value, document.getElementById('c-img-2').value, document.getElementById('c-img-3').value, document.getElementById('c-img-4').value].filter(u => u.trim() !== '');
+            const newCar = { id: 'c_' + Date.now(), brand: document.getElementById('c-brand').value, name: document.getElementById('c-name').value, price: parseFloat(document.getElementById('c-price').value), description: document.getElementById('c-desc').value, imageUrls: imgs, specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value } };
+            cars.unshift(newCar); localStorage.setItem('cars', JSON.stringify(cars));
+            alert("Published!"); renderGrid(); e.target.reset(); showSection('inventory');
+        });
+
+        document.getElementById('salary-form').addEventListener('submit', (e)=>{
+            e.preventDefault(); const s=parseFloat(document.getElementById('salary').value);
+            const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0];
+            const div=document.getElementById('budget-result'); div.style.display='block';
+            div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`;
+        });
+
+        function checkLogin() {
+            document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block';
+            document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none';
+            document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none';
+            document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block';
+            document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none';
+            if(currentUser) document.getElementById('user-display').innerText = currentUser;
+        }
+        document.getElementById('auth-form').addEventListener('submit', (e) => { e.preventDefault(); const u=document.getElementById('u-name').value; if(isRegister){alert("Registered!"); toggleAuth();}else{currentUser=u; localStorage.setItem('user',u); checkLogin(); closeModal();} });
+        function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
+        function openLogin(){document.getElementById('auth-modal').style.display='flex';}
+        function closeModal(){document.getElementById('auth-modal').style.display='none';}
+        function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
+
+        renderGrid(); checkLogin();
+    </script>
+</body>
 </html>
