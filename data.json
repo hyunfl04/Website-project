@@ -1,0 +1,17 @@
+{
+    "cars": [
+        {
+            "id": "c1",
+            "name": "Maserati Ghibli",
+            "price": 85000,
+            "description": "Italian luxury.",
+            "imageUrl": "https://giaxeoto.vn/admin/upload/images/resize/640-gia-xe-maserati-ghibli.jpg"
+        }
+    ],
+    "users": [
+        {
+            "username": "123",
+            "password": "12345"
+        }
+    ]
+}
