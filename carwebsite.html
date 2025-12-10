@@ -44,12 +44,12 @@
         .cart-count { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; position: absolute; top: -5px; right: -5px; }
         .auth-btn { background: var(--gold); color: #000; padding: 8px 20px; font-weight: bold; border: none; cursor: pointer; font-size: 0.8em; }
 
-        /* --- HERO (ĐÃ CHỈNH VỊ TRÍ CHỮ THẤP XUỐNG) --- */
+        /* --- HERO (ĐÃ CHỈNH VỊ TRÍ CHỮ THẤP HƠN NỮA) --- */
         .hero { 
             height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; 
-            /* QUAN TRỌNG: Thêm padding-top để đẩy nội dung xuống xa khỏi logo */
-            padding-top: 120px; 
+            /* QUAN TRỌNG: Tăng padding-top lên 220px để đẩy chữ xuống xa logo */
+            padding-top: 220px; 
         }
         .hero video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
         .overlay-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: -1; }
@@ -118,9 +118,8 @@
         .detail-img { width: 65%; background: #000; position: relative; display:flex; align-items:center; }
         .detail-img img { width: 100%; height: 100%; object-fit: cover; }
         
-        .spec-big { font-size: 2.5em; color: #fff; line-height: 1.2; }
+        .spec-big { font-size: 2.2em; color: #fff; line-height: 1.2; }
         
-        /* Gallery grid */
         .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 60px; background: #0a0a0a; }
         .gallery-box img { width: 100%; height: 180px; object-fit: cover; border: 1px solid #333; transition: 0.3s; }
         .gallery-box img:hover { border-color: var(--gold); transform: scale(1.02); }
@@ -207,13 +206,16 @@
                         <input type="text" id="c-power" placeholder="Power">
                         <input type="text" id="c-speed" placeholder="Top Speed">
                     </div>
-                    <div class="form-section-title">Gallery (4 Links)</div>
+                    
+                    <div class="form-section-title">Vehicle Gallery (1 Cover + 4 Gallery)</div>
+                    <input type="url" id="c-img-cover" placeholder="Cover Image URL (Main Display)" required style="margin-bottom: 20px;">
                     <div class="form-grid-2">
-                        <input type="url" id="c-img-1" placeholder="Cover Image" required>
-                        <input type="url" id="c-img-2" placeholder="Image 2">
-                        <input type="url" id="c-img-3" placeholder="Image 3">
-                        <input type="url" id="c-img-4" placeholder="Image 4">
+                        <input type="url" id="c-img-1" placeholder="Gallery Image 1 URL">
+                        <input type="url" id="c-img-2" placeholder="Gallery Image 2 URL">
+                        <input type="url" id="c-img-3" placeholder="Gallery Image 3 URL">
+                        <input type="url" id="c-img-4" placeholder="Gallery Image 4 URL">
                     </div>
+                    
                     <button type="submit" class="btn-gold" id="form-submit-btn">Publish Vehicle</button>
                 </form>
             </div>
@@ -249,8 +251,23 @@
     </div>
 
     <script>
-        // DATA
-        const initialCars = [{ id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine.", imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg"], specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} }];
+        // DATA MỚI VỚI CẤU TRÚC 5 HÌNH
+        const initialCars = [{ 
+            id: "c1", 
+            brand: "Bugatti", 
+            name: "Chiron Pur Sport", 
+            price: 3500000, 
+            description: "The ultimate driving machine.", 
+            // HÌNH BÌA RIÊNG
+            coverImage: "https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg",
+            // DANH SÁCH 4 HÌNH GALLERY RIÊNG (Tui để tạm 1 hình khác để thấy sự khác biệt)
+            galleryImages: [
+                "https://cdn.motor1.com/images/mgl/6Z1zZ/s3/bugatti-chiron-pur-sport.jpg", 
+                "", "", ""
+            ],
+            specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} 
+        }];
+
         let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
         let cart = JSON.parse(localStorage.getItem('userCart')) || [];
         let currentUser = localStorage.getItem('user');
@@ -275,7 +292,8 @@
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
-                const cover = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : 'https://via.placeholder.com/400';
+                // Sử dụng coverImage cho thẻ bài
+                const cover = item.coverImage || 'https://via.placeholder.com/400';
                 container.innerHTML += `
                     <div class="card">
                         <img src="${cover}" class="card-img">
@@ -300,18 +318,30 @@
         function openCart() {
             const container = document.getElementById('cart-items-container'); container.innerHTML = ''; let total = 0;
             if (cart.length === 0) container.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px">Your cart is empty.</p>';
-            else cart.forEach((item, index) => { total += item.price; const img = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : ''; container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div style="color:#fff; font-weight:bold">${item.name}</div><div style="color:var(--gold)">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="removeFromCart(${index})">×</div></div>`; });
+            else cart.forEach((item, index) => { 
+                total += item.price; 
+                // Sử dụng coverImage cho giỏ hàng
+                const img = item.coverImage || ''; 
+                container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div style="color:#fff; font-weight:bold">${item.name}</div><div style="color:var(--gold)">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="removeFromCart(${index})">×</div></div>`; 
+            });
             document.getElementById('cart-total-price').innerText = total.toLocaleString(); document.getElementById('cart-modal').style.display = 'flex';
         }
         function removeFromCart(index) { cart.splice(index, 1); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); openCart(); }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
 
-        // DETAIL PAGE LOGIC
+        // DETAIL PAGE LOGIC (CẬP NHẬT ĐỂ DÙNG 5 HÌNH)
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
-            let gallery = ''; (c.imageUrls || []).forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
-            const cover = (c.imageUrls && c.imageUrls.length > 0) ? c.imageUrls[0] : 'https://via.placeholder.com/800';
+            
+            // Tạo gallery từ danh sách 4 hình riêng
+            let gallery = ''; 
+            (c.galleryImages || []).forEach(u => { 
+                if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; 
+            });
+            
+            // Hình cover lớn bên phải
+            const cover = c.coverImage || 'https://via.placeholder.com/800';
             
             const adminButtons = currentUser ? `
                 <div class="admin-btn-group">
@@ -350,6 +380,7 @@
             }
         }
 
+        // EDIT CAR (CẬP NHẬT ĐỂ LẤY 5 HÌNH)
         function startEditCar(id) {
             const c = cars.find(x => x.id === id); if(!c) return;
             editingCarId = id;
@@ -361,10 +392,15 @@
             document.getElementById('c-accel').value = c.specs?.accel || '';
             document.getElementById('c-power').value = c.specs?.power || '';
             document.getElementById('c-speed').value = c.specs?.speed || '';
-            document.getElementById('c-img-1').value = c.imageUrls?.[0] || '';
-            document.getElementById('c-img-2').value = c.imageUrls?.[1] || '';
-            document.getElementById('c-img-3').value = c.imageUrls?.[2] || '';
-            document.getElementById('c-img-4').value = c.imageUrls?.[3] || '';
+            
+            // Điền cover image
+            document.getElementById('c-img-cover').value = c.coverImage || '';
+            // Điền 4 gallery images
+            document.getElementById('c-img-1').value = c.galleryImages?.[0] || '';
+            document.getElementById('c-img-2').value = c.galleryImages?.[1] || '';
+            document.getElementById('c-img-3').value = c.galleryImages?.[2] || '';
+            document.getElementById('c-img-4').value = c.galleryImages?.[3] || '';
+            
             document.getElementById('form-title').innerText = "Edit Vehicle Details";
             document.getElementById('form-submit-btn').innerText = "Update Vehicle";
             closeDetail();
@@ -378,16 +414,23 @@
             document.getElementById('form-submit-btn').innerText = "Publish Vehicle";
         }
 
+        // FORM SUBMIT (CẬP NHẬT ĐỂ LƯU 5 HÌNH)
         document.getElementById('add-car-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const imgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== '');
+            // Lấy cover image
+            const coverImg = document.getElementById('c-img-cover').value;
+            // Lấy 4 gallery images
+            const galleryImgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== '');
+            
             const carData = {
                 id: editingCarId || 'c_' + Date.now(),
                 brand: document.getElementById('c-brand').value,
                 name: document.getElementById('c-name').value,
                 price: parseFloat(document.getElementById('c-price').value),
                 description: document.getElementById('c-desc').value,
-                imageUrls: imgs,
+                // Lưu theo cấu trúc mới
+                coverImage: coverImg,
+                galleryImages: galleryImgs,
                 specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value }
             };
 
