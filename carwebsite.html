@@ -40,23 +40,15 @@
         }
         .nav-links li a:hover { color: var(--gold); }
         
-        /* CART ICON */
-        .cart-btn {
-            position: relative; cursor: pointer; color: var(--gold); font-weight: bold; border: 1px solid var(--gold); padding: 8px 15px; font-size: 0.8em;
-        }
-        .cart-count {
-            background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px;
-            position: absolute; top: -5px; right: -5px;
-        }
-
+        .cart-btn { position: relative; cursor: pointer; color: var(--gold); font-weight: bold; border: 1px solid var(--gold); padding: 8px 15px; font-size: 0.8em; }
+        .cart-count { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; position: absolute; top: -5px; right: -5px; }
         .auth-btn { background: var(--gold); color: #000; padding: 8px 20px; font-weight: bold; border: none; cursor: pointer; font-size: 0.8em; }
 
         /* --- HERO --- */
         .hero { height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0; }
         .hero video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
         .overlay-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: -1; }
-        
-        .hero-text { text-align: center; z-index: 10; }
+        .hero-text { text-align: center; z-index: 10; margin: 0; transform: translateY(0); }
         .hero-text h1 { font-family: var(--font-serif); font-size: 5.5em; color: #fff; text-transform: uppercase; margin: 0; letter-spacing: 15px; font-weight: 400; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text p { color: var(--gold); font-family: var(--font-main); font-size: 1.2em; font-weight: 400; text-transform: uppercase; letter-spacing: 5px; margin-top: 25px; }
         .explore-btn { margin-top: 50px; padding: 15px 45px; background-color: var(--gold); color: #000; border: none; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9em; cursor: pointer; transition: 0.3s; }
@@ -76,7 +68,6 @@
         .card-body { padding: 25px; }
         .card-name { font-size: 1.5em; font-weight: 600; color: #fff; margin-bottom: 10px; }
         .card-price { color: var(--gold); font-size: 1.2em; font-weight: bold; }
-        
         .btn-group { display: flex; gap: 10px; margin-top: 15px; }
         .view-btn { flex: 1; padding: 10px; background: transparent; border: 1px solid #444; color: #fff; cursor: pointer; font-size: 0.8em; text-transform: uppercase; }
         .view-btn:hover { border-color: #fff; }
@@ -91,26 +82,39 @@
         .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 
-        /* --- MODALS (Login & Cart) --- */
+        /* --- MODALS --- */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
         .cart-modal-content { background: #111; width: 600px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--gold); padding: 30px; position: relative; }
-        
         .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding: 15px 0; }
         .cart-item img { width: 80px; height: 50px; object-fit: cover; margin-right: 15px; }
         .cart-info { flex-grow: 1; }
         .cart-remove { color: red; cursor: pointer; font-size: 1.2em; padding: 0 10px; }
         .cart-total { text-align: right; font-size: 1.5em; color: var(--gold); margin-top: 20px; font-weight: bold; }
 
+        /* --- DETAIL PAGE (SỬA CHUẨN ĐẸP) --- */
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
         .close-overlay { position: fixed; top:30px; right:50px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; }
         
-        .detail-flex { display: flex; min-height: 90vh; }
-        .detail-info { width: 40%; padding: 80px; }
-        .detail-img { width: 60%; }
+        .detail-flex { display: flex; min-height: 100vh; }
+        /* Cột thông tin nhỏ lại */
+        .detail-info { width: 35%; padding: 60px 40px; display: flex; flex-direction: column; justify-content: center; background: #0a0a0a; border-right: 1px solid #222; }
+        /* Cột hình ảnh to ra */
+        .detail-img { width: 65%; background: #000; position: relative; display:flex; align-items:center; }
         .detail-img img { width: 100%; height: 100%; object-fit: cover; }
-        .spec-big { font-size: 4em; color: #fff; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 60px 80px; }
-        .gallery-box img { width: 100%; height: 150px; object-fit: cover; border: 1px solid #333; }
+        
+        .spec-big { font-size: 3.5em; color: #fff; line-height: 1.2; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 60px; background: #0a0a0a; }
+        .gallery-box img { width: 100%; height: 180px; object-fit: cover; border: 1px solid #333; transition: 0.3s; }
+        .gallery-box img:hover { border-color: var(--gold); transform: scale(1.02); }
+
+        /* Nút Admin (Sửa/Xóa) */
+        .admin-btn-group { display: flex; gap: 15px; margin-top: 20px; }
+        .edit-btn { flex: 1; padding: 12px; background: #333; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .edit-btn:hover { background: var(--gold); color: #000; }
+        .delete-btn { flex: 1; padding: 12px; background: #500; border: 1px solid #f00; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .delete-btn:hover { background: #f00; }
+        
+        .login-notice { color: #555; font-size: 0.8em; margin-top: 10px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -122,12 +126,8 @@
             <li><a onclick="showSection('inventory')">Discover Models</a></li>
             <li><a onclick="showSection('budget')">Budget Finder</a></li>
             <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
-            
-            <li onclick="openCart()" class="cart-btn">
-                CART <span id="cart-count" class="cart-count">0</span>
-            </li>
+            <li onclick="openCart()" class="cart-btn">CART <span id="cart-count" class="cart-count">0</span></li>
         </ul>
-        
         <div id="auth-ui">
             <button class="auth-btn" onclick="openLogin()">LOGIN</button>
         </div>
@@ -139,7 +139,7 @@
 
     <div id="hero" class="hero active-section">
         <video autoplay muted loop playsinline>
-            <source src="intro.mp4" type="video/mp4">
+            <source src="https://www.pexels.com/video/zoom-shot-of-a-parked-mercedes-benz-4228659/" type="video/mp4">
         </video>
         <div class="overlay-bg"></div>
         <div class="hero-text">
@@ -167,7 +167,7 @@
     </div>
 
     <div id="add-vehicle" class="section">
-        <h2 class="sec-title">Add Vehicle to Fleet</h2>
+        <h2 class="sec-title" id="form-title">Add Vehicle to Fleet</h2>
         <div id="add-login-req" class="form-box" style="text-align: center;">
             <h3 style="color:#888;">Restricted Access</h3>
             <button class="btn-gold" onclick="openLogin()">LOGIN TO SYSTEM</button>
@@ -175,13 +175,14 @@
         <div id="add-form-area" style="display:none;">
             <div class="form-box">
                 <form id="add-car-form">
+                    <input type="hidden" id="c-id">
                     <div class="form-section-title">Vehicle Info</div>
                     <div class="form-grid-2">
                         <input type="text" id="c-brand" placeholder="Brand" required>
                         <input type="text" id="c-name" placeholder="Model Name" required>
                     </div>
                     <input type="number" id="c-price" placeholder="Price (USD)" required>
-                    <textarea id="c-desc" rows="3" placeholder="Description..." required></textarea>
+                    <textarea id="c-desc" rows="4" placeholder="Description..." required></textarea>
                     <div class="form-section-title">Specs</div>
                     <div class="form-grid-3">
                         <input type="text" id="c-accel" placeholder="0-100 km/h">
@@ -195,7 +196,7 @@
                         <input type="url" id="c-img-3" placeholder="Image 3">
                         <input type="url" id="c-img-4" placeholder="Image 4">
                     </div>
-                    <button type="submit" class="btn-gold">Publish</button>
+                    <button type="submit" class="btn-gold" id="form-submit-btn">Publish Vehicle</button>
                 </form>
             </div>
         </div>
@@ -205,9 +206,7 @@
         <div class="cart-modal-content">
             <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeCart()">×</span>
             <h2 style="color:var(--gold); border-bottom:1px solid #333; padding-bottom:15px;">Your Shopping Cart</h2>
-            <div id="cart-items-container">
-                <p style="color:#888; text-align:center; margin-top:20px">Your cart is empty.</p>
-            </div>
+            <div id="cart-items-container"></div>
             <div class="cart-total">Total: $<span id="cart-total-price">0</span></div>
             <button class="btn-gold" onclick="alert('Checkout feature coming soon!')">CHECKOUT NOW</button>
         </div>
@@ -235,11 +234,11 @@
         // DATA
         const initialCars = [{ id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine.", imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg"], specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} }];
         let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
-        let cart = JSON.parse(localStorage.getItem('userCart')) || []; // Giỏ hàng
+        let cart = JSON.parse(localStorage.getItem('userCart')) || [];
         let currentUser = localStorage.getItem('user');
         let isRegister = false;
+        let editingCarId = null;
 
-        // SCROLL EFFECT
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if(window.scrollY > 50) nav.classList.add('scrolled');
@@ -251,10 +250,10 @@
             document.querySelectorAll('.section, .hero').forEach(el => el.style.display = 'none');
             if(id === 'hero') { document.getElementById('hero').style.display = 'flex'; document.getElementById('hero').classList.add('active-section'); } 
             else { document.getElementById(id).style.display = 'block'; document.getElementById(id).classList.add('active-section'); }
+            if (id !== 'add-vehicle') resetForm();
             window.scrollTo(0,0);
         }
 
-        // RENDER GRID (THÊM NÚT ADD TO CART)
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
@@ -275,80 +274,119 @@
             });
         }
 
-        // CART LOGIC
         function addToCart(id) {
             const car = cars.find(c => c.id === id);
-            cart.push(car);
-            localStorage.setItem('userCart', JSON.stringify(cart));
-            updateCartCount();
-            alert("Added " + car.name + " to cart!");
+            cart.push(car); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); alert("Added " + car.name + " to cart!");
         }
-
-        function updateCartCount() {
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-
+        function updateCartCount() { document.getElementById('cart-count').innerText = cart.length; }
         function openCart() {
-            const container = document.getElementById('cart-items-container');
-            container.innerHTML = '';
-            let total = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px">Your cart is empty.</p>';
-            } else {
-                cart.forEach((item, index) => {
-                    total += item.price;
-                    const img = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : '';
-                    container.innerHTML += `
-                        <div class="cart-item">
-                            <img src="${img}">
-                            <div class="cart-info">
-                                <div style="color:#fff; font-weight:bold">${item.name}</div>
-                                <div style="color:var(--gold)">$${item.price.toLocaleString()}</div>
-                            </div>
-                            <div class="cart-remove" onclick="removeFromCart(${index})">×</div>
-                        </div>
-                    `;
-                });
-            }
-            document.getElementById('cart-total-price').innerText = total.toLocaleString();
-            document.getElementById('cart-modal').style.display = 'flex';
+            const container = document.getElementById('cart-items-container'); container.innerHTML = ''; let total = 0;
+            if (cart.length === 0) container.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px">Your cart is empty.</p>';
+            else cart.forEach((item, index) => { total += item.price; const img = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : ''; container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div style="color:#fff; font-weight:bold">${item.name}</div><div style="color:var(--gold)">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="removeFromCart(${index})">×</div></div>`; });
+            document.getElementById('cart-total-price').innerText = total.toLocaleString(); document.getElementById('cart-modal').style.display = 'flex';
         }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('userCart', JSON.stringify(cart));
-            updateCartCount();
-            openCart(); // Re-render
-        }
-
+        function removeFromCart(index) { cart.splice(index, 1); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); openCart(); }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
 
-        // OTHER LOGIC (DETAIL, ADD CAR, AUTH)
+        // DETAIL PAGE LOGIC
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
             let gallery = ''; (c.imageUrls || []).forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
             const cover = (c.imageUrls && c.imageUrls.length > 0) ? c.imageUrls[0] : 'https://via.placeholder.com/800';
-            document.getElementById('detail-content').innerHTML = `<div class="detail-flex"><div class="detail-info"><h1 style="color:var(--gold); font-size:3em">${c.name}</h1><p style="color:#888; font-size:1.2em; margin-bottom:30px">${c.brand}</p><div class="spec-big">${s.accel}</div><span>0-100 km/h</span><div class="spec-big">${s.power}</div><span>Power</span><p style="margin-top:30px; color:#ccc">${c.description}</p><h2 style="color:var(--gold); margin-top:30px">$${c.price.toLocaleString()}</h2><button class="btn-gold" onclick="addToCart('${c.id}')">ADD TO CART</button></div><div class="detail-img"><img src="${cover}"></div></div><div style="padding:60px"><h2 class="sec-title">Gallery</h2><div class="gallery-grid">${gallery}</div></div>`;
+            
+            // Nếu chưa Login thì hiện dòng nhắc nhở
+            const adminButtons = currentUser ? `
+                <div class="admin-btn-group">
+                    <button class="edit-btn" onclick="startEditCar('${c.id}')">EDIT VEHICLE</button>
+                    <button class="delete-btn" onclick="deleteCar('${c.id}')">DELETE VEHICLE</button>
+                </div>` : '<p class="login-notice">(Login as Admin to Edit/Delete)</p>';
+
+            document.getElementById('detail-content').innerHTML = `
+                <div class="detail-flex">
+                    <div class="detail-info">
+                        <h1 style="color:var(--gold); font-size:3em; line-height:1">${c.name}</h1>
+                        <p style="color:#888; font-size:1.2em; margin-bottom:30px; text-transform:uppercase; letter-spacing:1px">${c.brand}</p>
+                        <div class="spec-big">${s.accel}</div><span style="color:#888; display:block; margin-bottom:20px">0-100 km/h</span>
+                        <div class="spec-big">${s.power}</div><span style="color:#888; display:block; margin-bottom:20px">Power Output</span>
+                        <p style="margin-top:30px; color:#ccc; line-height:1.6">${c.description}</p>
+                        <h2 style="color:var(--gold); margin-top:30px; font-size:2.5em">$${c.price.toLocaleString()}</h2>
+                        <button class="btn-gold" onclick="addToCart('${c.id}')">ADD TO CART</button>
+                        ${adminButtons}
+                    </div>
+                    <div class="detail-img"><img src="${cover}"></div>
+                </div>
+                <div style="background:#0a0a0a">
+                    <div class="gallery-grid">${gallery}</div>
+                </div>`;
             document.getElementById('product-overlay').style.display = 'block';
         }
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
 
+        function deleteCar(id) {
+            if (confirm("Are you sure you want to delete this vehicle?")) {
+                cars = cars.filter(c => c.id !== id);
+                localStorage.setItem('cars', JSON.stringify(cars));
+                renderGrid();
+                closeDetail();
+                alert("Vehicle deleted successfully.");
+            }
+        }
+
+        function startEditCar(id) {
+            const c = cars.find(x => x.id === id); if(!c) return;
+            editingCarId = id;
+            document.getElementById('c-id').value = c.id;
+            document.getElementById('c-brand').value = c.brand;
+            document.getElementById('c-name').value = c.name;
+            document.getElementById('c-price').value = c.price;
+            document.getElementById('c-desc').value = c.description;
+            document.getElementById('c-accel').value = c.specs?.accel || '';
+            document.getElementById('c-power').value = c.specs?.power || '';
+            document.getElementById('c-speed').value = c.specs?.speed || '';
+            document.getElementById('c-img-1').value = c.imageUrls?.[0] || '';
+            document.getElementById('c-img-2').value = c.imageUrls?.[1] || '';
+            document.getElementById('c-img-3').value = c.imageUrls?.[2] || '';
+            document.getElementById('c-img-4').value = c.imageUrls?.[3] || '';
+            document.getElementById('form-title').innerText = "Edit Vehicle Details";
+            document.getElementById('form-submit-btn').innerText = "Update Vehicle";
+            closeDetail();
+            showSection('add-vehicle');
+        }
+
+        function resetForm() {
+            editingCarId = null;
+            document.getElementById('add-car-form').reset();
+            document.getElementById('form-title').innerText = "Add Vehicle to Fleet";
+            document.getElementById('form-submit-btn').innerText = "Publish Vehicle";
+        }
+
         document.getElementById('add-car-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const imgs = [document.getElementById('c-img-1').value, document.getElementById('c-img-2').value, document.getElementById('c-img-3').value, document.getElementById('c-img-4').value].filter(u => u.trim() !== '');
-            const newCar = { id: 'c_' + Date.now(), brand: document.getElementById('c-brand').value, name: document.getElementById('c-name').value, price: parseFloat(document.getElementById('c-price').value), description: document.getElementById('c-desc').value, imageUrls: imgs, specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value } };
-            cars.unshift(newCar); localStorage.setItem('cars', JSON.stringify(cars));
-            alert("Published!"); renderGrid(); e.target.reset(); showSection('inventory');
+            const imgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== '');
+            const carData = {
+                id: editingCarId || 'c_' + Date.now(),
+                brand: document.getElementById('c-brand').value,
+                name: document.getElementById('c-name').value,
+                price: parseFloat(document.getElementById('c-price').value),
+                description: document.getElementById('c-desc').value,
+                imageUrls: imgs,
+                specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value }
+            };
+
+            if (editingCarId) {
+                const index = cars.findIndex(c => c.id === editingCarId);
+                if (index !== -1) cars[index] = carData;
+                alert("Vehicle Updated Successfully!");
+            } else {
+                cars.unshift(carData);
+                alert("Vehicle Published Successfully!");
+            }
+            localStorage.setItem('cars', JSON.stringify(cars));
+            renderGrid(); resetForm(); showSection('inventory');
         });
 
-        document.getElementById('salary-form').addEventListener('submit', (e)=>{
-            e.preventDefault(); const s=parseFloat(document.getElementById('salary').value);
-            const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0];
-            const div=document.getElementById('budget-result'); div.style.display='block';
-            div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`;
-        });
+        document.getElementById('salary-form').addEventListener('submit', (e)=>{ e.preventDefault(); const s=parseFloat(document.getElementById('salary').value); const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0]; const div=document.getElementById('budget-result'); div.style.display='block'; div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`; });
 
         function checkLogin() {
             document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block';
@@ -362,7 +400,6 @@
         function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
         function openLogin(){document.getElementById('auth-modal').style.display='flex';}
         function closeModal(){document.getElementById('auth-modal').style.display='none';}
-        function closeCart(){document.getElementById('cart-modal').style.display='none';}
         function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
 
         renderGrid(); checkLogin(); updateCartCount();
