@@ -91,29 +91,27 @@
         .cart-remove { color: red; cursor: pointer; font-size: 1.2em; padding: 0 10px; }
         .cart-total { text-align: right; font-size: 1.5em; color: var(--gold); margin-top: 20px; font-weight: bold; }
 
-        /* --- DETAIL PAGE (SỬA CHUẨN ĐẸP) --- */
+        /* --- DETAIL PAGE (ĐÃ THU NHỎ FONT CHỮ) --- */
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
         .close-overlay { position: fixed; top:30px; right:50px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; }
         
         .detail-flex { display: flex; min-height: 100vh; }
-        /* Cột thông tin nhỏ lại */
         .detail-info { width: 35%; padding: 60px 40px; display: flex; flex-direction: column; justify-content: center; background: #0a0a0a; border-right: 1px solid #222; }
-        /* Cột hình ảnh to ra */
         .detail-img { width: 65%; background: #000; position: relative; display:flex; align-items:center; }
         .detail-img img { width: 100%; height: 100%; object-fit: cover; }
         
-        .spec-big { font-size: 3.5em; color: #fff; line-height: 1.2; }
+        /* ĐÃ GIẢM SIZE CHỮ THÔNG SỐ */
+        .spec-big { font-size: 2.5em; color: #fff; line-height: 1.2; } 
+        
         .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 60px; background: #0a0a0a; }
         .gallery-box img { width: 100%; height: 180px; object-fit: cover; border: 1px solid #333; transition: 0.3s; }
         .gallery-box img:hover { border-color: var(--gold); transform: scale(1.02); }
 
-        /* Nút Admin (Sửa/Xóa) */
         .admin-btn-group { display: flex; gap: 15px; margin-top: 20px; }
         .edit-btn { flex: 1; padding: 12px; background: #333; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .edit-btn:hover { background: var(--gold); color: #000; }
         .delete-btn { flex: 1; padding: 12px; background: #500; border: 1px solid #f00; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .delete-btn:hover { background: #f00; }
-        
         .login-notice { color: #555; font-size: 0.8em; margin-top: 10px; font-style: italic; }
     </style>
 </head>
@@ -139,7 +137,7 @@
 
     <div id="hero" class="hero active-section">
         <video autoplay muted loop playsinline>
-            <source src="https://www.pexels.com/video/zoom-shot-of-a-parked-mercedes-benz-4228659/" type="video/mp4">
+            <source src="intro.mp4" type="video/mp4">
         </video>
         <div class="overlay-bg"></div>
         <div class="hero-text">
@@ -295,17 +293,17 @@
             let gallery = ''; (c.imageUrls || []).forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
             const cover = (c.imageUrls && c.imageUrls.length > 0) ? c.imageUrls[0] : 'https://via.placeholder.com/800';
             
-            // Nếu chưa Login thì hiện dòng nhắc nhở
             const adminButtons = currentUser ? `
                 <div class="admin-btn-group">
                     <button class="edit-btn" onclick="startEditCar('${c.id}')">EDIT VEHICLE</button>
                     <button class="delete-btn" onclick="deleteCar('${c.id}')">DELETE VEHICLE</button>
                 </div>` : '<p class="login-notice">(Login as Admin to Edit/Delete)</p>';
 
+            // ĐÃ GIẢM SIZE CHỮ TÊN XE VÀ THÔNG SỐ
             document.getElementById('detail-content').innerHTML = `
                 <div class="detail-flex">
                     <div class="detail-info">
-                        <h1 style="color:var(--gold); font-size:3em; line-height:1">${c.name}</h1>
+                        <h1 style="color:var(--gold); font-size:2.2em; line-height:1">${c.name}</h1>
                         <p style="color:#888; font-size:1.2em; margin-bottom:30px; text-transform:uppercase; letter-spacing:1px">${c.brand}</p>
                         <div class="spec-big">${s.accel}</div><span style="color:#888; display:block; margin-bottom:20px">0-100 km/h</span>
                         <div class="spec-big">${s.power}</div><span style="color:#888; display:block; margin-bottom:20px">Power Output</span>
