@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CẤU HÌNH CƠ BẢN --- */
+        /* --- CẤU HÌNH CHUNG --- */
         :root {
             --bg-color: #000000;
             --text-white: #ffffff;
@@ -19,154 +19,115 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
-        /* --- 1. MENU TRONG SUỐT (NẰM ĐÈ LÊN TRÊN) --- */
+        /* --- MENU --- */
         nav {
-            position: fixed; /* Ghim cứng, không chiếm diện tích */
-            top: 0; left: 0; width: 100%; height: 90px; 
-            z-index: 9999; /* Luôn nổi trên cùng */
+            position: fixed; top: 0; left: 0; width: 100%; height: 90px; 
+            z-index: 9999; 
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 50px;
-            /* Gradient đen mờ nhẹ ở trên để dễ đọc menu, dưới trong suốt */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+            transition: 0.3s;
         }
+        nav.scrolled { background: #000; box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2); }
         
-        .logo { 
-            font-family: var(--font-serif); font-size: 2em; color: var(--gold); 
-            letter-spacing: 2px; font-weight: bold; cursor: pointer;
-        }
+        .logo { font-family: var(--font-serif); font-size: 2em; color: var(--gold); letter-spacing: 2px; font-weight: bold; cursor: pointer; }
 
-        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
         .nav-links li a { 
             color: #fff; text-decoration: none; text-transform: uppercase; 
-            font-size: 0.85em; font-weight: 600; letter-spacing: 1px; transition: 0.3s;
+            font-size: 0.85em; font-weight: 600; letter-spacing: 1px; transition: 0.3s; cursor: pointer;
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
         .nav-links li a:hover { color: var(--gold); }
         
-        .auth-btn { 
-            background: transparent; border: 1px solid var(--gold); color: var(--gold); 
-            padding: 10px 25px; font-weight: bold; text-transform: uppercase; 
-            font-size: 0.8em; letter-spacing: 1px; cursor: pointer; transition: 0.3s;
+        /* CART ICON */
+        .cart-btn {
+            position: relative; cursor: pointer; color: var(--gold); font-weight: bold; border: 1px solid var(--gold); padding: 8px 15px; font-size: 0.8em;
         }
-        .auth-btn:hover { background: var(--gold); color: #000; }
+        .cart-count {
+            background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px;
+            position: absolute; top: -5px; right: -5px;
+        }
 
-        /* --- 2. HERO SECTION (CĂN GIỮA TUYỆT ĐỐI) --- */
-        .hero { 
-            height: 100vh; /* Full màn hình */
-            width: 100%;
-            position: relative; 
-            /* CÔNG THỨC CĂN GIỮA CHUẨN KHÔNG CẦN CHỈNH */
-            display: flex; 
-            flex-direction: column;
-            justify-content: center; /* Căn giữa chiều dọc */
-            align-items: center;     /* Căn giữa chiều ngang */
-            padding: 0; /* XÓA SẠCH PADDING ĐỂ KHÔNG BỊ LỆCH */
-        }
+        .auth-btn { background: var(--gold); color: #000; padding: 8px 20px; font-weight: bold; border: none; cursor: pointer; font-size: 0.8em; }
+
+        /* --- HERO --- */
+        .hero { height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0; }
+        .hero video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+        .overlay-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: -1; }
         
-        /* VIDEO NỀN */
-        .hero video { 
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            object-fit: cover; /* Phủ kín màn hình */
-            z-index: -2;
-        }
-        
-        /* Lớp phủ đen mờ 40% để chữ nổi bật */
-        .overlay-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4); 
-            z-index: -1;
-        }
-        
-        /* NỘI DUNG CHÍNH */
-        .hero-text { 
-            text-align: center; 
-            z-index: 10; 
-            /* Đảm bảo không bị margin lạ đẩy đi */
-            margin: 0; transform: translateY(0);
-        }
-        
-        .hero-text h1 { 
-            font-family: var(--font-serif); 
-            font-size: 5.5em; /* Kích thước chữ to */
-            color: #fff; 
-            text-transform: uppercase; margin: 0; 
-            letter-spacing: 15px; line-height: 1; 
-            font-weight: 400;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-        
-        .hero-text p { 
-            color: var(--gold); 
-            font-family: var(--font-main); 
-            font-size: 1.2em; 
-            font-weight: 400; 
-            text-transform: uppercase; 
-            letter-spacing: 5px; 
-            margin-top: 25px; 
-            text-shadow: 0 5px 15px rgba(0,0,0,1);
-        }
-        
-        .explore-btn { 
-            margin-top: 50px; 
-            padding: 15px 45px; 
-            background-color: var(--gold); 
-            color: #000; border: none; font-weight: 700; 
-            letter-spacing: 2px; text-transform: uppercase; 
-            font-size: 0.9em; cursor: pointer; transition: 0.3s;
-        }
+        .hero-text { text-align: center; z-index: 10; }
+        .hero-text h1 { font-family: var(--font-serif); font-size: 5.5em; color: #fff; text-transform: uppercase; margin: 0; letter-spacing: 15px; font-weight: 400; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .hero-text p { color: var(--gold); font-family: var(--font-main); font-size: 1.2em; font-weight: 400; text-transform: uppercase; letter-spacing: 5px; margin-top: 25px; }
+        .explore-btn { margin-top: 50px; padding: 15px 45px; background-color: var(--gold); color: #000; border: none; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9em; cursor: pointer; transition: 0.3s; }
         .explore-btn:hover { background-color: #fff; transform: translateY(-3px); }
 
-        /* --- 3. CÁC PHẦN KHÁC (ẨN/HIỆN) --- */
+        /* --- SECTIONS --- */
         .section { padding: 100px 50px; display: none; min-height: 100vh; background: #000; animation: fadeIn 0.5s; }
         .active-section { display: block; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
-        
         .sec-title { font-family: var(--font-serif); font-size: 3em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 50px; text-align: center; padding-bottom: 20px;}
+
+        /* --- GRID & CARD --- */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
-        .card { background: #111; border: 1px solid #222; transition: 0.4s; }
+        .card { background: #111; border: 1px solid #222; transition: 0.4s; position: relative; }
         .card:hover { border-color: var(--gold); transform: translateY(-5px); }
         .card-img { height: 240px; width: 100%; object-fit: cover; }
         .card-body { padding: 25px; }
         .card-name { font-size: 1.5em; font-weight: 600; color: #fff; margin-bottom: 10px; }
         .card-price { color: var(--gold); font-size: 1.2em; font-weight: bold; }
-        .view-btn { width: 100%; padding: 12px; background: transparent; border: 1px solid #444; color: #fff; margin-top: 15px; cursor: pointer; }
-        .view-btn:hover { border-color: var(--gold); color: var(--gold); }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        .view-btn { flex: 1; padding: 10px; background: transparent; border: 1px solid #444; color: #fff; cursor: pointer; font-size: 0.8em; text-transform: uppercase; }
+        .view-btn:hover { border-color: #fff; }
+        .add-cart-btn { flex: 1; padding: 10px; background: var(--gold); border: none; color: #000; font-weight: bold; cursor: pointer; font-size: 0.8em; text-transform: uppercase; }
+        .add-cart-btn:hover { background: #fff; }
 
-        /* FORM */
+        /* --- FORMS --- */
         .form-box { max-width: 700px; margin: 0 auto; border: 1px solid var(--gold); padding: 50px; background: #0a0a0a; }
-        .form-section-title { color: var(--gold); font-size: 1.1em; margin-bottom: 20px; padding-bottom: 5px; border-bottom: 1px solid #333; text-transform: uppercase; letter-spacing: 1px; margin-top: 30px; }
-        input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; color: #fff; margin-bottom: 15px; }
+        .form-section-title { color: var(--gold); font-size: 1.1em; margin-bottom: 20px; border-bottom: 1px solid #333; text-transform: uppercase; margin-top: 30px; padding-bottom: 5px;}
+        input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; color: #fff; margin-bottom: 15px; box-sizing: border-box; }
         .btn-gold { width: 100%; background: var(--gold); padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; }
         .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 
-        /* POPUP & DETAIL */
+        /* --- MODALS (Login & Cart) --- */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
+        .cart-modal-content { background: #111; width: 600px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--gold); padding: 30px; position: relative; }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding: 15px 0; }
+        .cart-item img { width: 80px; height: 50px; object-fit: cover; margin-right: 15px; }
+        .cart-info { flex-grow: 1; }
+        .cart-remove { color: red; cursor: pointer; font-size: 1.2em; padding: 0 10px; }
+        .cart-total { text-align: right; font-size: 1.5em; color: var(--gold); margin-top: 20px; font-weight: bold; }
+
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
         .close-overlay { position: fixed; top:30px; right:50px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; }
+        
         .detail-flex { display: flex; min-height: 90vh; }
         .detail-info { width: 40%; padding: 80px; }
         .detail-img { width: 60%; }
         .detail-img img { width: 100%; height: 100%; object-fit: cover; }
-        .spec-big { font-size: 4.5em; font-weight: 300; line-height: 1; margin-top: 20px; color: #fff; }
-        .spec-label { color: #888; font-size: 0.9em; margin-bottom: 30px; display: block; border-bottom: 1px solid #333; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;}
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 60px 80px; }
-        .gallery-box { height: 220px; border: 1px solid #333; overflow: hidden; }
-        .gallery-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; opacity: 0.8; }
-        .gallery-box img:hover { transform: scale(1.1); opacity: 1; }
+        .spec-big { font-size: 4em; color: #fff; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 60px 80px; }
+        .gallery-box img { width: 100%; height: 150px; object-fit: cover; border: 1px solid #333; }
     </style>
 </head>
 <body>
 
-    <nav>
+    <nav id="navbar">
         <div class="logo" onclick="showSection('hero')">X-CAR</div>
         <ul class="nav-links">
             <li><a onclick="showSection('hero')">Home</a></li>
             <li><a onclick="showSection('inventory')">Discover Models</a></li>
             <li><a onclick="showSection('budget')">Budget Finder</a></li>
             <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
+            
+            <li onclick="openCart()" class="cart-btn">
+                CART <span id="cart-count" class="cart-count">0</span>
+            </li>
         </ul>
+        
         <div id="auth-ui">
             <button class="auth-btn" onclick="openLogin()">LOGIN</button>
         </div>
@@ -177,12 +138,11 @@
     </nav>
 
     <div id="hero" class="hero active-section">
-        
         <video autoplay muted loop playsinline>
             <source src="intro.mp4" type="video/mp4">
         </video>
-        
-        <div class="overlay-bg"></div> <div class="hero-text">
+        <div class="overlay-bg"></div>
+        <div class="hero-text">
             <h1>THE COLLECTION</h1>
             <p>Pinnacle of Automotive Engineering</p>
             <button class="explore-btn" onclick="showSection('inventory')">EXPLORE MODELS</button>
@@ -195,7 +155,7 @@
     </div>
 
     <div id="budget" class="section">
-        <h2 class="sec-title">Financial Services</h2>
+        <h2 class="sec-title">Budget Finder</h2>
         <div class="form-box">
             <p style="color:#888; margin-bottom:20px">Calculate your eligibility.</p>
             <form id="salary-form">
@@ -215,30 +175,41 @@
         <div id="add-form-area" style="display:none;">
             <div class="form-box">
                 <form id="add-car-form">
-                    <div class="form-section-title">Vehicle Information</div>
+                    <div class="form-section-title">Vehicle Info</div>
                     <div class="form-grid-2">
                         <input type="text" id="c-brand" placeholder="Brand" required>
                         <input type="text" id="c-name" placeholder="Model Name" required>
                     </div>
                     <input type="number" id="c-price" placeholder="Price (USD)" required>
-                    <div class="form-section-title">Description</div>
-                    <textarea id="c-desc" rows="4" placeholder="Detailed description..." required></textarea>
-                    <div class="form-section-title">Technical Specifications</div>
+                    <textarea id="c-desc" rows="3" placeholder="Description..." required></textarea>
+                    <div class="form-section-title">Specs</div>
                     <div class="form-grid-3">
                         <input type="text" id="c-accel" placeholder="0-100 km/h">
                         <input type="text" id="c-power" placeholder="Power">
                         <input type="text" id="c-speed" placeholder="Top Speed">
                     </div>
-                    <div class="form-section-title">Vehicle Gallery</div>
+                    <div class="form-section-title">Gallery (4 Links)</div>
                     <div class="form-grid-2">
-                        <input type="url" id="c-img-1" placeholder="Image URL 1 (Cover)" required>
-                        <input type="url" id="c-img-2" placeholder="Image URL 2">
-                        <input type="url" id="c-img-3" placeholder="Image URL 3">
-                        <input type="url" id="c-img-4" placeholder="Image URL 4">
+                        <input type="url" id="c-img-1" placeholder="Cover Image" required>
+                        <input type="url" id="c-img-2" placeholder="Image 2">
+                        <input type="url" id="c-img-3" placeholder="Image 3">
+                        <input type="url" id="c-img-4" placeholder="Image 4">
                     </div>
-                    <button type="submit" class="btn-gold">Publish Vehicle</button>
+                    <button type="submit" class="btn-gold">Publish</button>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal">
+        <div class="cart-modal-content">
+            <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeCart()">×</span>
+            <h2 style="color:var(--gold); border-bottom:1px solid #333; padding-bottom:15px;">Your Shopping Cart</h2>
+            <div id="cart-items-container">
+                <p style="color:#888; text-align:center; margin-top:20px">Your cart is empty.</p>
+            </div>
+            <div class="cart-total">Total: $<span id="cart-total-price">0</span></div>
+            <button class="btn-gold" onclick="alert('Checkout feature coming soon!')">CHECKOUT NOW</button>
         </div>
     </div>
 
@@ -261,10 +232,19 @@
     </div>
 
     <script>
+        // DATA
         const initialCars = [{ id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine.", imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg"], specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} }];
         let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
+        let cart = JSON.parse(localStorage.getItem('userCart')) || []; // Giỏ hàng
         let currentUser = localStorage.getItem('user');
         let isRegister = false;
+
+        // SCROLL EFFECT
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if(window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
 
         function showSection(id) {
             document.querySelectorAll('.active-section').forEach(el => el.classList.remove('active-section'));
@@ -274,20 +254,83 @@
             window.scrollTo(0,0);
         }
 
+        // RENDER GRID (THÊM NÚT ADD TO CART)
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
                 const cover = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : 'https://via.placeholder.com/400';
-                container.innerHTML += `<div class="card"><img src="${cover}" class="card-img"><div class="card-body"><div class="card-brand">${item.brand}</div><div class="card-name">${item.name}</div><div class="card-price">$${item.price.toLocaleString()}</div><button class="view-btn" onclick="openDetail('${item.id}')">View Details »</button></div></div>`;
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${cover}" class="card-img">
+                        <div class="card-body">
+                            <div class="card-brand">${item.brand}</div>
+                            <div class="card-name">${item.name}</div>
+                            <div class="card-price">$${item.price.toLocaleString()}</div>
+                            <div class="btn-group">
+                                <button class="view-btn" onclick="openDetail('${item.id}')">View</button>
+                                <button class="add-cart-btn" onclick="addToCart('${item.id}')">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>`;
             });
         }
 
+        // CART LOGIC
+        function addToCart(id) {
+            const car = cars.find(c => c.id === id);
+            cart.push(car);
+            localStorage.setItem('userCart', JSON.stringify(cart));
+            updateCartCount();
+            alert("Added " + car.name + " to cart!");
+        }
+
+        function updateCartCount() {
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        function openCart() {
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px">Your cart is empty.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    const img = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : '';
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <img src="${img}">
+                            <div class="cart-info">
+                                <div style="color:#fff; font-weight:bold">${item.name}</div>
+                                <div style="color:var(--gold)">$${item.price.toLocaleString()}</div>
+                            </div>
+                            <div class="cart-remove" onclick="removeFromCart(${index})">×</div>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('cart-total-price').innerText = total.toLocaleString();
+            document.getElementById('cart-modal').style.display = 'flex';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('userCart', JSON.stringify(cart));
+            updateCartCount();
+            openCart(); // Re-render
+        }
+
+        function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
+
+        // OTHER LOGIC (DETAIL, ADD CAR, AUTH)
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
-            let gallery = ''; (c.imageUrls || []).forEach(u => { if(u) gallery += `<img src="${u}" style="height:100px; border:1px solid #333; margin:5px;">`; });
+            let gallery = ''; (c.imageUrls || []).forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
             const cover = (c.imageUrls && c.imageUrls.length > 0) ? c.imageUrls[0] : 'https://via.placeholder.com/800';
-            document.getElementById('detail-content').innerHTML = `<div class="detail-flex"><div class="detail-info"><h1 style="color:var(--gold); font-size:3em">${c.name}</h1><p style="color:#888; font-size:1.2em; margin-bottom:30px">${c.brand}</p><div class="spec-big">${s.accel}</div><span class="spec-label">0-100 km/h</span><div class="spec-big">${s.power}</div><span class="spec-label">Power</span><p style="margin-top:30px; line-height:1.6; color:#ccc">${c.description}</p><h2 style="color:var(--gold); margin-top:30px">$${c.price.toLocaleString()}</h2><div style="margin-top:30px">${gallery}</div></div><div class="detail-img"><img src="${cover}"></div></div>`;
+            document.getElementById('detail-content').innerHTML = `<div class="detail-flex"><div class="detail-info"><h1 style="color:var(--gold); font-size:3em">${c.name}</h1><p style="color:#888; font-size:1.2em; margin-bottom:30px">${c.brand}</p><div class="spec-big">${s.accel}</div><span>0-100 km/h</span><div class="spec-big">${s.power}</div><span>Power</span><p style="margin-top:30px; color:#ccc">${c.description}</p><h2 style="color:var(--gold); margin-top:30px">$${c.price.toLocaleString()}</h2><button class="btn-gold" onclick="addToCart('${c.id}')">ADD TO CART</button></div><div class="detail-img"><img src="${cover}"></div></div><div style="padding:60px"><h2 class="sec-title">Gallery</h2><div class="gallery-grid">${gallery}</div></div>`;
             document.getElementById('product-overlay').style.display = 'block';
         }
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
@@ -319,9 +362,10 @@
         function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
         function openLogin(){document.getElementById('auth-modal').style.display='flex';}
         function closeModal(){document.getElementById('auth-modal').style.display='none';}
+        function closeCart(){document.getElementById('cart-modal').style.display='none';}
         function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
 
-        renderGrid(); checkLogin();
+        renderGrid(); checkLogin(); updateCartCount();
     </script>
 </body>
 </html>
