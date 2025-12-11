@@ -90,7 +90,6 @@
         .view-btn:hover { border-color: #fff; }
         .add-cart-btn { flex: 1; padding: 10px; background: #222; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; font-size: 0.7em; text-transform: uppercase; }
         .add-cart-btn:hover { background: var(--gold); color: #000; }
-        /* Nút so sánh */
         .compare-btn { flex: 1; padding: 10px; background: #0a0a0a; border: 1px solid #555; color: #ccc; font-weight: bold; cursor: pointer; font-size: 0.7em; text-transform: uppercase; }
         .compare-btn:hover { border-color: #fff; color: #fff; }
         .compare-btn.active { background: #fff; color: #000; border-color: #fff; }
@@ -98,21 +97,14 @@
         /* --- COMPARE SECTION --- */
         .compare-container { overflow-x: auto; }
         .compare-grid { display: flex; gap: 20px; justify-content: center; min-width: 800px; }
-        .compare-card { 
-            width: 30%; background: #111; border: 1px solid var(--gold); padding: 20px; text-align: center; position: relative; 
-            display: flex; flex-direction: column;
-        }
+        .compare-card { width: 30%; background: #111; border: 1px solid var(--gold); padding: 20px; text-align: center; position: relative; display: flex; flex-direction: column; }
         .compare-img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px; border: 1px solid #333; }
         .compare-name { font-size: 1.5em; color: var(--gold); margin-bottom: 10px; font-family: var(--font-serif); }
         .compare-price { font-size: 1.3em; font-weight: bold; color: #fff; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
         .compare-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; font-size: 0.9em; color: #ccc; }
         .compare-label { font-weight: bold; color: #666; text-transform: uppercase; }
         .compare-remove { position: absolute; top: 10px; right: 10px; color: red; cursor: pointer; font-size: 1.5em; font-weight: bold; }
-        
-        .advice-box { 
-            margin-top: 20px; padding: 15px; background: #1a1a1a; border: 1px dashed var(--gold); 
-            font-size: 0.9em; line-height: 1.5; color: #ddd; min-height: 80px; display: flex; align-items: center; justify-content: center;
-        }
+        .advice-box { margin-top: 20px; padding: 15px; background: #1a1a1a; border: 1px dashed var(--gold); font-size: 0.9em; line-height: 1.5; color: #ddd; min-height: 80px; display: flex; align-items: center; justify-content: center; }
         .advice-highlight { color: var(--gold); font-weight: bold; font-size: 1.1em; display: block; margin-bottom: 5px; }
 
         /* --- FORMS --- */
@@ -135,7 +127,6 @@
         /* --- DETAIL PAGE --- */
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
         .close-overlay { position: fixed; top:30px; right:50px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; }
-        
         .detail-flex { display: flex; min-height: 100vh; }
         .detail-info { width: 35%; padding: 60px 40px; display: flex; flex-direction: column; justify-content: center; background: #0a0a0a; border-right: 1px solid #222; }
         .detail-img { width: 65%; background: #000; position: relative; display:flex; align-items:center; }
@@ -144,7 +135,6 @@
         .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 60px; background: #0a0a0a; }
         .gallery-box img { width: 100%; height: 180px; object-fit: cover; border: 1px solid #333; transition: 0.3s; }
         .gallery-box img:hover { border-color: var(--gold); transform: scale(1.02); }
-
         .admin-btn-group { display: flex; gap: 15px; margin-top: 20px; }
         .edit-btn { flex: 1; padding: 12px; background: #333; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .delete-btn { flex: 1; padding: 12px; background: #500; border: 1px solid #f00; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
@@ -158,16 +148,11 @@
         <ul class="nav-links">
             <li><a onclick="showSection('hero')">Home</a></li>
             <li><a onclick="showSection('inventory')">Discover</a></li>
-            <li><a onclick="showSection('compare')">Compare</a></li> <li><a onclick="showSection('budget')">Budget</a></li>
+            <li><a onclick="showSection('compare')">Compare</a></li>
+            <li><a onclick="showSection('budget')">Budget</a></li>
             <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
-            
-            <li onclick="showSection('compare')" class="compare-counter-btn">
-                ⚖️ <span id="compare-count" class="badge-count">0</span>
-            </li>
-            
-            <li onclick="openCart()" class="cart-btn">
-                🛒 <span id="cart-count" class="badge-count">0</span>
-            </li>
+            <li onclick="showSection('compare')" class="compare-counter-btn">⚖️ <span id="compare-count" class="badge-count">0</span></li>
+            <li onclick="openCart()" class="cart-btn">🛒 <span id="cart-count" class="badge-count">0</span></li>
         </ul>
         <div id="auth-ui">
             <button class="auth-btn" onclick="openLogin()">LOGIN</button>
@@ -180,7 +165,7 @@
 
     <div id="hero" class="hero active-section">
         <video autoplay muted loop playsinline>
-            <source src="intro.mp4.mp4" type="video/mp4">
+            <source src="intro.mp4" type="video/mp4">
         </video>
         <div class="overlay-bg"></div>
         <div class="hero-text">
@@ -197,17 +182,13 @@
 
     <div id="compare" class="section">
         <h2 class="sec-title">Vehicle Comparison</h2>
-        
         <div class="form-box" style="margin-bottom: 40px; text-align: center;">
             <p style="color:#888; margin-bottom:10px">Enter your monthly salary to get personalized advice.</p>
             <input type="number" id="compare-salary" placeholder="Monthly Salary (USD)" style="max-width: 300px; display:inline-block;">
             <button class="btn-gold" style="width: auto; padding: 15px 30px; margin-left: 10px;" onclick="calculateAdvice()">Get Advice</button>
         </div>
-
         <div class="compare-container">
-            <div id="compare-wrapper" class="compare-grid">
-                <p style="color:#666; margin-top:50px;">No vehicles selected. Go to 'Discover' and click 'Compare' on vehicles you like.</p>
-            </div>
+            <div id="compare-wrapper" class="compare-grid"></div>
         </div>
     </div>
 
@@ -245,13 +226,16 @@
                         <input type="text" id="c-power" placeholder="Power">
                         <input type="text" id="c-speed" placeholder="Top Speed">
                     </div>
-                    <div class="form-section-title">Gallery (4 Links)</div>
+                    
+                    <div class="form-section-title">Vehicle Images (1 Cover + 4 Gallery)</div>
+                    <input type="url" id="c-img-cover" placeholder="Cover Image URL (Main display)" required style="margin-bottom: 20px; border: 1px solid var(--gold);">
                     <div class="form-grid-2">
-                        <input type="url" id="c-img-1" placeholder="Cover Image" required>
-                        <input type="url" id="c-img-2" placeholder="Image 2">
-                        <input type="url" id="c-img-3" placeholder="Image 3">
-                        <input type="url" id="c-img-4" placeholder="Image 4">
+                        <input type="url" id="c-img-1" placeholder="Gallery Image 1 URL">
+                        <input type="url" id="c-img-2" placeholder="Gallery Image 2 URL">
+                        <input type="url" id="c-img-3" placeholder="Gallery Image 3 URL">
+                        <input type="url" id="c-img-4" placeholder="Gallery Image 4 URL">
                     </div>
+                    
                     <button type="submit" class="btn-gold" id="form-submit-btn">Publish Vehicle</button>
                 </form>
             </div>
@@ -287,11 +271,18 @@
     </div>
 
     <script>
-        // DATA
-        const initialCars = [{ id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine.", imageUrls: ["https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg"], specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} }];
+        // DATA MỚI: TÁCH RIÊNG COVER VÀ GALLERY
+        const initialCars = [{ 
+            id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine.", 
+            // Ảnh bìa riêng
+            coverImage: "https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg",
+            // Danh sách ảnh gallery riêng (Tui để trống 3 cái, bà tự thêm sau nha)
+            galleryImages: ["https://cdn.motor1.com/images/mgl/6Z1zZ/s3/bugatti-chiron-pur-sport.jpg", "", "", ""],
+            specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} 
+        }];
         let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
         let cart = JSON.parse(localStorage.getItem('userCart')) || [];
-        let compareList = JSON.parse(localStorage.getItem('compareList')) || []; // List so sánh
+        let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
         let currentUser = localStorage.getItem('user');
         let isRegister = false;
         let editingCarId = null;
@@ -307,20 +298,18 @@
             document.querySelectorAll('.section, .hero').forEach(el => el.style.display = 'none');
             if(id === 'hero') { document.getElementById('hero').style.display = 'flex'; document.getElementById('hero').classList.add('active-section'); } 
             else { document.getElementById(id).style.display = 'block'; document.getElementById(id).classList.add('active-section'); }
-            if(id === 'compare') renderCompare(); // Render lại trang so sánh khi mở
+            if(id === 'compare') renderCompare();
             if (id !== 'add-vehicle') resetForm();
             window.scrollTo(0,0);
         }
 
-        // RENDER GRID + COMPARE BUTTON
+        // RENDER GRID (DÙNG COVER IMAGE)
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
-                const cover = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : 'https://via.placeholder.com/400';
-                // Check if in compare list
+                // Ưu tiên dùng coverImage mới, nếu là xe cũ chưa có thì dùng tạm placeholder
+                const cover = item.coverImage || item.imageUrls?.[0] || 'https://via.placeholder.com/400';
                 const isCompared = compareList.find(c => c.id === item.id) ? 'active' : '';
-                const compareText = isCompared ? 'Added' : 'Compare';
-                
                 container.innerHTML += `
                     <div class="card">
                         <img src="${cover}" class="card-img">
@@ -330,7 +319,7 @@
                             <div class="card-price">$${item.price.toLocaleString()}</div>
                             <div class="btn-group">
                                 <button class="view-btn" onclick="openDetail('${item.id}')">View</button>
-                                <button class="compare-btn ${isCompared}" onclick="toggleCompare('${item.id}')">⚖️ ${compareText}</button>
+                                <button class="compare-btn ${isCompared}" onclick="toggleCompare('${item.id}')">⚖️ Compare</button>
                                 <button class="add-cart-btn" onclick="addToCart('${item.id}')">Add Cart</button>
                             </div>
                         </div>
@@ -339,103 +328,64 @@
             updateCompareCount();
         }
 
-        // --- COMPARE LOGIC ---
         function toggleCompare(id) {
             const index = compareList.findIndex(c => c.id === id);
-            if (index > -1) {
-                compareList.splice(index, 1); // Remove
-            } else {
-                if (compareList.length >= 3) { alert("You can only compare up to 3 vehicles."); return; }
-                const car = cars.find(c => c.id === id);
-                compareList.push(car);
-            }
-            localStorage.setItem('compareList', JSON.stringify(compareList));
-            updateCompareCount();
-            renderGrid(); // Re-render to update buttons
+            if (index > -1) { compareList.splice(index, 1); } 
+            else { if (compareList.length >= 3) { alert("Max 3 vehicles."); return; } compareList.push(cars.find(c => c.id === id)); }
+            localStorage.setItem('compareList', JSON.stringify(compareList)); updateCompareCount(); renderGrid();
         }
-
         function updateCompareCount() { document.getElementById('compare-count').innerText = compareList.length; }
 
+        // RENDER COMPARE (DÙNG COVER IMAGE)
         function renderCompare() {
             const wrapper = document.getElementById('compare-wrapper');
-            if (compareList.length === 0) {
-                wrapper.innerHTML = '<p style="color:#666; margin-top:50px;">No vehicles selected. Go to \'Discover\' and click \'Compare\' on vehicles you like.</p>';
-                return;
-            }
-            
+            if (compareList.length === 0) { wrapper.innerHTML = '<p style="color:#666; margin-top:50px;">No vehicles selected.</p>'; return; }
             wrapper.innerHTML = '';
-            compareList.forEach((car, index) => {
-                const cover = (car.imageUrls && car.imageUrls.length > 0) ? car.imageUrls[0] : '';
+            compareList.forEach((car) => {
+                const cover = car.coverImage || car.imageUrls?.[0] || '';
                 const s = car.specs || {accel:"-", power:"-", speed:"-"};
-                
-                wrapper.innerHTML += `
-                    <div class="compare-card">
-                        <div class="compare-remove" onclick="toggleCompare('${car.id}'); renderCompare();">×</div>
-                        <img src="${cover}" class="compare-img">
-                        <div class="compare-name">${car.name}</div>
-                        <div class="compare-price">$${car.price.toLocaleString()}</div>
-                        
-                        <div class="compare-row"><span class="compare-label">Brand</span><span>${car.brand}</span></div>
-                        <div class="compare-row"><span class="compare-label">0-100 km/h</span><span>${s.accel}</span></div>
-                        <div class="compare-row"><span class="compare-label">Power</span><span>${s.power}</span></div>
-                        <div class="compare-row"><span class="compare-label">Top Speed</span><span>${s.speed}</span></div>
-                        
-                        <div class="advice-box" id="advice-${car.id}">
-                            Enter salary above to see advice.
-                        </div>
-                    </div>
-                `;
+                wrapper.innerHTML += `<div class="compare-card"><div class="compare-remove" onclick="toggleCompare('${car.id}'); renderCompare();">×</div><img src="${cover}" class="compare-img"><div class="compare-name">${car.name}</div><div class="compare-price">$${car.price.toLocaleString()}</div><div class="compare-row"><span class="compare-label">Brand</span><span>${car.brand}</span></div><div class="compare-row"><span class="compare-label">0-100 km/h</span><span>${s.accel}</span></div><div class="compare-row"><span class="compare-label">Power</span><span>${s.power}</span></div><div class="compare-row"><span class="compare-label">Top Speed</span><span>${s.speed}</span></div><div class="advice-box" id="advice-${car.id}">Enter salary above.</div></div>`;
             });
-            // Nếu đã nhập lương trước đó thì tính luôn
-            const salary = document.getElementById('compare-salary').value;
-            if(salary) calculateAdvice();
+            const salary = document.getElementById('compare-salary').value; if(salary) calculateAdvice();
         }
 
         function calculateAdvice() {
             const salary = parseFloat(document.getElementById('compare-salary').value);
-            if (!salary || salary <= 0) { alert("Please enter a valid monthly salary."); return; }
-
+            if (!salary || salary <= 0) { alert("Enter valid salary."); return; }
             compareList.forEach(car => {
-                const box = document.getElementById(`advice-${car.id}`);
-                if (!box) return;
-
-                if (salary >= car.price) {
-                    box.innerHTML = `<span class="advice-highlight">GREAT CHOICE!</span> You can buy this vehicle immediately with one month's salary.`;
-                } else {
-                    const months = Math.ceil(car.price / salary);
-                    const years = (months / 12).toFixed(1);
-                    box.innerHTML = `<span class="advice-highlight">DREAM CAR?</span> You need to work for about <strong>${months} months</strong> (${years} years) to afford this beauty. Keep grinding! 💪`;
-                }
+                const box = document.getElementById(`advice-${car.id}`); if (!box) return;
+                if (salary >= car.price) { box.innerHTML = `<span class="advice-highlight">GREAT CHOICE!</span> Buy it now!`; } 
+                else { const months = Math.ceil(car.price / salary); const years = (months / 12).toFixed(1); box.innerHTML = `<span class="advice-highlight">DREAM CAR?</span> Work for <strong>${months} months</strong> (${years} years). Keep grinding! 💪`; }
             });
         }
 
-        // CART LOGIC
-        function addToCart(id) {
-            const car = cars.find(c => c.id === id);
-            cart.push(car); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); alert("Added " + car.name + " to cart!");
-        }
+        // CART LOGIC (DÙNG COVER IMAGE)
+        function addToCart(id) { cart.push(cars.find(c => c.id === id)); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); alert("Added to cart!"); }
         function updateCartCount() { document.getElementById('cart-count').innerText = cart.length; }
         function openCart() {
             const container = document.getElementById('cart-items-container'); container.innerHTML = ''; let total = 0;
-            if (cart.length === 0) container.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px">Your cart is empty.</p>';
-            else cart.forEach((item, index) => { total += item.price; const img = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls[0] : ''; container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div style="color:#fff; font-weight:bold">${item.name}</div><div style="color:var(--gold)">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="removeFromCart(${index})">×</div></div>`; });
+            if (cart.length === 0) container.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px">Empty cart.</p>';
+            else cart.forEach((item, index) => { total += item.price; const img = item.coverImage || item.imageUrls?.[0] || ''; container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div style="color:#fff; font-weight:bold">${item.name}</div><div style="color:var(--gold)">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="removeFromCart(${index})">×</div></div>`; });
             document.getElementById('cart-total-price').innerText = total.toLocaleString(); document.getElementById('cart-modal').style.display = 'flex';
         }
         function removeFromCart(index) { cart.splice(index, 1); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); openCart(); }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
 
-        // DETAIL PAGE LOGIC
+        // DETAIL PAGE (HIỂN THỊ ĐÚNG 5 ẢNH KHÔNG TRÙNG)
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
-            let gallery = ''; (c.imageUrls || []).forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
-            const cover = (c.imageUrls && c.imageUrls.length > 0) ? c.imageUrls[0] : 'https://via.placeholder.com/800';
             
-            const adminButtons = currentUser ? `
-                <div class="admin-btn-group">
-                    <button class="edit-btn" onclick="startEditCar('${c.id}')">EDIT VEHICLE</button>
-                    <button class="delete-btn" onclick="deleteCar('${c.id}')">DELETE VEHICLE</button>
-                </div>` : '<p class="login-notice">(Login as Admin to Edit/Delete)</p>';
+            // Tạo gallery chỉ từ danh sách galleryImages (không chứa cover)
+            let gallery = ''; 
+            // Hỗ trợ cả xe cũ (imageUrls) và xe mới (galleryImages)
+            const gallerySource = c.galleryImages || (c.imageUrls ? c.imageUrls.slice(1) : []);
+            gallerySource.forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
+            
+            // Ảnh cover lớn
+            const cover = c.coverImage || c.imageUrls?.[0] || 'https://via.placeholder.com/800';
+            
+            const adminButtons = currentUser ? `<div class="admin-btn-group"><button class="edit-btn" onclick="startEditCar('${c.id}')">EDIT VEHICLE</button><button class="delete-btn" onclick="deleteCar('${c.id}')">DELETE VEHICLE</button></div>` : '<p class="login-notice">(Login as Admin to Edit/Delete)</p>';
 
             document.getElementById('detail-content').innerHTML = `
                 <div class="detail-flex">
@@ -446,100 +396,61 @@
                         <div class="spec-big">${s.power}</div><span style="color:#888; display:block; margin-bottom:20px">Power Output</span>
                         <p style="margin-top:30px; color:#ccc; line-height:1.6">${c.description}</p>
                         <h2 style="color:var(--gold); margin-top:30px; font-size:2.5em">$${c.price.toLocaleString()}</h2>
-                        <div class="btn-group" style="margin-top:20px">
-                            <button class="btn-gold" style="margin-top:0; flex:1" onclick="addToCart('${c.id}')">ADD CART</button>
-                            <button class="btn-gold" style="margin-top:0; flex:1; background:#222; color:#fff; border:1px solid #fff" onclick="toggleCompare('${c.id}'); alert('Added to Compare List');">COMPARE</button>
-                        </div>
+                        <div class="btn-group" style="margin-top:20px"><button class="btn-gold" style="margin-top:0; flex:1" onclick="addToCart('${c.id}')">ADD CART</button><button class="btn-gold" style="margin-top:0; flex:1; background:#222; color:#fff; border:1px solid #fff" onclick="toggleCompare('${c.id}'); alert('Added to Compare');">COMPARE</button></div>
                         ${adminButtons}
                     </div>
                     <div class="detail-img"><img src="${cover}"></div>
                 </div>
-                <div style="background:#0a0a0a">
-                    <div class="gallery-grid">${gallery}</div>
-                </div>`;
+                <div style="background:#0a0a0a"><div class="gallery-grid">${gallery}</div></div>`;
             document.getElementById('product-overlay').style.display = 'block';
         }
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
+        function deleteCar(id) { if (confirm("Delete vehicle?")) { cars = cars.filter(c => c.id !== id); localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); closeDetail(); } }
 
-        function deleteCar(id) {
-            if (confirm("Are you sure you want to delete this vehicle?")) {
-                cars = cars.filter(c => c.id !== id);
-                localStorage.setItem('cars', JSON.stringify(cars));
-                renderGrid();
-                closeDetail();
-                alert("Vehicle deleted successfully.");
-            }
-        }
-
+        // EDIT CAR (ĐIỀN FORM 5 ẢNH)
         function startEditCar(id) {
             const c = cars.find(x => x.id === id); if(!c) return;
             editingCarId = id;
-            document.getElementById('c-id').value = c.id;
-            document.getElementById('c-brand').value = c.brand;
-            document.getElementById('c-name').value = c.name;
-            document.getElementById('c-price').value = c.price;
-            document.getElementById('c-desc').value = c.description;
-            document.getElementById('c-accel').value = c.specs?.accel || '';
-            document.getElementById('c-power').value = c.specs?.power || '';
-            document.getElementById('c-speed').value = c.specs?.speed || '';
-            document.getElementById('c-img-1').value = c.imageUrls?.[0] || '';
-            document.getElementById('c-img-2').value = c.imageUrls?.[1] || '';
-            document.getElementById('c-img-3').value = c.imageUrls?.[2] || '';
-            document.getElementById('c-img-4').value = c.imageUrls?.[3] || '';
-            document.getElementById('form-title').innerText = "Edit Vehicle Details";
-            document.getElementById('form-submit-btn').innerText = "Update Vehicle";
-            closeDetail();
-            showSection('add-vehicle');
+            document.getElementById('c-id').value = c.id; document.getElementById('c-brand').value = c.brand; document.getElementById('c-name').value = c.name; document.getElementById('c-price').value = c.price; document.getElementById('c-desc').value = c.description;
+            document.getElementById('c-accel').value = c.specs?.accel||''; document.getElementById('c-power').value = c.specs?.power||''; document.getElementById('c-speed').value = c.specs?.speed||'';
+            
+            // Điền ảnh cover
+            document.getElementById('c-img-cover').value = c.coverImage || c.imageUrls?.[0] || '';
+            // Điền 4 ảnh gallery (Hỗ trợ cả xe cũ và mới)
+            const galSource = c.galleryImages || (c.imageUrls ? c.imageUrls.slice(1) : []);
+            document.getElementById('c-img-1').value = galSource[0] || '';
+            document.getElementById('c-img-2').value = galSource[1] || '';
+            document.getElementById('c-img-3').value = galSource[2] || '';
+            document.getElementById('c-img-4').value = galSource[3] || '';
+            
+            document.getElementById('form-title').innerText = "Edit Vehicle Details"; document.getElementById('form-submit-btn').innerText = "Update Vehicle"; closeDetail(); showSection('add-vehicle');
         }
+        function resetForm() { editingCarId = null; document.getElementById('add-car-form').reset(); document.getElementById('form-title').innerText = "Add Vehicle to Fleet"; document.getElementById('form-submit-btn').innerText = "Publish Vehicle"; }
 
-        function resetForm() {
-            editingCarId = null;
-            document.getElementById('add-car-form').reset();
-            document.getElementById('form-title').innerText = "Add Vehicle to Fleet";
-            document.getElementById('form-submit-btn').innerText = "Publish Vehicle";
-        }
-
+        // FORM SUBMIT (LƯU 5 ẢNH RIÊNG BIỆT)
         document.getElementById('add-car-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const imgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== '');
+            const coverImg = document.getElementById('c-img-cover').value; // Lấy ảnh bìa
+            const galleryImgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== ''); // Lấy 4 ảnh gallery
+            
             const carData = {
                 id: editingCarId || 'c_' + Date.now(),
-                brand: document.getElementById('c-brand').value,
-                name: document.getElementById('c-name').value,
-                price: parseFloat(document.getElementById('c-price').value),
-                description: document.getElementById('c-desc').value,
-                imageUrls: imgs,
+                brand: document.getElementById('c-brand').value, name: document.getElementById('c-name').value, price: parseFloat(document.getElementById('c-price').value), description: document.getElementById('c-desc').value,
+                // LƯU CẤU TRÚC MỚI
+                coverImage: coverImg,
+                galleryImages: galleryImgs,
                 specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value }
             };
-
-            if (editingCarId) {
-                const index = cars.findIndex(c => c.id === editingCarId);
-                if (index !== -1) cars[index] = carData;
-                alert("Vehicle Updated Successfully!");
-            } else {
-                cars.unshift(carData);
-                alert("Vehicle Published Successfully!");
-            }
-            localStorage.setItem('cars', JSON.stringify(cars));
-            renderGrid(); resetForm(); showSection('inventory');
+            if (editingCarId) { cars[cars.findIndex(c => c.id === editingCarId)] = carData; alert("Updated!"); } 
+            else { cars.unshift(carData); alert("Published!"); }
+            localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); resetForm(); showSection('inventory');
         });
 
         document.getElementById('salary-form').addEventListener('submit', (e)=>{ e.preventDefault(); const s=parseFloat(document.getElementById('salary').value); const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0]; const div=document.getElementById('budget-result'); div.style.display='block'; div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`; });
-
-        function checkLogin() {
-            document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block';
-            document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none';
-            document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none';
-            document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block';
-            document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none';
-            if(currentUser) document.getElementById('user-display').innerText = currentUser;
-        }
+        function checkLogin() { document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block'; document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none'; document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none'; document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block'; document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none'; if(currentUser) document.getElementById('user-display').innerText = currentUser; }
         document.getElementById('auth-form').addEventListener('submit', (e) => { e.preventDefault(); const u=document.getElementById('u-name').value; if(isRegister){alert("Registered!"); toggleAuth();}else{currentUser=u; localStorage.setItem('user',u); checkLogin(); closeModal();} });
         function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
-        function openLogin(){document.getElementById('auth-modal').style.display='flex';}
-        function closeModal(){document.getElementById('auth-modal').style.display='none';}
-        function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
-
+        function openLogin(){document.getElementById('auth-modal').style.display='flex';} function closeModal(){document.getElementById('auth-modal').style.display='none';} function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
         renderGrid(); checkLogin(); updateCartCount(); updateCompareCount();
     </script>
 </body>
