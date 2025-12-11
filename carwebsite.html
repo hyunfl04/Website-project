@@ -535,14 +535,55 @@
         });
 
         document.getElementById('salary-form').addEventListener('submit', (e)=>{ e.preventDefault(); const s=parseFloat(document.getElementById('salary').value); const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0]; const div=document.getElementById('budget-result'); div.style.display='block'; div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`; });
-        function checkLogin() { document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block'; document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none'; document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none'; document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block'; document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none'; if(currentUser) document.getElementById('user-display').innerText = currentUser; }
-        document.getElementById('auth-form').addEventListener('submit', (e) => { e.preventDefault(); const u=document.getElementById('u-name').value; if(isRegister){alert("Registered!"); toggleAuth();}else{currentUser=u; localStorage.setItem('user',u); checkLogin(); closeModal();} });
+       function checkLogin() { 
+            document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block'; 
+            document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none'; 
+            document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none'; 
+            document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block'; 
+            document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none'; 
+            if(currentUser) document.getElementById('user-display').innerText = currentUser; 
+        }
+        
+        function googleLogin() {
+            currentUser = "Google User";
+            localStorage.setItem('user', currentUser);
+            alert("Signed in with Google successfully!");
+            checkLogin(); closeModal();
+        }
+
+        document.getElementById('auth-form').addEventListener('submit', (e) => { 
+            e.preventDefault(); 
+            const u = document.getElementById('u-email').value.split('@')[0]; // Lấy tên từ email
+            if(isRegister){ alert("Registered successfully! Please Sign In."); toggleAuth(); }
+            else{ currentUser = u; localStorage.setItem('user',u); checkLogin(); closeModal(); alert("Welcome back, "+u); } 
+        });
+        
         function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
-        function openLogin(){document.getElementById('auth-modal').style.display='flex';} function closeModal(){document.getElementById('auth-modal').style.display='none';} function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
+        function openLogin(){document.getElementById('auth-modal').style.display='flex'; isRegister = false; updateAuthUI();} 
+        function closeModal(){document.getElementById('auth-modal').style.display='none';} 
+        
+        function toggleAuth(){ isRegister = !isRegister; updateAuthUI(); }
+        
+        function updateAuthUI() {
+            const title = document.getElementById('auth-title');
+            const btn = document.getElementById('auth-submit');
+            const switchText = document.getElementById('auth-switch-text');
+            const switchLink = document.getElementById('auth-switch-link');
+            
+            if (isRegister) {
+                title.innerText = 'Create Account';
+                btn.innerText = 'REGISTER';
+                switchText.innerText = 'Already have an account?';
+                switchLink.innerText = 'Sign in';
+            } else {
+                title.innerText = 'Sign In';
+                btn.innerText = 'SIGN IN';
+                switchText.innerText = "Don't have an account?";
+                switchLink.innerText = 'Sign up';
+            }
+        }
         
         renderGrid(); checkLogin(); updateCartCount(); updateWishlistCount();
     </script>
 </body>
 </html>
-
-
