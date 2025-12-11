@@ -40,8 +40,11 @@
         }
         .nav-links li a:hover { color: var(--gold); }
         
-        .cart-btn, .compare-counter-btn { position: relative; cursor: pointer; color: var(--gold); font-weight: bold; border: 1px solid var(--gold); padding: 8px 15px; font-size: 0.8em; margin-left: 10px;}
+        /* ICON BUTTONS (Cart & Wishlist) */
+        .icon-btn { position: relative; cursor: pointer; color: var(--gold); font-weight: bold; border: 1px solid var(--gold); padding: 8px 15px; font-size: 1em; margin-left: 10px; transition:0.3s; }
+        .icon-btn:hover { background: var(--gold); color: #000; }
         .badge-count { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; position: absolute; top: -5px; right: -5px; }
+        
         .auth-btn { background: var(--gold); color: #000; padding: 8px 20px; font-weight: bold; border: none; cursor: pointer; font-size: 0.8em; margin-left: 20px; }
 
         /* --- HERO --- */
@@ -72,7 +75,7 @@
         .explore-btn:hover { background-color: #fff; transform: translateY(-3px); }
 
         /* --- SECTIONS --- */
-        .section { padding: 120px 50px; display: none; min-height: 100vh; background: #000; animation: fadeIn 0.5s; }
+        .section { padding: 100px 50px; display: none; min-height: 100vh; background: #000; animation: fadeIn 0.5s; }
         .active-section { display: block; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
         .sec-title { font-family: var(--font-serif); font-size: 3em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 50px; text-align: center; padding-bottom: 20px;}
@@ -85,14 +88,18 @@
         .card-body { padding: 25px; }
         .card-name { font-size: 1.5em; font-weight: 600; color: #fff; margin-bottom: 10px; }
         .card-price { color: var(--gold); font-size: 1.2em; font-weight: bold; }
-        .btn-group { display: flex; gap: 5px; margin-top: 15px; }
-        .view-btn { flex: 1; padding: 10px; background: transparent; border: 1px solid #444; color: #fff; cursor: pointer; font-size: 0.7em; text-transform: uppercase; font-weight:bold; }
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; align-items: center; }
+        .view-btn { flex: 1; padding: 10px; background: transparent; border: 1px solid #444; color: #fff; cursor: pointer; font-size: 0.8em; text-transform: uppercase; font-weight:bold; }
         .view-btn:hover { border-color: #fff; }
         .add-cart-btn { flex: 1; padding: 10px; background: #222; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; font-size: 0.7em; text-transform: uppercase; }
         .add-cart-btn:hover { background: var(--gold); color: #000; }
-        .compare-btn { flex: 1; padding: 10px; background: #0a0a0a; border: 1px solid #555; color: #ccc; font-weight: bold; cursor: pointer; font-size: 0.7em; text-transform: uppercase; }
-        .compare-btn:hover { border-color: #fff; color: #fff; }
-        .compare-btn.active { background: #fff; color: #000; border-color: #fff; }
+        
+        /* TIM YÊU THÍCH */
+        .wishlist-icon { 
+            font-size: 1.5em; cursor: pointer; color: #555; transition: 0.3s; padding: 0 5px;
+        }
+        .wishlist-icon:hover { color: #888; }
+        .wishlist-icon.active { color: red; text-shadow: 0 0 5px red; }
 
         /* --- COMPARE SECTION --- */
         .compare-container { overflow-x: auto; }
@@ -151,8 +158,14 @@
             <li><a onclick="showSection('compare')">Compare</a></li>
             <li><a onclick="showSection('budget')">Budget</a></li>
             <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
-            <li onclick="showSection('compare')" class="compare-counter-btn">⚖️ <span id="compare-count" class="badge-count">0</span></li>
-            <li onclick="openCart()" class="cart-btn">🛒 <span id="cart-count" class="badge-count">0</span></li>
+            
+            <li onclick="openWishlist()" class="icon-btn">
+                <span id="wishlist-icon-nav">❤️</span> <span id="wishlist-count" class="badge-count">0</span>
+            </li>
+            
+            <li onclick="openCart()" class="icon-btn">
+                🛒 <span id="cart-count" class="badge-count">0</span>
+            </li>
         </ul>
         <div id="auth-ui">
             <button class="auth-btn" onclick="openLogin()">LOGIN</button>
@@ -165,7 +178,7 @@
 
     <div id="hero" class="hero active-section">
         <video autoplay muted loop playsinline>
-            <source src="intro.mp4.mp4" type="video/mp4">
+            <source src="intro.mp4" type="video/mp4">
         </video>
         <div class="overlay-bg"></div>
         <div class="hero-text">
@@ -226,16 +239,14 @@
                         <input type="text" id="c-power" placeholder="Power">
                         <input type="text" id="c-speed" placeholder="Top Speed">
                     </div>
-                    
-                    <div class="form-section-title">Vehicle Images (1 Cover + 4 Gallery)</div>
-                    <input type="url" id="c-img-cover" placeholder="Cover Image URL (Main display)" required style="margin-bottom: 20px; border: 1px solid var(--gold);">
+                    <div class="form-section-title">Gallery (1 Cover + 4 Gallery)</div>
+                    <input type="url" id="c-img-cover" placeholder="Cover Image URL (Main Display)" required style="margin-bottom: 20px; border: 1px solid var(--gold);">
                     <div class="form-grid-2">
                         <input type="url" id="c-img-1" placeholder="Gallery Image 1 URL">
                         <input type="url" id="c-img-2" placeholder="Gallery Image 2 URL">
                         <input type="url" id="c-img-3" placeholder="Gallery Image 3 URL">
                         <input type="url" id="c-img-4" placeholder="Gallery Image 4 URL">
                     </div>
-                    
                     <button type="submit" class="btn-gold" id="form-submit-btn">Publish Vehicle</button>
                 </form>
             </div>
@@ -249,6 +260,14 @@
             <div id="cart-items-container"></div>
             <div class="cart-total">Total: $<span id="cart-total-price">0</span></div>
             <button class="btn-gold" onclick="alert('Checkout feature coming soon!')">CHECKOUT NOW</button>
+        </div>
+    </div>
+
+    <div id="wishlist-modal" class="modal">
+        <div class="cart-modal-content">
+            <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeWishlist()">×</span>
+            <h2 style="color:red; border-bottom:1px solid #333; padding-bottom:15px;">Your Wishlist ❤️</h2>
+            <div id="wishlist-items-container"></div>
         </div>
     </div>
 
@@ -271,17 +290,16 @@
     </div>
 
     <script>
-        // DATA MỚI: TÁCH RIÊNG COVER VÀ GALLERY
+        // DATA
         const initialCars = [{ 
             id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine.", 
-            // Ảnh bìa riêng
             coverImage: "https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg",
-            // Danh sách ảnh gallery riêng (Tui để trống 3 cái, bà tự thêm sau nha)
             galleryImages: ["https://cdn.motor1.com/images/mgl/6Z1zZ/s3/bugatti-chiron-pur-sport.jpg", "", "", ""],
             specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} 
         }];
         let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
         let cart = JSON.parse(localStorage.getItem('userCart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('userWishlist')) || []; // Wishlist mới
         let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
         let currentUser = localStorage.getItem('user');
         let isRegister = false;
@@ -303,13 +321,14 @@
             window.scrollTo(0,0);
         }
 
-        // RENDER GRID (DÙNG COVER IMAGE)
+        // RENDER GRID (THÊM ICON TIM)
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
-                // Ưu tiên dùng coverImage mới, nếu là xe cũ chưa có thì dùng tạm placeholder
                 const cover = item.coverImage || item.imageUrls?.[0] || 'https://via.placeholder.com/400';
-                const isCompared = compareList.find(c => c.id === item.id) ? 'active' : '';
+                const isLiked = wishlist.find(c => c.id === item.id) ? 'active' : '';
+                const heartIcon = isLiked ? '♥' : '♡'; // Đổi icon dựa trên trạng thái
+                
                 container.innerHTML += `
                     <div class="card">
                         <img src="${cover}" class="card-img">
@@ -319,24 +338,59 @@
                             <div class="card-price">$${item.price.toLocaleString()}</div>
                             <div class="btn-group">
                                 <button class="view-btn" onclick="openDetail('${item.id}')">View</button>
-                                <button class="compare-btn ${isCompared}" onclick="toggleCompare('${item.id}')">⚖️ Compare</button>
+                                <span class="wishlist-icon ${isLiked}" onclick="toggleWishlist('${item.id}')">${heartIcon}</span>
+                                <button class="compare-btn" onclick="toggleCompare('${item.id}'); alert('Added to Compare')">⚖️</button>
                                 <button class="add-cart-btn" onclick="addToCart('${item.id}')">Add Cart</button>
                             </div>
                         </div>
                     </div>`;
             });
-            updateCompareCount();
+            updateWishlistCount();
         }
 
+        // --- WISHLIST LOGIC (MỚI) ---
+        function toggleWishlist(id) {
+            const index = wishlist.findIndex(c => c.id === id);
+            if (index > -1) {
+                wishlist.splice(index, 1); // Bỏ tim
+            } else {
+                const car = cars.find(c => c.id === id);
+                wishlist.push(car); // Thả tim
+            }
+            localStorage.setItem('userWishlist', JSON.stringify(wishlist));
+            updateWishlistCount();
+            renderGrid(); // Vẽ lại để cập nhật icon tim
+        }
+
+        function updateWishlistCount() { document.getElementById('wishlist-count').innerText = wishlist.length; }
+
+        function openWishlist() {
+            const container = document.getElementById('wishlist-items-container'); container.innerHTML = '';
+            if (wishlist.length === 0) container.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px">Your wishlist is empty.</p>';
+            else wishlist.forEach((item, index) => { 
+                const img = item.coverImage || item.imageUrls?.[0] || ''; 
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${img}">
+                        <div class="cart-info">
+                            <div style="color:#fff; font-weight:bold">${item.name}</div>
+                            <div style="color:var(--gold)">$${item.price.toLocaleString()}</div>
+                        </div>
+                        <div class="cart-remove" onclick="toggleWishlist('${item.id}'); openWishlist();">×</div>
+                    </div>`; 
+            });
+            document.getElementById('wishlist-modal').style.display = 'flex';
+        }
+        function closeWishlist() { document.getElementById('wishlist-modal').style.display = 'none'; }
+
+        // COMPARE LOGIC
         function toggleCompare(id) {
             const index = compareList.findIndex(c => c.id === id);
             if (index > -1) { compareList.splice(index, 1); } 
             else { if (compareList.length >= 3) { alert("Max 3 vehicles."); return; } compareList.push(cars.find(c => c.id === id)); }
-            localStorage.setItem('compareList', JSON.stringify(compareList)); updateCompareCount(); renderGrid();
+            localStorage.setItem('compareList', JSON.stringify(compareList)); 
         }
-        function updateCompareCount() { document.getElementById('compare-count').innerText = compareList.length; }
 
-        // RENDER COMPARE (DÙNG COVER IMAGE)
         function renderCompare() {
             const wrapper = document.getElementById('compare-wrapper');
             if (compareList.length === 0) { wrapper.innerHTML = '<p style="color:#666; margin-top:50px;">No vehicles selected.</p>'; return; }
@@ -359,7 +413,7 @@
             });
         }
 
-        // CART LOGIC (DÙNG COVER IMAGE)
+        // CART LOGIC
         function addToCart(id) { cart.push(cars.find(c => c.id === id)); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); alert("Added to cart!"); }
         function updateCartCount() { document.getElementById('cart-count').innerText = cart.length; }
         function openCart() {
@@ -371,20 +425,18 @@
         function removeFromCart(index) { cart.splice(index, 1); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); openCart(); }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
 
-        // DETAIL PAGE (HIỂN THỊ ĐÚNG 5 ẢNH KHÔNG TRÙNG)
+        // DETAIL PAGE (THÊM NÚT TIM)
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
-            
-            // Tạo gallery chỉ từ danh sách galleryImages (không chứa cover)
             let gallery = ''; 
-            // Hỗ trợ cả xe cũ (imageUrls) và xe mới (galleryImages)
             const gallerySource = c.galleryImages || (c.imageUrls ? c.imageUrls.slice(1) : []);
             gallerySource.forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
-            
-            // Ảnh cover lớn
             const cover = c.coverImage || c.imageUrls?.[0] || 'https://via.placeholder.com/800';
             
+            const isLiked = wishlist.find(w => w.id === c.id) ? 'active' : '';
+            const heartIcon = isLiked ? '♥' : '♡';
+
             const adminButtons = currentUser ? `<div class="admin-btn-group"><button class="edit-btn" onclick="startEditCar('${c.id}')">EDIT VEHICLE</button><button class="delete-btn" onclick="deleteCar('${c.id}')">DELETE VEHICLE</button></div>` : '<p class="login-notice">(Login as Admin to Edit/Delete)</p>';
 
             document.getElementById('detail-content').innerHTML = `
@@ -396,7 +448,10 @@
                         <div class="spec-big">${s.power}</div><span style="color:#888; display:block; margin-bottom:20px">Power Output</span>
                         <p style="margin-top:30px; color:#ccc; line-height:1.6">${c.description}</p>
                         <h2 style="color:var(--gold); margin-top:30px; font-size:2.5em">$${c.price.toLocaleString()}</h2>
-                        <div class="btn-group" style="margin-top:20px"><button class="btn-gold" style="margin-top:0; flex:1" onclick="addToCart('${c.id}')">ADD CART</button><button class="btn-gold" style="margin-top:0; flex:1; background:#222; color:#fff; border:1px solid #fff" onclick="toggleCompare('${c.id}'); alert('Added to Compare');">COMPARE</button></div>
+                        <div class="btn-group" style="margin-top:20px">
+                            <button class="btn-gold" style="margin-top:0; flex:1" onclick="addToCart('${c.id}')">ADD CART</button>
+                            <span class="wishlist-icon ${isLiked}" style="font-size:2em; margin:0 20px; align-self:center;" onclick="toggleWishlist('${c.id}'); openDetail('${c.id}');">${heartIcon}</span>
+                        </div>
                         ${adminButtons}
                     </div>
                     <div class="detail-img"><img src="${cover}"></div>
@@ -407,38 +462,26 @@
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
         function deleteCar(id) { if (confirm("Delete vehicle?")) { cars = cars.filter(c => c.id !== id); localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); closeDetail(); } }
 
-        // EDIT CAR (ĐIỀN FORM 5 ẢNH)
         function startEditCar(id) {
             const c = cars.find(x => x.id === id); if(!c) return;
             editingCarId = id;
             document.getElementById('c-id').value = c.id; document.getElementById('c-brand').value = c.brand; document.getElementById('c-name').value = c.name; document.getElementById('c-price').value = c.price; document.getElementById('c-desc').value = c.description;
             document.getElementById('c-accel').value = c.specs?.accel||''; document.getElementById('c-power').value = c.specs?.power||''; document.getElementById('c-speed').value = c.specs?.speed||'';
-            
-            // Điền ảnh cover
             document.getElementById('c-img-cover').value = c.coverImage || c.imageUrls?.[0] || '';
-            // Điền 4 ảnh gallery (Hỗ trợ cả xe cũ và mới)
             const galSource = c.galleryImages || (c.imageUrls ? c.imageUrls.slice(1) : []);
-            document.getElementById('c-img-1').value = galSource[0] || '';
-            document.getElementById('c-img-2').value = galSource[1] || '';
-            document.getElementById('c-img-3').value = galSource[2] || '';
-            document.getElementById('c-img-4').value = galSource[3] || '';
-            
+            document.getElementById('c-img-1').value = galSource[0] || ''; document.getElementById('c-img-2').value = galSource[1] || ''; document.getElementById('c-img-3').value = galSource[2] || ''; document.getElementById('c-img-4').value = galSource[3] || '';
             document.getElementById('form-title').innerText = "Edit Vehicle Details"; document.getElementById('form-submit-btn').innerText = "Update Vehicle"; closeDetail(); showSection('add-vehicle');
         }
         function resetForm() { editingCarId = null; document.getElementById('add-car-form').reset(); document.getElementById('form-title').innerText = "Add Vehicle to Fleet"; document.getElementById('form-submit-btn').innerText = "Publish Vehicle"; }
 
-        // FORM SUBMIT (LƯU 5 ẢNH RIÊNG BIỆT)
         document.getElementById('add-car-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const coverImg = document.getElementById('c-img-cover').value; // Lấy ảnh bìa
-            const galleryImgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== ''); // Lấy 4 ảnh gallery
-            
+            const coverImg = document.getElementById('c-img-cover').value; 
+            const galleryImgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== '');
             const carData = {
                 id: editingCarId || 'c_' + Date.now(),
                 brand: document.getElementById('c-brand').value, name: document.getElementById('c-name').value, price: parseFloat(document.getElementById('c-price').value), description: document.getElementById('c-desc').value,
-                // LƯU CẤU TRÚC MỚI
-                coverImage: coverImg,
-                galleryImages: galleryImgs,
+                coverImage: coverImg, galleryImages: galleryImgs,
                 specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value }
             };
             if (editingCarId) { cars[cars.findIndex(c => c.id === editingCarId)] = carData; alert("Updated!"); } 
@@ -451,7 +494,8 @@
         document.getElementById('auth-form').addEventListener('submit', (e) => { e.preventDefault(); const u=document.getElementById('u-name').value; if(isRegister){alert("Registered!"); toggleAuth();}else{currentUser=u; localStorage.setItem('user',u); checkLogin(); closeModal();} });
         function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
         function openLogin(){document.getElementById('auth-modal').style.display='flex';} function closeModal(){document.getElementById('auth-modal').style.display='none';} function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
-        renderGrid(); checkLogin(); updateCartCount(); updateCompareCount();
+        
+        renderGrid(); checkLogin(); updateCartCount(); updateWishlistCount();
     </script>
 </body>
 </html>
