@@ -21,13 +21,13 @@
         html, body { height: 100%; }
         body { background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
-        /* --- 1. MENU (ĐÃ SỬA ICON) --- */
+        /* --- 1. MENU --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 90px; 
             z-index: 9999; 
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 50px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); /* Nền gradient nhẹ để thấy video */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
             transition: 0.3s;
         }
         nav.scrolled { background: #000; box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2); }
@@ -35,7 +35,6 @@
         .logo { font-family: var(--font-serif); font-size: 2.5em; color: var(--gold); letter-spacing: 2px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
         .nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
-        /* Tăng size chữ menu lên xíu cho đỡ nhỏ */
         .nav-links li a { 
             color: #fff; text-decoration: none; text-transform: uppercase; 
             font-size: 1em; font-weight: 600; letter-spacing: 1px; transition: 0.3s; cursor: pointer;
@@ -43,12 +42,12 @@
         }
         .nav-links li a:hover { color: var(--gold); }
         
-        /* ICON BUTTONS (Chỉ còn Tim & Giỏ) */
+        /* ICON BUTTONS */
         .icon-btn { 
             position: relative; cursor: pointer; color: var(--gold); 
-            border: 1px solid var(--gold); width: 45px; height: 45px; /* Tăng size nút icon */
+            border: 1px solid var(--gold); width: 45px; height: 45px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.3em; /* Tăng size icon bên trong */
+            font-size: 1.3em;
             margin-left: 10px; transition: 0.3s; 
         }
         .icon-btn:hover { background: var(--gold); color: #000; }
@@ -64,10 +63,9 @@
             font-size: 1em; margin-left: 20px; letter-spacing: 1px;
         }
 
-        /* --- 2. HERO SECTION (CHỮ TO CHÀ BÁ, NẰM GIỮA) --- */
+        /* --- 2. HERO SECTION (ĐÃ CHỈNH FONT SIZE VỪA VẶN) --- */
         .hero { 
             height: 100vh; width: 100%; position: relative; 
-            /* CĂN GIỮA TUYỆT ĐỐI */
             display: flex; flex-direction: column; 
             justify-content: center; align-items: center; 
             padding: 0; margin: 0;
@@ -84,16 +82,16 @@
             background: rgba(0, 0, 0, 0.4); z-index: -1; 
         }
         
-        /* Container chứa chữ */
-        .hero-text { text-align: center; z-index: 10; transform: translateY(-20px); /* Điều chỉnh nhẹ để trông cân đối hơn với menu */ }
+        .hero-text { text-align: center; z-index: 10; transform: translateY(-20px); }
         
-        /* CHỮ TO ĐÙNG ĐÂY RỒI */
+        /* CHỮ ĐÃ ĐƯỢC THU NHỎ LẠI CHO VỪA VẶN */
         .hero-text h1 { 
             font-family: var(--font-serif); 
-            font-size: 7em; /* SIÊU TO */
+            font-size: 4.5em; /* Đã giảm từ 7em xuống 4.5em */
             color: #fff; 
             text-transform: uppercase; margin: 0; 
-            letter-spacing: 15px; line-height: 0.9;
+            letter-spacing: 10px; /* Điều chỉnh khoảng cách chữ cho cân đối */
+            line-height: 1;
             font-weight: 900; 
             text-shadow: 0 5px 30px rgba(0,0,0,0.8); 
         }
@@ -101,15 +99,15 @@
         .hero-text p { 
             color: var(--gold); 
             font-family: var(--font-main); 
-            font-size: 1.5em; /* Tăng size chữ phụ */
+            font-size: 1.1em; /* Đã giảm từ 1.5em xuống 1.1em */
             font-weight: 500; text-transform: uppercase; 
-            letter-spacing: 8px; 
-            margin-top: 30px; 
+            letter-spacing: 5px; /* Điều chỉnh khoảng cách chữ */
+            margin-top: 25px; 
             text-shadow: 0 2px 10px rgba(0,0,0,1);
         }
         
         .explore-btn { 
-            margin-top: 60px; padding: 20px 60px; 
+            margin-top: 50px; padding: 18px 50px; 
             background-color: var(--gold); color: #000; border: none; 
             font-weight: 800; letter-spacing: 3px; 
             text-transform: uppercase; font-size: 1em; 
@@ -121,7 +119,6 @@
         .section { padding: 150px 50px; display: none; min-height: 100vh; background: #000; animation: fadeIn 0.5s; }
         .active-section { display: block; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
-        /* Tăng size tiêu đề section */
         .sec-title { font-family: var(--font-serif); font-size: 4em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 80px; text-align: center; padding-bottom: 30px; font-weight: 700;}
 
         /* --- GRID & CARD --- */
@@ -129,7 +126,6 @@
         .card { background: #0a0a0a; border: 1px solid #222; transition: 0.4s; position: relative; }
         .card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.7); }
         
-        /* Icon trái tim trên ảnh xe */
         .card-wishlist {
             position: absolute; top: 20px; right: 20px; font-size: 1.8em;
             color: rgba(255,255,255,0.6); cursor: pointer; z-index: 5; transition: 0.3s;
@@ -216,7 +212,8 @@
         <ul class="nav-links">
             <li><a onclick="showSection('hero')">Home</a></li>
             <li><a onclick="showSection('inventory')">Discover</a></li>
-            <li><a onclick="showSection('compare')">Compare</a></li> <li><a onclick="showSection('budget')">Budget Finder</a></li>
+            <li><a onclick="showSection('compare')">Compare</a></li>
+            <li><a onclick="showSection('budget')">Budget Finder</a></li>
             <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
             
             <li onclick="openWishlist()" class="icon-btn" title="Wishlist">
@@ -241,7 +238,8 @@
 
     <div id="hero" class="hero active-section">
         <video autoplay muted loop playsinline>
-            <source src="intro.mp4.mp4" type="video/mp4"> </video>
+            <source src="intro.mp4" type="video/mp4">
+        </video>
         <div class="overlay-bg"></div>
         
         <div class="hero-text">
@@ -261,7 +259,7 @@
         <div class="form-box" style="text-align: center; max-width: 800px;">
             <p style="color:#888; margin-bottom:30px; font-size: 1.1em;">Select vehicles from the 'Discover' page to compare them here.</p>
             <div id="compare-container" style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
-                 </div>
+            </div>
              <button class="btn-gold" style="width: auto; padding: 15px 40px; margin-top: 40px;" onclick="showSection('inventory')">ADD VEHICLES TO COMPARE</button>
         </div>
     </div>
@@ -398,7 +396,7 @@
             window.scrollTo(0,0);
         }
 
-        // RENDER GRID (TIM ĐỔI MÀU TRÊN ẢNH)
+        // RENDER GRID
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
@@ -464,13 +462,12 @@
         function updateCounts() {
             document.getElementById('cart-count').innerText = cart.length;
             document.getElementById('wishlist-count').innerText = wishlist.length;
-            // Cập nhật icon tim trên menu
             const navHeart = document.getElementById('nav-heart-icon');
             if(wishlist.length > 0) { navHeart.classList.remove('fa-regular'); navHeart.classList.add('fa-solid'); navHeart.style.color = 'red'; }
             else { navHeart.classList.remove('fa-solid'); navHeart.classList.add('fa-regular'); navHeart.style.color = 'var(--gold)'; }
         }
 
-        // COMPARE LOGIC (Đơn giản hóa để tránh lỗi)
+        // COMPARE LOGIC
         function toggleCompare(id) {
              const index = compareList.findIndex(c => c.id === id);
              if (index > -1) { compareList.splice(index, 1); alert("Removed from comparison."); }
@@ -500,7 +497,6 @@
                     </div>`;
             });
         }
-
 
         // DETAIL PAGE
         window.openDetail = (id) => {
@@ -537,7 +533,7 @@
         }
         function changeDetailImage(url) { document.getElementById('main-detail-img').src = url; }
 
-        // LOGIN / REGISTER LOGIC
+        // LOGIN / REGISTER
         function toggleAuthMode() {
             isRegisterMode = !isRegisterMode;
             const title = document.getElementById('auth-title');
