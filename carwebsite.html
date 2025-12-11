@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X-CAR | Luxury Collection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-    
+        /* --- CẤU HÌNH CHUNG --- */
         :root {
             --bg-color: #000000;
             --text-white: #ffffff;
@@ -18,58 +18,62 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
         body { background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
+        /* --- 1. MENU (ĐÃ SỬA ICON) --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 90px; 
             z-index: 9999; 
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 50px;
-          
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); /* Nền gradient nhẹ để thấy video */
             transition: 0.3s;
         }
         nav.scrolled { background: #000; box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2); }
         
-        .logo { font-family: var(--font-serif); font-size: 2.5em; color: var(--gold); letter-spacing: 2px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        .logo { font-family: var(--font-serif); font-size: 2.5em; color: var(--gold); letter-spacing: 2px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
-        .nav-links { display: flex; gap: 35px; list-style: none; align-items: center; }
+        .nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
+        /* Tăng size chữ menu lên xíu cho đỡ nhỏ */
         .nav-links li a { 
             color: #fff; text-decoration: none; text-transform: uppercase; 
-            font-size: 0.9em; font-weight: 600; letter-spacing: 1px; transition: 0.3s; cursor: pointer;
+            font-size: 1em; font-weight: 600; letter-spacing: 1px; transition: 0.3s; cursor: pointer;
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
         .nav-links li a:hover { color: var(--gold); }
         
-        /* ICON BUTTONS (Tim & Giỏ) */
+        /* ICON BUTTONS (Chỉ còn Tim & Giỏ) */
         .icon-btn { 
             position: relative; cursor: pointer; color: var(--gold); 
-            border: 1px solid var(--gold); width: 40px; height: 40px; 
+            border: 1px solid var(--gold); width: 45px; height: 45px; /* Tăng size nút icon */
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.1em; margin-left: 10px; transition: 0.3s; 
+            font-size: 1.3em; /* Tăng size icon bên trong */
+            margin-left: 10px; transition: 0.3s; 
         }
         .icon-btn:hover { background: var(--gold); color: #000; }
         .badge-count { 
             background: #c00; color: white; border-radius: 50%; 
-            padding: 2px 6px; font-size: 10px; font-weight: bold;
-            position: absolute; top: -8px; right: -8px; 
+            padding: 3px 7px; font-size: 11px; font-weight: bold;
+            position: absolute; top: -10px; right: -10px; border: 2px solid #000;
         }
         
         .auth-btn { 
-            background: var(--gold); color: #000; padding: 10px 25px; 
+            background: var(--gold); color: #000; padding: 12px 30px; 
             font-weight: 800; border: none; cursor: pointer; 
-            font-size: 0.9em; margin-left: 20px; letter-spacing: 1px;
+            font-size: 1em; margin-left: 20px; letter-spacing: 1px;
         }
 
-   
+        /* --- 2. HERO SECTION (CHỮ TO CHÀ BÁ, NẰM GIỮA) --- */
         .hero { 
             height: 100vh; width: 100%; position: relative; 
+            /* CĂN GIỮA TUYỆT ĐỐI */
             display: flex; flex-direction: column; 
             justify-content: center; align-items: center; 
-            padding: 0; 
+            padding: 0; margin: 0;
         }
         
-      
+        /* VIDEO NỀN */
         .hero video { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             object-fit: cover; z-index: -2; 
@@ -77,131 +81,132 @@
         
         .overlay-bg { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.3); z-index: -1; 
+            background: rgba(0, 0, 0, 0.4); z-index: -1; 
         }
         
-        .hero-text { text-align: center; z-index: 10; margin-top: 40px; }
+        /* Container chứa chữ */
+        .hero-text { text-align: center; z-index: 10; transform: translateY(-20px); /* Điều chỉnh nhẹ để trông cân đối hơn với menu */ }
         
-   
+        /* CHỮ TO ĐÙNG ĐÂY RỒI */
         .hero-text h1 { 
             font-family: var(--font-serif); 
-            font-size: 6.5em; 
+            font-size: 7em; /* SIÊU TO */
             color: #fff; 
             text-transform: uppercase; margin: 0; 
-            letter-spacing: 15px; line-height: 1;
-            font-weight: 400; 
-            text-shadow: 0 10px 40px rgba(0,0,0,0.9); 
+            letter-spacing: 15px; line-height: 0.9;
+            font-weight: 900; 
+            text-shadow: 0 5px 30px rgba(0,0,0,0.8); 
         }
         
         .hero-text p { 
             color: var(--gold); 
             font-family: var(--font-main); 
-            font-size: 1.3em; 
-            font-weight: 400; text-transform: uppercase; 
-            letter-spacing: 6px; 
-            margin-top: 25px; 
+            font-size: 1.5em; /* Tăng size chữ phụ */
+            font-weight: 500; text-transform: uppercase; 
+            letter-spacing: 8px; 
+            margin-top: 30px; 
             text-shadow: 0 2px 10px rgba(0,0,0,1);
         }
         
         .explore-btn { 
-            margin-top: 50px; padding: 18px 50px; 
+            margin-top: 60px; padding: 20px 60px; 
             background-color: var(--gold); color: #000; border: none; 
             font-weight: 800; letter-spacing: 3px; 
-            text-transform: uppercase; font-size: 0.9em; 
+            text-transform: uppercase; font-size: 1em; 
             cursor: pointer; transition: 0.3s; 
         }
-        .explore-btn:hover { background-color: #fff; transform: translateY(-5px); }
+        .explore-btn:hover { background-color: #fff; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
 
-       
-        .section { padding: 120px 50px; display: none; min-height: 100vh; background: #000; animation: fadeIn 0.5s; }
+        /* --- SECTIONS --- */
+        .section { padding: 150px 50px; display: none; min-height: 100vh; background: #000; animation: fadeIn 0.5s; }
         .active-section { display: block; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
-        .sec-title { font-family: var(--font-serif); font-size: 3.5em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 60px; text-align: center; padding-bottom: 20px;}
+        /* Tăng size tiêu đề section */
+        .sec-title { font-family: var(--font-serif); font-size: 4em; color: var(--gold); border-bottom: 1px solid #333; margin-bottom: 80px; text-align: center; padding-bottom: 30px; font-weight: 700;}
 
-  
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
-        .card { background: #111; border: 1px solid #222; transition: 0.4s; position: relative; }
-        .card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        /* --- GRID & CARD --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 40px; }
+        .card { background: #0a0a0a; border: 1px solid #222; transition: 0.4s; position: relative; }
+        .card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.7); }
         
-    
+        /* Icon trái tim trên ảnh xe */
         .card-wishlist {
-            position: absolute; top: 15px; right: 15px; font-size: 1.5em;
-            color: rgba(255,255,255,0.7); cursor: pointer; z-index: 5; transition: 0.3s;
+            position: absolute; top: 20px; right: 20px; font-size: 1.8em;
+            color: rgba(255,255,255,0.6); cursor: pointer; z-index: 5; transition: 0.3s;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
         }
-        .card-wishlist:hover { transform: scale(1.2); }
-        .card-wishlist.active { color: #e74c3c; text-shadow: 0 0 10px #e74c3c; }
+        .card-wishlist:hover { transform: scale(1.1); color: #fff; }
+        .card-wishlist.active { color: #e74c3c; filter: drop-shadow(0 0 10px #e74c3c); }
 
-        .card-img { height: 250px; width: 100%; object-fit: cover; border-bottom: 1px solid #222; }
-        .card-body { padding: 30px; }
-        .card-brand { color: var(--gold); font-size: 0.8em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
-        .card-name { font-size: 1.6em; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.2; font-family: var(--font-serif); }
-        .card-price { color: var(--gold); font-size: 1.3em; font-weight: bold; }
+        .card-img { height: 260px; width: 100%; object-fit: cover; border-bottom: 1px solid #222; }
+        .card-body { padding: 35px; }
+        .card-brand { color: var(--gold); font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 600; }
+        .card-name { font-size: 1.8em; font-weight: 700; color: #fff; margin-bottom: 20px; line-height: 1.2; font-family: var(--font-serif); }
+        .card-price { color: var(--gold); font-size: 1.5em; font-weight: 800; }
         
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        .view-btn { flex: 1; padding: 12px; background: transparent; border: 1px solid #444; color: #fff; cursor: pointer; font-size: 0.8em; text-transform: uppercase; font-weight:bold; transition: 0.3s; }
+        .btn-group { display: flex; gap: 15px; margin-top: 25px; }
+        .view-btn { flex: 1; padding: 15px; background: transparent; border: 1px solid #444; color: #fff; cursor: pointer; font-size: 0.9em; text-transform: uppercase; font-weight:800; transition: 0.3s; letter-spacing: 1px;}
         .view-btn:hover { border-color: #fff; background: #222; }
-        .add-cart-btn { flex: 1; padding: 12px; background: var(--gold); border: none; color: #000; font-weight: 800; cursor: pointer; font-size: 0.8em; text-transform: uppercase; transition: 0.3s; }
+        .add-cart-btn { flex: 1; padding: 15px; background: var(--gold); border: none; color: #000; font-weight: 800; cursor: pointer; font-size: 0.9em; text-transform: uppercase; transition: 0.3s; letter-spacing: 1px; }
         .add-cart-btn:hover { background: #fff; }
 
-      
-        .form-box { max-width: 500px; margin: 0 auto; border: 1px solid var(--gold); padding: 50px; background: #0a0a0a; position: relative; }
+        /* --- LOGIN FORM MỚI --- */
+        .form-box { max-width: 550px; margin: 0 auto; border: 1px solid var(--gold); padding: 60px; background: #0a0a0a; position: relative; box-shadow: 0 0 30px rgba(212, 175, 55, 0.1); }
         .google-btn {
-            background: #fff; color: #333; width: 100%; padding: 12px; border: none; font-weight: bold; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; transition: 0.3s;
-            font-family: var(--font-main);
+            background: #fff; color: #333; width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 25px; transition: 0.3s;
+            font-family: var(--font-main); font-size: 1em;
         }
-        .google-btn:hover { background: #eee; }
-        .google-icon { color: #DB4437; font-size: 1.2em; }
+        .google-btn:hover { background: #f0f0f0; }
+        .google-icon { color: #DB4437; font-size: 1.3em; }
         
-        .divider { display: flex; align-items: center; text-align: center; color: #666; margin: 20px 0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
+        .divider { display: flex; align-items: center; text-align: center; color: #666; margin: 25px 0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
         .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #333; }
         .divider:not(:empty)::before { margin-right: 1em; }
         .divider:not(:empty)::after { margin-left: 1em; }
 
-        input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; color: #fff; margin-bottom: 15px; box-sizing: border-box; font-family: var(--font-main); }
-        input:focus { border-color: var(--gold); outline: none; }
+        input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 18px; color: #fff; margin-bottom: 20px; box-sizing: border-box; font-family: var(--font-main); font-size: 1em; }
+        input:focus, textarea:focus { border-color: var(--gold); outline: none; background: #1a1a1a; }
         
-        .btn-gold { width: 100%; background: var(--gold); padding: 15px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; color: #000; transition: 0.3s; }
-        .btn-gold:hover { background: #fff; }
+        .btn-gold { width: 100%; background: var(--gold); padding: 18px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; color: #000; transition: 0.3s; font-size: 1em; }
+        .btn-gold:hover { background: #fff; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
 
-        .auth-switch { text-align: center; color: #888; margin-top: 20px; font-size: 0.9em; }
-        .auth-switch span { color: var(--gold); cursor: pointer; font-weight: bold; text-decoration: underline; }
-
-        /* --- ADD CAR FORM & BUDGET --- */
-        .form-section-title { color: var(--gold); font-size: 1.1em; margin-bottom: 20px; border-bottom: 1px solid #333; text-transform: uppercase; margin-top: 30px; padding-bottom: 5px;}
-        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .auth-switch { text-align: center; color: #888; margin-top: 25px; font-size: 1em; }
+        .auth-switch span { color: var(--gold); cursor: pointer; font-weight: bold; text-decoration: underline; margin-left: 5px; }
 
         /* --- MODALS --- */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
-        .cart-modal-content { background: #111; width: 600px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--gold); padding: 30px; position: relative; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding: 15px 0; }
-        .cart-item img { width: 80px; height: 50px; object-fit: cover; margin-right: 15px; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .cart-modal-content { background: #0a0a0a; width: 650px; max-height: 85vh; overflow-y: auto; border: 1px solid var(--gold); padding: 40px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding: 20px 0; }
+        .cart-item img { width: 100px; height: 60px; object-fit: cover; margin-right: 20px; border: 1px solid #333; }
         .cart-info { flex-grow: 1; }
-        .cart-remove { color: #666; cursor: pointer; font-size: 1.2em; padding: 0 10px; transition: 0.3s; }
-        .cart-remove:hover { color: red; }
-        .cart-total { text-align: right; font-size: 1.5em; color: var(--gold); margin-top: 20px; font-weight: bold; }
+        .cart-item-title { color: #fff; font-weight: 700; font-size: 1.1em; font-family: var(--font-serif); }
+        .cart-item-price { color: var(--gold); font-weight: 600; margin-top: 5px; }
+        .cart-remove { color: #666; cursor: pointer; font-size: 1.5em; padding: 5px 15px; transition: 0.3s; }
+        .cart-remove:hover { color: red; transform: scale(1.2); }
+        .cart-total { text-align: right; font-size: 1.8em; color: var(--gold); margin-top: 30px; font-weight: 900; font-family: var(--font-serif); }
 
         /* --- DETAIL PAGE --- */
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
-        .close-overlay { position: fixed; top:30px; right:50px; color: var(--gold); font-size: 3em; cursor: pointer; z-index: 2001; transition:0.3s; }
-        .close-overlay:hover { transform: rotate(90deg); color: #fff; }
+        .close-overlay { position: fixed; top:40px; right:60px; color: var(--gold); font-size: 3.5em; cursor: pointer; z-index: 2001; transition:0.3s; opacity: 0.8; }
+        .close-overlay:hover { transform: rotate(90deg); color: #fff; opacity: 1; }
         
         .detail-flex { display: flex; min-height: 100vh; }
-        .detail-info { width: 35%; padding: 80px 50px; display: flex; flex-direction: column; justify-content: center; background: #080808; border-right: 1px solid #222; }
-        .detail-img { width: 65%; background: #000; display:flex; align-items:center; justify-content: center; overflow: hidden; }
+        .detail-info { width: 40%; padding: 100px 60px; display: flex; flex-direction: column; justify-content: center; background: #080808; border-right: 1px solid #222; }
+        .detail-img { width: 60%; background: #000; display:flex; align-items:center; justify-content: center; overflow: hidden; position: relative; }
         .detail-img img { width: 100%; height: 100%; object-fit: cover; }
         
-        .spec-big { font-size: 2.5em; color: #fff; line-height: 1.2; font-weight: 300; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 60px; background: #080808; }
-        .gallery-box img { width: 100%; height: 180px; object-fit: cover; border: 1px solid #333; transition: 0.3s; opacity: 0.7; }
-        .gallery-box img:hover { border-color: var(--gold); transform: scale(1.05); opacity: 1; }
+        .spec-big { font-size: 3em; color: #fff; line-height: 1; font-weight: 700; font-family: var(--font-serif); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 50px 80px; background: #080808; }
+        .gallery-box img { width: 100%; height: 200px; object-fit: cover; border: 1px solid #333; transition: 0.3s; opacity: 0.6; cursor: pointer; }
+        .gallery-box img:hover { border-color: var(--gold); transform: scale(1.03); opacity: 1; z-index: 2; box-shadow: 0 5px 20px rgba(0,0,0,0.8); }
 
-        .admin-btn-group { display: flex; gap: 15px; margin-top: 20px; }
-        .edit-btn { flex: 1; padding: 12px; background: #222; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        .edit-btn:hover { background: var(--gold); color: #000; }
-        .delete-btn { flex: 1; padding: 12px; background: #300; border: 1px solid #f00; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        .delete-btn:hover { background: #f00; }
+        /* CSS phụ trợ */
+        .form-section-title { color: var(--gold); font-size: 1.2em; margin-bottom: 25px; border-bottom: 1px solid #333; text-transform: uppercase; margin-top: 40px; padding-bottom: 10px; font-weight: 700; letter-spacing: 1px;}
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; }
+        .admin-btn-group { display: flex; gap: 15px; margin-top: 30px; }
     </style>
 </head>
 <body>
@@ -211,15 +216,15 @@
         <ul class="nav-links">
             <li><a onclick="showSection('hero')">Home</a></li>
             <li><a onclick="showSection('inventory')">Discover</a></li>
-            <li><a onclick="showSection('budget')">Budget Finder</a></li>
+            <li><a onclick="showSection('compare')">Compare</a></li> <li><a onclick="showSection('budget')">Budget Finder</a></li>
             <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
             
-            <li onclick="openWishlist()" class="icon-btn">
+            <li onclick="openWishlist()" class="icon-btn" title="Wishlist">
                 <i class="fa-regular fa-heart" id="nav-heart-icon"></i>
                 <span id="wishlist-count" class="badge-count">0</span>
             </li>
             
-            <li onclick="openCart()" class="icon-btn">
+            <li onclick="openCart()" class="icon-btn" title="Cart">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span id="cart-count" class="badge-count">0</span>
             </li>
@@ -229,15 +234,14 @@
             <button class="auth-btn" onclick="openLogin()">LOGIN</button>
         </div>
         <div id="user-ui" style="display:none;">
-            <span id="user-display" style="color:var(--gold); font-weight:bold; margin-right: 15px; text-transform: uppercase;">Admin</span>
+            <span id="user-display" style="color:var(--gold); font-weight:bold; margin-right: 15px; text-transform: uppercase; letter-spacing: 1px;">Admin</span>
             <button class="auth-btn" onclick="logout()">LOGOUT</button>
         </div>
     </nav>
 
     <div id="hero" class="hero active-section">
         <video autoplay muted loop playsinline>
-            <source src="intro.mp4.mp4" type="video/mp4">
-        </video>
+            <source src="intro.mp4.mp4" type="video/mp4"> </video>
         <div class="overlay-bg"></div>
         
         <div class="hero-text">
@@ -252,26 +256,36 @@
         <div id="car-grid" class="grid"></div>
     </div>
 
+    <div id="compare" class="section">
+        <h2 class="sec-title">Vehicle Comparison</h2>
+        <div class="form-box" style="text-align: center; max-width: 800px;">
+            <p style="color:#888; margin-bottom:30px; font-size: 1.1em;">Select vehicles from the 'Discover' page to compare them here.</p>
+            <div id="compare-container" style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
+                 </div>
+             <button class="btn-gold" style="width: auto; padding: 15px 40px; margin-top: 40px;" onclick="showSection('inventory')">ADD VEHICLES TO COMPARE</button>
+        </div>
+    </div>
+
     <div id="budget" class="section">
         <h2 class="sec-title">Budget Finder</h2>
         <div class="form-box">
-            <p style="color:#888; margin-bottom:20px; text-align: center;">Enter your monthly income to check eligibility.</p>
+            <p style="color:#888; margin-bottom:30px; text-align: center; font-size: 1.1em;">Enter your monthly income to check eligibility.</p>
             <form id="salary-form">
                 <input type="number" id="salary" placeholder="Monthly Income (USD)" required>
                 <button type="submit" class="btn-gold">Calculate Eligibility</button>
             </form>
-            <div id="budget-result" style="margin-top:30px; padding:20px; border:1px solid #333; display:none; background:#111; text-align:center;"></div>
+            <div id="budget-result" style="margin-top:40px; padding:30px; border:1px solid #333; display:none; background:#111; text-align:center; font-size: 1.2em;"></div>
         </div>
     </div>
 
     <div id="add-vehicle" class="section">
         <h2 class="sec-title" id="form-title">Add Vehicle</h2>
         <div id="add-login-req" class="form-box" style="text-align: center;">
-            <h3 style="color:#888;">Restricted Access</h3>
+            <h3 style="color:#888; font-size: 1.5em; margin-bottom: 30px;">Restricted Access</h3>
             <button class="btn-gold" onclick="openLogin()">LOGIN TO SYSTEM</button>
         </div>
         <div id="add-form-area" style="display:none;">
-            <div class="form-box">
+            <div class="form-box" style="max-width: 800px;">
                 <form id="add-car-form">
                     <input type="hidden" id="c-id">
                     <div class="form-section-title">Vehicle Info</div>
@@ -280,7 +294,7 @@
                         <input type="text" id="c-name" placeholder="Model Name" required>
                     </div>
                     <input type="number" id="c-price" placeholder="Price (USD)" required>
-                    <textarea id="c-desc" rows="4" placeholder="Description..." required></textarea>
+                    <textarea id="c-desc" rows="5" placeholder="Description..." required></textarea>
                     <div class="form-section-title">Specs</div>
                     <div class="form-grid-3">
                         <input type="text" id="c-accel" placeholder="0-100 km/h">
@@ -288,14 +302,14 @@
                         <input type="text" id="c-speed" placeholder="Top Speed">
                     </div>
                     <div class="form-section-title">Gallery (1 Cover + 4 Detail)</div>
-                    <input type="url" id="c-img-cover" placeholder="Cover Image URL (Big)" required style="margin-bottom: 20px; border: 1px solid var(--gold);">
+                    <input type="url" id="c-img-cover" placeholder="Cover Image URL (Big Display)" required style="margin-bottom: 25px; border: 1px solid var(--gold); background: #0f0f0f;">
                     <div class="form-grid-2">
                         <input type="url" id="c-img-1" placeholder="Detail Image 1">
                         <input type="url" id="c-img-2" placeholder="Detail Image 2">
                         <input type="url" id="c-img-3" placeholder="Detail Image 3">
                         <input type="url" id="c-img-4" placeholder="Detail Image 4">
                     </div>
-                    <button type="submit" class="btn-gold" id="form-submit-btn">Publish Vehicle</button>
+                    <button type="submit" class="btn-gold" id="form-submit-btn" style="margin-top: 40px;">Publish Vehicle</button>
                 </form>
             </div>
         </div>
@@ -303,27 +317,27 @@
 
     <div id="wishlist-modal" class="modal">
         <div class="cart-modal-content">
-            <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeModal()">×</span>
-            <h2 style="color:red; border-bottom:1px solid #333; padding-bottom:15px; margin-bottom: 20px;"><i class="fa-solid fa-heart"></i> Your Wishlist</h2>
+            <span style="position:absolute; top:20px; right:25px; color:#fff; cursor:pointer; font-size:30px" onclick="closeModal()">×</span>
+            <h2 style="color:red; border-bottom:1px solid #333; padding-bottom:20px; margin-bottom: 30px; font-family: var(--font-serif); font-size: 2.5em;"><i class="fa-solid fa-heart"></i> Your Wishlist</h2>
             <div id="wishlist-items-container"></div>
         </div>
     </div>
 
     <div id="cart-modal" class="modal">
         <div class="cart-modal-content">
-            <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeModal()">×</span>
-            <h2 style="color:var(--gold); border-bottom:1px solid #333; padding-bottom:15px; margin-bottom: 20px;">Your Cart</h2>
+            <span style="position:absolute; top:20px; right:25px; color:#fff; cursor:pointer; font-size:30px" onclick="closeModal()">×</span>
+            <h2 style="color:var(--gold); border-bottom:1px solid #333; padding-bottom:20px; margin-bottom: 30px; font-family: var(--font-serif); font-size: 2.5em;">Your Cart</h2>
             <div id="cart-items-container"></div>
             <div class="cart-total">Total: $<span id="cart-total-price">0</span></div>
-            <button class="btn-gold" onclick="alert('Checkout feature coming soon!')">CHECKOUT NOW</button>
+            <button class="btn-gold" style="margin-top: 30px;" onclick="alert('Checkout feature coming soon!')">CHECKOUT NOW</button>
         </div>
     </div>
 
     <div id="auth-modal" class="modal">
-        <div class="form-box" style="width: 450px; position:relative; padding: 40px 30px;">
-            <span style="position:absolute; top:15px; right:20px; color:#fff; cursor:pointer; font-size:24px" onclick="closeModal()">×</span>
+        <div class="form-box">
+            <span style="position:absolute; top:20px; right:25px; color:#fff; cursor:pointer; font-size:30px" onclick="closeModal()">×</span>
             
-            <h3 id="auth-title" style="color:var(--gold); text-align:center; margin-bottom: 25px; font-family: var(--font-serif); font-size: 2em;">Welcome Back</h3>
+            <h3 id="auth-title" style="color:var(--gold); text-align:center; margin-bottom: 35px; font-family: var(--font-serif); font-size: 2.5em; font-weight: 700;">Welcome Back</h3>
             
             <button class="google-btn" onclick="googleLogin()">
                 <i class="fa-brands fa-google google-icon"></i> Continue with Google
@@ -338,7 +352,7 @@
             </form>
             
             <div class="auth-switch">
-                <span id="switch-text" style="color: #888; text-decoration: none; cursor: default;">Don't have an account?</span> 
+                <span id="switch-text" style="color: #888; text-decoration: none; cursor: default; margin: 0;">Don't have an account?</span> 
                 <span onclick="toggleAuthMode()" id="switch-btn">Sign Up</span>
             </div>
         </div>
@@ -352,20 +366,21 @@
     <script>
         // DATA
         const initialCars = [{ 
-            id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine designed for cornering.", 
+            id: "c1", brand: "Bugatti", name: "Chiron Pur Sport", price: 3500000, description: "The ultimate driving machine designed for cornering. A masterpiece of engineering and speed.", 
             coverImage: "https://cdn.motor1.com/images/mgl/vEJmQ/s3/bugatti-chiron-pur-sport-front-3-4.jpg",
-            galleryImages: ["https://cdn.motor1.com/images/mgl/6Z1zZ/s3/bugatti-chiron-pur-sport.jpg", "", "", ""],
+            galleryImages: ["https://cdn.motor1.com/images/mgl/6Z1zZ/s3/bugatti-chiron-pur-sport.jpg", "https://cdn.bugatti.com/media/3z1cp14w/bugatti-chiron-pur-sport-rear-view.jpg", "https://wsupercars.com/wallpapers/Bugatti/2021-Bugatti-Chiron-Pur-Sport-004-1080.jpg", "https://cdn.bmwblog.com/wp-content/uploads/2020/03/Bugatti-Chiron-Pur-Sport-18.jpg"],
             specs: {accel: "2.3s", power: "1500 HP", speed: "350 km/h"} 
         }];
         
         let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
         let cart = JSON.parse(localStorage.getItem('userCart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('userWishlist')) || [];
+        let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
         let currentUser = localStorage.getItem('user');
         let isRegisterMode = false;
         let editingCarId = null;
 
-        // SCROLL
+        // SCROLL & INIT
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if(window.scrollY > 50) nav.classList.add('scrolled');
@@ -377,30 +392,32 @@
             document.querySelectorAll('.section, .hero').forEach(el => el.style.display = 'none');
             if(id === 'hero') { document.getElementById('hero').style.display = 'flex'; document.getElementById('hero').classList.add('active-section'); } 
             else { document.getElementById(id).style.display = 'block'; document.getElementById(id).classList.add('active-section'); }
+            
+            if(id === 'compare') renderComparePage();
             if (id !== 'add-vehicle') resetForm();
             window.scrollTo(0,0);
         }
 
-    
+        // RENDER GRID (TIM ĐỔI MÀU TRÊN ẢNH)
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
-                const cover = item.coverImage || item.imageUrls?.[0] || 'https://via.placeholder.com/400';
+                const cover = item.coverImage || 'https://via.placeholder.com/400';
                 const isLiked = wishlist.find(c => c.id === item.id);
                 const heartClass = isLiked ? "active" : "";
                 const heartIcon = isLiked ? "fa-solid fa-heart" : "fa-regular fa-heart";
                 
                 container.innerHTML += `
                     <div class="card">
-                        <i class="${heartIcon} card-wishlist ${heartClass}" onclick="toggleWishlist('${item.id}')"></i>
+                        <i class="${heartIcon} card-wishlist ${heartClass}" onclick="toggleWishlist('${item.id}', event)"></i>
                         <img src="${cover}" class="card-img">
                         <div class="card-body">
                             <div class="card-brand">${item.brand}</div>
                             <div class="card-name">${item.name}</div>
                             <div class="card-price">$${item.price.toLocaleString()}</div>
                             <div class="btn-group">
-                                <button class="view-btn" onclick="openDetail('${item.id}')">View</button>
-                                <button class="add-cart-btn" onclick="addToCart('${item.id}')">Add Cart</button>
+                                <button class="view-btn" onclick="openDetail('${item.id}')">View Details</button>
+                                <button class="add-cart-btn" onclick="addToCart('${item.id}')">Add to Cart</button>
                             </div>
                         </div>
                     </div>`;
@@ -408,34 +425,37 @@
             updateCounts();
         }
 
-        function toggleWishlist(id) {
+        // WISHLIST LOGIC
+        function toggleWishlist(id, event) {
+            if(event) event.stopPropagation();
             const index = wishlist.findIndex(c => c.id === id);
             if (index > -1) { wishlist.splice(index, 1); } 
             else { wishlist.push(cars.find(c => c.id === id)); }
             localStorage.setItem('userWishlist', JSON.stringify(wishlist));
             renderGrid(); updateCounts();
-            if(document.getElementById('wishlist-modal').style.display === 'flex') openWishlist(); // Refresh modal if open
+            if(document.getElementById('wishlist-modal').style.display === 'flex') openWishlist();
         }
 
         function openWishlist() {
             const container = document.getElementById('wishlist-items-container'); container.innerHTML = '';
-            if (wishlist.length === 0) container.innerHTML = '<p style="color:#888; text-align:center;">Empty Wishlist.</p>';
+            if (wishlist.length === 0) container.innerHTML = '<p style="color:#888; text-align:center; font-size: 1.2em;">Your wishlist is empty.</p>';
             else wishlist.forEach((item) => { 
                 const img = item.coverImage || ''; 
-                container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div style="color:#fff; font-weight:bold">${item.name}</div><div style="color:var(--gold)">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="toggleWishlist('${item.id}')">×</div></div>`; 
+                container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div class="cart-item-title">${item.name}</div><div class="cart-item-price">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="toggleWishlist('${item.id}')"><i class="fa-solid fa-trash"></i></div></div>`; 
             });
             document.getElementById('wishlist-modal').style.display = 'flex';
         }
 
+        // CART LOGIC
         function addToCart(id) {
-            cart.push(cars.find(c => c.id === id)); localStorage.setItem('userCart', JSON.stringify(cart)); updateCounts(); alert("Added to cart!");
+            cart.push(cars.find(c => c.id === id)); localStorage.setItem('userCart', JSON.stringify(cart)); updateCounts(); alert("Vehicle added to your cart.");
         }
         function openCart() {
             const container = document.getElementById('cart-items-container'); container.innerHTML = ''; let total = 0;
-            if (cart.length === 0) container.innerHTML = '<p style="color:#888; text-align:center;">Empty Cart.</p>';
+            if (cart.length === 0) container.innerHTML = '<p style="color:#888; text-align:center; font-size: 1.2em;">Your cart is empty.</p>';
             else cart.forEach((item, index) => { 
                 total += item.price; const img = item.coverImage || ''; 
-                container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div style="color:#fff; font-weight:bold">${item.name}</div><div style="color:var(--gold)">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="removeFromCart(${index})">×</div></div>`; 
+                container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div class="cart-item-title">${item.name}</div><div class="cart-item-price">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="removeFromCart(${index})"><i class="fa-solid fa-trash"></i></div></div>`; 
             });
             document.getElementById('cart-total-price').innerText = total.toLocaleString(); document.getElementById('cart-modal').style.display = 'flex';
         }
@@ -444,14 +464,51 @@
         function updateCounts() {
             document.getElementById('cart-count').innerText = cart.length;
             document.getElementById('wishlist-count').innerText = wishlist.length;
+            // Cập nhật icon tim trên menu
+            const navHeart = document.getElementById('nav-heart-icon');
+            if(wishlist.length > 0) { navHeart.classList.remove('fa-regular'); navHeart.classList.add('fa-solid'); navHeart.style.color = 'red'; }
+            else { navHeart.classList.remove('fa-solid'); navHeart.classList.add('fa-regular'); navHeart.style.color = 'var(--gold)'; }
         }
 
+        // COMPARE LOGIC (Đơn giản hóa để tránh lỗi)
+        function toggleCompare(id) {
+             const index = compareList.findIndex(c => c.id === id);
+             if (index > -1) { compareList.splice(index, 1); alert("Removed from comparison."); }
+             else { if(compareList.length >= 3) { alert("Max 3 vehicles for comparison."); return; } compareList.push(cars.find(c => c.id === id)); alert("Added to comparison."); }
+             localStorage.setItem('compareList', JSON.stringify(compareList));
+        }
+        
+        function renderComparePage() {
+            const container = document.getElementById('compare-container');
+            container.innerHTML = '';
+            if(compareList.length === 0) { container.innerHTML = '<p style="color:#666; font-size: 1.2em;">No vehicles selected for comparison.</p>'; return; }
+            compareList.forEach(car => {
+                const s = car.specs || {accel:"-", power:"-", speed:"-"};
+                container.innerHTML += `
+                    <div class="card" style="width: 300px;">
+                        <img src="${car.coverImage}" class="card-img" style="height: 200px;">
+                        <div class="card-body" style="text-align:center;">
+                            <div class="card-name" style="font-size: 1.4em;">${car.name}</div>
+                            <div class="card-price" style="font-size: 1.2em; margin-bottom: 20px;">$${car.price.toLocaleString()}</div>
+                            <div style="text-align:left; color:#ccc; line-height: 1.8;">
+                                <div><strong>0-100 km/h:</strong> ${s.accel}</div>
+                                <div><strong>Power:</strong> ${s.power}</div>
+                                <div><strong>Top Speed:</strong> ${s.speed}</div>
+                            </div>
+                            <button class="view-btn" style="margin-top: 20px; width:100%;" onclick="toggleCompare('${car.id}'); showSection('compare');">Remove</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+
+        // DETAIL PAGE
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
             let gallery = ''; 
-            const gallerySource = c.galleryImages || (c.imageUrls ? c.imageUrls.slice(1) : []);
-            gallerySource.forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
+            const gallerySource = c.galleryImages || [];
+            gallerySource.forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}" onclick="changeDetailImage('${u}')"></div>`; });
             const cover = c.coverImage || 'https://via.placeholder.com/800';
             
             const adminButtons = currentUser ? `<div class="admin-btn-group"><button class="edit-btn" onclick="startEditCar('${c.id}')">EDIT VEHICLE</button><button class="delete-btn" onclick="deleteCar('${c.id}')">DELETE VEHICLE</button></div>` : '';
@@ -459,21 +516,28 @@
             document.getElementById('detail-content').innerHTML = `
                 <div class="detail-flex">
                     <div class="detail-info">
-                        <h1 style="color:var(--gold); font-size:2.5em; line-height:1; font-family:var(--font-serif)">${c.name}</h1>
-                        <p style="color:#888; font-size:1.2em; margin-bottom:30px; text-transform:uppercase; letter-spacing:1px">${c.brand}</p>
-                        <div class="spec-big">${s.accel}</div><span style="color:#888; display:block; margin-bottom:20px">0-100 km/h</span>
-                        <div class="spec-big">${s.power}</div><span style="color:#888; display:block; margin-bottom:20px">Power Output</span>
-                        <p style="margin-top:30px; color:#ccc; line-height:1.6">${c.description}</p>
-                        <h2 style="color:var(--gold); margin-top:30px; font-size:2.5em">$${c.price.toLocaleString()}</h2>
-                        <button class="btn-gold" onclick="addToCart('${c.id}')">ADD TO CART</button>
+                        <h1 style="color:var(--gold); font-size:3.5em; line-height:1.1; font-family:var(--font-serif); font-weight: 900; margin-bottom: 10px;">${c.name}</h1>
+                        <p style="color:#888; font-size:1.3em; margin-bottom:40px; text-transform:uppercase; letter-spacing:2px; font-weight: 600;">${c.brand}</p>
+                        <div style="display: flex; gap: 40px; margin-bottom: 40px;">
+                            <div><div class="spec-big">${s.accel}</div><span style="color:#888; display:block; margin-top:10px; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">0-100 km/h</span></div>
+                            <div><div class="spec-big">${s.power}</div><span style="color:#888; display:block; margin-top:10px; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Power Output</span></div>
+                        </div>
+                        <p style="margin-bottom:40px; color:#ccc; line-height:1.8; font-size: 1.1em;">${c.description}</p>
+                        <h2 style="color:var(--gold); margin-bottom:40px; font-size:3em; font-family: var(--font-serif);">$${c.price.toLocaleString()}</h2>
+                        <div style="display:flex; gap: 20px;">
+                            <button class="btn-gold" style="flex: 2;" onclick="addToCart('${c.id}')">ADD TO CART</button>
+                            <button class="view-btn" style="flex: 1;" onclick="toggleCompare('${c.id}')">COMPARE</button>
+                        </div>
                         ${adminButtons}
                     </div>
-                    <div class="detail-img"><img src="${cover}"></div>
+                    <div class="detail-img"><img id="main-detail-img" src="${cover}"></div>
                 </div>
-                <div style="background:#0a0a0a"><div class="gallery-grid">${gallery}</div></div>`;
+                <div style="background:#080808"><div class="gallery-grid">${gallery}</div></div>`;
             document.getElementById('product-overlay').style.display = 'block';
         }
+        function changeDetailImage(url) { document.getElementById('main-detail-img').src = url; }
 
+        // LOGIN / REGISTER LOGIC
         function toggleAuthMode() {
             isRegisterMode = !isRegisterMode;
             const title = document.getElementById('auth-title');
@@ -482,42 +546,25 @@
             const switchBtn = document.getElementById('switch-btn');
             
             if (isRegisterMode) {
-                title.innerText = 'Create Account';
-                btn.innerText = 'REGISTER';
-                switchText.innerText = 'Already have an account?';
-                switchBtn.innerText = 'Sign In';
+                title.innerText = 'Create Account'; btn.innerText = 'REGISTER';
+                switchText.innerText = 'Already have an account?'; switchBtn.innerText = 'Sign In';
             } else {
-                title.innerText = 'Welcome Back';
-                btn.innerText = 'SIGN IN';
-                switchText.innerText = "Don't have an account?";
-                switchBtn.innerText = 'Sign Up';
+                title.innerText = 'Welcome Back'; btn.innerText = 'SIGN IN';
+                switchText.innerText = "Don't have an account?"; switchBtn.innerText = 'Sign Up';
             }
         }
-
         function googleLogin() {
-            alert("Logging in with Google...");
-            currentUser = "Google User";
-            localStorage.setItem('user', currentUser);
-            checkLogin(); closeModal();
+            currentUser = "Google User"; localStorage.setItem('user', currentUser);
+            checkLogin(); closeModal(); alert("Signed in with Google.");
         }
-
         document.getElementById('auth-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('u-email').value;
-            
-            if (isRegisterMode) {
-                alert("Account created! Please Sign In.");
-                toggleAuthMode();
-            } else {
-                currentUser = email.split('@')[0]; 
-                localStorage.setItem('user', currentUser);
-                checkLogin(); closeModal();
-                alert("Welcome back, " + currentUser);
-            }
+            e.preventDefault(); const email = document.getElementById('u-email').value;
+            if (isRegisterMode) { alert("Account created successfully! Please Sign In."); toggleAuthMode(); } 
+            else { currentUser = email.split('@')[0]; localStorage.setItem('user', currentUser); checkLogin(); closeModal(); alert("Welcome, " + currentUser + "!"); }
         });
 
-
-        function deleteCar(id) { if (confirm("Delete vehicle?")) { cars = cars.filter(c => c.id !== id); localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); closeDetail(); } }
+        // ADMIN & FORMS
+        function deleteCar(id) { if (confirm("Are you sure you want to delete this vehicle?")) { cars = cars.filter(c => c.id !== id); localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); closeDetail(); } }
         function startEditCar(id) {
             const c = cars.find(x => x.id === id); if(!c) return;
             editingCarId = id;
@@ -526,10 +573,9 @@
             document.getElementById('c-img-cover').value = c.coverImage || '';
             const galSource = c.galleryImages || [];
             for(let i=0; i<4; i++) document.getElementById('c-img-'+(i+1)).value = galSource[i] || '';
-            document.getElementById('form-title').innerText = "Edit Vehicle"; document.getElementById('form-submit-btn').innerText = "Update"; closeDetail(); showSection('add-vehicle');
+            document.getElementById('form-title').innerText = "Edit Vehicle"; document.getElementById('form-submit-btn').innerText = "Update Vehicle"; closeDetail(); showSection('add-vehicle');
         }
-        function resetForm() { editingCarId = null; document.getElementById('add-car-form').reset(); document.getElementById('form-title').innerText = "Add Vehicle"; document.getElementById('form-submit-btn').innerText = "Publish"; }
-
+        function resetForm() { editingCarId = null; document.getElementById('add-car-form').reset(); document.getElementById('form-title').innerText = "Add Vehicle"; document.getElementById('form-submit-btn').innerText = "Publish Vehicle"; }
         document.getElementById('add-car-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const coverImg = document.getElementById('c-img-cover').value; 
@@ -540,12 +586,11 @@
                 coverImage: coverImg, galleryImages: galleryImgs,
                 specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value }
             };
-            if (editingCarId) { cars[cars.findIndex(c => c.id === editingCarId)] = carData; alert("Updated!"); } 
-            else { cars.unshift(carData); alert("Published!"); }
+            if (editingCarId) { cars[cars.findIndex(c => c.id === editingCarId)] = carData; alert("Vehicle Updated!"); } 
+            else { cars.unshift(carData); alert("Vehicle Published!"); }
             localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); resetForm(); showSection('inventory');
         });
-
-        document.getElementById('salary-form').addEventListener('submit', (e)=>{ e.preventDefault(); const s=parseFloat(document.getElementById('salary').value); const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0]; const div=document.getElementById('budget-result'); div.style.display='block'; div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`; });
+        document.getElementById('salary-form').addEventListener('submit', (e)=>{ e.preventDefault(); const s=parseFloat(document.getElementById('salary').value); const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0]; const div=document.getElementById('budget-result'); div.style.display='block'; div.innerHTML = best ? `Based on your income, we recommend the <strong style="color:var(--gold); font-size:1.3em; display:block; margin:10px 0;">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget for these models.`; });
 
         function checkLogin() { 
             document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block'; 
@@ -559,8 +604,6 @@
         function openLogin(){document.getElementById('auth-modal').style.display='flex'; isRegisterMode = false; toggleAuthMode(); toggleAuthMode();} 
         function closeModal(){document.querySelectorAll('.modal').forEach(m => m.style.display='none');}
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
-        function closeWishlist() { document.getElementById('wishlist-modal').style.display = 'none'; }
-        function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
 
         renderGrid(); checkLogin(); updateCounts();
     </script>
