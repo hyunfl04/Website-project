@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X-CAR | Luxury Collection</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         /* --- CẤU HÌNH CHUNG --- */
@@ -40,7 +41,6 @@
         }
         .nav-links li a:hover { color: var(--gold); }
         
-        /* ICON BUTTONS (Cart & Wishlist) */
         .icon-btn { position: relative; cursor: pointer; color: var(--gold); font-weight: bold; border: 1px solid var(--gold); padding: 8px 15px; font-size: 1em; margin-left: 10px; transition:0.3s; }
         .icon-btn:hover { background: var(--gold); color: #000; }
         .badge-count { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; position: absolute; top: -5px; right: -5px; }
@@ -93,15 +93,11 @@
         .view-btn:hover { border-color: #fff; }
         .add-cart-btn { flex: 1; padding: 10px; background: #222; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; font-size: 0.7em; text-transform: uppercase; }
         .add-cart-btn:hover { background: var(--gold); color: #000; }
-        
-        /* TIM YÊU THÍCH */
-        .wishlist-icon { 
-            font-size: 1.5em; cursor: pointer; color: #555; transition: 0.3s; padding: 0 5px;
-        }
+        .wishlist-icon { font-size: 1.5em; cursor: pointer; color: #555; transition: 0.3s; padding: 0 5px; }
         .wishlist-icon:hover { color: #888; }
         .wishlist-icon.active { color: red; text-shadow: 0 0 5px red; }
 
-        /* --- COMPARE SECTION --- */
+        /* --- COMPARE & BUDGET --- */
         .compare-container { overflow-x: auto; }
         .compare-grid { display: flex; gap: 20px; justify-content: center; min-width: 800px; }
         .compare-card { width: 30%; background: #111; border: 1px solid var(--gold); padding: 20px; text-align: center; position: relative; display: flex; flex-direction: column; }
@@ -122,7 +118,7 @@
         .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 
-        /* --- MODALS --- */
+        /* --- MODALS (CART & WISHLIST) --- */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
         .cart-modal-content { background: #111; width: 600px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--gold); padding: 30px; position: relative; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding: 15px 0; }
@@ -146,6 +142,17 @@
         .edit-btn { flex: 1; padding: 12px; background: #333; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .delete-btn { flex: 1; padding: 12px; background: #500; border: 1px solid #f00; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .login-notice { color: #555; font-size: 0.8em; margin-top: 10px; font-style: italic; }
+
+        /* --- STYLES CHO FORM LOGIN MỚI --- */
+        .google-btn {
+            background: #fff; color: #333; width: 100%; padding: 12px; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; transition: 0.3s;
+        }
+        .google-btn:hover { background: #eee; }
+        .google-icon { color: #DB4437; font-size: 1.2em; } /* Màu đỏ Google */
+        .divider { display: flex; align-items: center; text-align: center; color: #666; margin: 20px 0; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #333; }
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
     </style>
 </head>
 <body>
@@ -158,14 +165,8 @@
             <li><a onclick="showSection('compare')">Compare</a></li>
             <li><a onclick="showSection('budget')">Budget</a></li>
             <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
-            
-            <li onclick="openWishlist()" class="icon-btn">
-                <span id="wishlist-icon-nav">❤️</span> <span id="wishlist-count" class="badge-count">0</span>
-            </li>
-            
-            <li onclick="openCart()" class="icon-btn">
-                🛒 <span id="cart-count" class="badge-count">0</span>
-            </li>
+            <li onclick="openWishlist()" class="icon-btn"><span id="wishlist-icon-nav">❤️</span> <span id="wishlist-count" class="badge-count">0</span></li>
+            <li onclick="openCart()" class="icon-btn">🛒 <span id="cart-count" class="badge-count">0</span></li>
         </ul>
         <div id="auth-ui">
             <button class="auth-btn" onclick="openLogin()">LOGIN</button>
@@ -272,15 +273,26 @@
     </div>
 
     <div id="auth-modal" class="modal">
-        <div class="form-box" style="width: 400px; position:relative;">
+        <div class="form-box" style="width: 400px; position:relative; padding: 40px;">
             <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeModal()">×</span>
-            <h3 style="color:var(--gold); text-align:center; margin-bottom:30px;">Login</h3>
+            <h3 id="auth-title" style="color:var(--gold); text-align:center; margin-bottom:20px; font-size: 1.8em;">Sign In</h3>
+            
+            <button class="google-btn" onclick="googleLogin()">
+                <i class="fab fa-google google-icon"></i> Continue with Google
+            </button>
+            
+            <div class="divider">or</div>
+
             <form id="auth-form">
-                <input type="text" id="u-name" placeholder="Username" required>
+                <input type="text" id="u-email" placeholder="Email Address" required>
                 <input type="password" id="u-pass" placeholder="Password" required>
-                <button type="submit" class="btn-gold" id="auth-submit">LOGIN</button>
+                <button type="submit" class="btn-gold" id="auth-submit">SIGN IN</button>
             </form>
-            <p style="text-align:center; color:#666; margin-top:20px; cursor:pointer;" onclick="toggleAuth()">Register</p>
+            
+            <p style="text-align:center; color:#888; margin-top:20px; font-size:0.9em;">
+                <span id="auth-switch-text">Don't have an account?</span> 
+                <span style="color:var(--gold); cursor:pointer; font-weight:bold" onclick="toggleAuth()" id="auth-switch-link">Sign up</span>
+            </p>
         </div>
     </div>
 
@@ -299,7 +311,7 @@
         }];
         let cars = JSON.parse(localStorage.getItem('cars')) || initialCars;
         let cart = JSON.parse(localStorage.getItem('userCart')) || [];
-        let wishlist = JSON.parse(localStorage.getItem('userWishlist')) || []; // Wishlist mới
+        let wishlist = JSON.parse(localStorage.getItem('userWishlist')) || [];
         let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
         let currentUser = localStorage.getItem('user');
         let isRegister = false;
@@ -321,13 +333,13 @@
             window.scrollTo(0,0);
         }
 
-        // RENDER GRID (THÊM ICON TIM)
+        // RENDER GRID
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
                 const cover = item.coverImage || item.imageUrls?.[0] || 'https://via.placeholder.com/400';
                 const isLiked = wishlist.find(c => c.id === item.id) ? 'active' : '';
-                const heartIcon = isLiked ? '♥' : '♡'; // Đổi icon dựa trên trạng thái
+                const heartIcon = isLiked ? '♥' : '♡';
                 
                 container.innerHTML += `
                     <div class="card">
@@ -339,7 +351,7 @@
                             <div class="btn-group">
                                 <button class="view-btn" onclick="openDetail('${item.id}')">View</button>
                                 <span class="wishlist-icon ${isLiked}" onclick="toggleWishlist('${item.id}')">${heartIcon}</span>
-                                <button class="compare-btn" onclick="toggleCompare('${item.id}'); alert('Added to Compare')">⚖️</button>
+                                <button class="compare-btn" style="background:none; border:1px solid #555; color:#ccc; cursor:pointer; padding:8px;" onclick="toggleCompare('${item.id}'); alert('Added to Compare')">⚖️</button>
                                 <button class="add-cart-btn" onclick="addToCart('${item.id}')">Add Cart</button>
                             </div>
                         </div>
@@ -348,36 +360,21 @@
             updateWishlistCount();
         }
 
-        // --- WISHLIST LOGIC (MỚI) ---
+        // WISHLIST LOGIC
         function toggleWishlist(id) {
             const index = wishlist.findIndex(c => c.id === id);
-            if (index > -1) {
-                wishlist.splice(index, 1); // Bỏ tim
-            } else {
-                const car = cars.find(c => c.id === id);
-                wishlist.push(car); // Thả tim
-            }
+            if (index > -1) { wishlist.splice(index, 1); } 
+            else { const car = cars.find(c => c.id === id); wishlist.push(car); }
             localStorage.setItem('userWishlist', JSON.stringify(wishlist));
-            updateWishlistCount();
-            renderGrid(); // Vẽ lại để cập nhật icon tim
+            updateWishlistCount(); renderGrid();
         }
-
         function updateWishlistCount() { document.getElementById('wishlist-count').innerText = wishlist.length; }
-
         function openWishlist() {
             const container = document.getElementById('wishlist-items-container'); container.innerHTML = '';
             if (wishlist.length === 0) container.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px">Your wishlist is empty.</p>';
-            else wishlist.forEach((item, index) => { 
+            else wishlist.forEach((item) => { 
                 const img = item.coverImage || item.imageUrls?.[0] || ''; 
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <img src="${img}">
-                        <div class="cart-info">
-                            <div style="color:#fff; font-weight:bold">${item.name}</div>
-                            <div style="color:var(--gold)">$${item.price.toLocaleString()}</div>
-                        </div>
-                        <div class="cart-remove" onclick="toggleWishlist('${item.id}'); openWishlist();">×</div>
-                    </div>`; 
+                container.innerHTML += `<div class="cart-item"><img src="${img}"><div class="cart-info"><div style="color:#fff; font-weight:bold">${item.name}</div><div style="color:var(--gold)">$${item.price.toLocaleString()}</div></div><div class="cart-remove" onclick="toggleWishlist('${item.id}'); openWishlist();">×</div></div>`; 
             });
             document.getElementById('wishlist-modal').style.display = 'flex';
         }
@@ -390,7 +387,6 @@
             else { if (compareList.length >= 3) { alert("Max 3 vehicles."); return; } compareList.push(cars.find(c => c.id === id)); }
             localStorage.setItem('compareList', JSON.stringify(compareList)); 
         }
-
         function renderCompare() {
             const wrapper = document.getElementById('compare-wrapper');
             if (compareList.length === 0) { wrapper.innerHTML = '<p style="color:#666; margin-top:50px;">No vehicles selected.</p>'; return; }
@@ -398,18 +394,17 @@
             compareList.forEach((car) => {
                 const cover = car.coverImage || car.imageUrls?.[0] || '';
                 const s = car.specs || {accel:"-", power:"-", speed:"-"};
-                wrapper.innerHTML += `<div class="compare-card"><div class="compare-remove" onclick="toggleCompare('${car.id}'); renderCompare();">×</div><img src="${cover}" class="compare-img"><div class="compare-name">${car.name}</div><div class="compare-price">$${car.price.toLocaleString()}</div><div class="compare-row"><span class="compare-label">Brand</span><span>${car.brand}</span></div><div class="compare-row"><span class="compare-label">0-100 km/h</span><span>${s.accel}</span></div><div class="compare-row"><span class="compare-label">Power</span><span>${s.power}</span></div><div class="compare-row"><span class="compare-label">Top Speed</span><span>${s.speed}</span></div><div class="advice-box" id="advice-${car.id}">Enter salary above.</div></div>`;
+                wrapper.innerHTML += `<div class="compare-card"><div class="compare-remove" onclick="toggleCompare('${car.id}'); renderCompare();">×</div><img src="${cover}" class="compare-img"><div class="compare-name">${car.name}</div><div class="compare-price">$${car.price.toLocaleString()}</div><div class="compare-row"><span class="compare-label">Brand</span><span>${car.brand}</span></div><div class="compare-row"><span class="compare-label">0-100 km/h</span><span>${s.accel}</span></div><div class="compare-row"><span class="compare-label">Power</span><span>${s.power}</span></div><div class="compare-row"><span class="compare-label">Top Speed</span><span>${s.speed}</span></div><div class="advice-box" id="advice-${car.id}">Enter salary.</div></div>`;
             });
             const salary = document.getElementById('compare-salary').value; if(salary) calculateAdvice();
         }
-
         function calculateAdvice() {
             const salary = parseFloat(document.getElementById('compare-salary').value);
             if (!salary || salary <= 0) { alert("Enter valid salary."); return; }
             compareList.forEach(car => {
                 const box = document.getElementById(`advice-${car.id}`); if (!box) return;
                 if (salary >= car.price) { box.innerHTML = `<span class="advice-highlight">GREAT CHOICE!</span> Buy it now!`; } 
-                else { const months = Math.ceil(car.price / salary); const years = (months / 12).toFixed(1); box.innerHTML = `<span class="advice-highlight">DREAM CAR?</span> Work for <strong>${months} months</strong> (${years} years). Keep grinding! 💪`; }
+                else { const months = Math.ceil(car.price / salary); const years = (months / 12).toFixed(1); box.innerHTML = `<span class="advice-highlight">DREAM CAR?</span> Work for <strong>${months} months</strong> (${years} years).`; }
             });
         }
 
@@ -425,7 +420,7 @@
         function removeFromCart(index) { cart.splice(index, 1); localStorage.setItem('userCart', JSON.stringify(cart)); updateCartCount(); openCart(); }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
 
-        // DETAIL PAGE (THÊM NÚT TIM)
+        // DETAIL PAGE
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
@@ -433,10 +428,8 @@
             const gallerySource = c.galleryImages || (c.imageUrls ? c.imageUrls.slice(1) : []);
             gallerySource.forEach(u => { if(u) gallery += `<div class="gallery-box"><img src="${u}"></div>`; });
             const cover = c.coverImage || c.imageUrls?.[0] || 'https://via.placeholder.com/800';
-            
             const isLiked = wishlist.find(w => w.id === c.id) ? 'active' : '';
             const heartIcon = isLiked ? '♥' : '♡';
-
             const adminButtons = currentUser ? `<div class="admin-btn-group"><button class="edit-btn" onclick="startEditCar('${c.id}')">EDIT VEHICLE</button><button class="delete-btn" onclick="deleteCar('${c.id}')">DELETE VEHICLE</button></div>` : '<p class="login-notice">(Login as Admin to Edit/Delete)</p>';
 
             document.getElementById('detail-content').innerHTML = `
@@ -462,6 +455,7 @@
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
         function deleteCar(id) { if (confirm("Delete vehicle?")) { cars = cars.filter(c => c.id !== id); localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); closeDetail(); } }
 
+        // EDIT CAR
         function startEditCar(id) {
             const c = cars.find(x => x.id === id); if(!c) return;
             editingCarId = id;
@@ -474,6 +468,7 @@
         }
         function resetForm() { editingCarId = null; document.getElementById('add-car-form').reset(); document.getElementById('form-title').innerText = "Add Vehicle to Fleet"; document.getElementById('form-submit-btn').innerText = "Publish Vehicle"; }
 
+        // FORM SUBMIT
         document.getElementById('add-car-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const coverImg = document.getElementById('c-img-cover').value; 
@@ -490,10 +485,55 @@
         });
 
         document.getElementById('salary-form').addEventListener('submit', (e)=>{ e.preventDefault(); const s=parseFloat(document.getElementById('salary').value); const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0]; const div=document.getElementById('budget-result'); div.style.display='block'; div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`; });
-        function checkLogin() { document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block'; document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none'; document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none'; document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block'; document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none'; if(currentUser) document.getElementById('user-display').innerText = currentUser; }
-        document.getElementById('auth-form').addEventListener('submit', (e) => { e.preventDefault(); const u=document.getElementById('u-name').value; if(isRegister){alert("Registered!"); toggleAuth();}else{currentUser=u; localStorage.setItem('user',u); checkLogin(); closeModal();} });
+        
+        // --- AUTH LOGIC (MỚI: TOGGLE LOGIN/REGISTER) ---
+        function checkLogin() { 
+            document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block'; 
+            document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none'; 
+            document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none'; 
+            document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block'; 
+            document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none'; 
+            if(currentUser) document.getElementById('user-display').innerText = currentUser; 
+        }
+        
+        function googleLogin() {
+            currentUser = "Google User";
+            localStorage.setItem('user', currentUser);
+            alert("Signed in with Google successfully!");
+            checkLogin(); closeModal();
+        }
+
+        document.getElementById('auth-form').addEventListener('submit', (e) => { 
+            e.preventDefault(); 
+            const u = document.getElementById('u-email').value.split('@')[0]; // Lấy tên từ email
+            if(isRegister){ alert("Registered successfully! Please Sign In."); toggleAuth(); }
+            else{ currentUser = u; localStorage.setItem('user',u); checkLogin(); closeModal(); alert("Welcome back, "+u); } 
+        });
+        
         function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
-        function openLogin(){document.getElementById('auth-modal').style.display='flex';} function closeModal(){document.getElementById('auth-modal').style.display='none';} function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
+        function openLogin(){document.getElementById('auth-modal').style.display='flex'; isRegister = false; updateAuthUI();} 
+        function closeModal(){document.getElementById('auth-modal').style.display='none';} 
+        
+        function toggleAuth(){ isRegister = !isRegister; updateAuthUI(); }
+        
+        function updateAuthUI() {
+            const title = document.getElementById('auth-title');
+            const btn = document.getElementById('auth-submit');
+            const switchText = document.getElementById('auth-switch-text');
+            const switchLink = document.getElementById('auth-switch-link');
+            
+            if (isRegister) {
+                title.innerText = 'Create Account';
+                btn.innerText = 'REGISTER';
+                switchText.innerText = 'Already have an account?';
+                switchLink.innerText = 'Sign in';
+            } else {
+                title.innerText = 'Sign In';
+                btn.innerText = 'SIGN IN';
+                switchText.innerText = "Don't have an account?";
+                switchLink.innerText = 'Sign up';
+            }
+        }
         
         renderGrid(); checkLogin(); updateCartCount(); updateWishlistCount();
     </script>
