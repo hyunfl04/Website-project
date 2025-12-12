@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X-CAR | Luxury Collection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- CẤU HÌNH CHUNG --- */
@@ -19,29 +19,54 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
-        /* --- MENU --- */
+        /* --- MENU (ĐÃ CHỈNH SỬA FONT & ICON) --- */
         nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: 90px; z-index: 9999; 
-            display: flex; justify-content: space-between; align-items: center; padding: 0 50px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 90px; 
+            z-index: 9999; 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 50px;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
             transition: 0.3s;
         }
         nav.scrolled { background: #000; box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2); }
         
         .logo { font-family: var(--font-serif); font-size: 2em; color: var(--gold); letter-spacing: 2px; font-weight: bold; cursor: pointer; }
-        .nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
-        .nav-links li a { color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; transition: 0.3s; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+
+        .nav-links { display: flex; gap: 35px; list-style: none; align-items: center; }
+        
+        /* Chỉnh font cho tất cả thẻ a trong menu giống nhau y đúc */
+        .nav-links li a { 
+            color: #fff; text-decoration: none; text-transform: uppercase; 
+            font-size: 0.85em; font-weight: 600; letter-spacing: 1px; transition: 0.3s; cursor: pointer;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            display: flex; align-items: center; /* Căn giữa icon và chữ */
+        }
         .nav-links li a:hover { color: var(--gold); }
         
-        .icon-btn { cursor: pointer; font-size: 1.2em; margin-left: 10px; position: relative; color: #fff; transition: 0.3s; }
-        .icon-btn:hover { color: var(--gold); }
-        .badge { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; position: absolute; top: -8px; right: -8px; }
-        .auth-btn { background: var(--gold); color: #000; padding: 8px 20px; font-weight: bold; border: none; cursor: pointer; font-size: 0.8em; margin-left: 20px;}
+        /* Style cho các nút icon (Tim, Giỏ hàng) */
+        .icon-nav { position: relative; cursor: pointer; display: flex; align-items: center; }
+        .icon-nav svg { transition: 0.3s; }
+        .icon-nav:hover svg { transform: scale(1.1); }
+        
+        /* Số lượng trên icon (Badge) */
+        .badge { 
+            background: red; color: white; border-radius: 50%; 
+            padding: 2px 5px; font-size: 10px; font-weight: bold;
+            position: absolute; top: -8px; right: -8px;
+            min-width: 16px; text-align: center;
+        }
+
+        .auth-btn { background: var(--gold); color: #000; padding: 8px 20px; font-weight: bold; border: none; cursor: pointer; font-size: 0.8em; margin-left: 10px;}
 
         /* --- HERO --- */
-        .hero { height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 220px; }
+        .hero { 
+            height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; 
+            padding-top: 220px; /* Giữ nguyên độ thấp của chữ */
+        }
         .hero video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
         .overlay-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: -1; }
+        
         .hero-text { text-align: center; z-index: 10; }
         .hero-text h1 { font-family: var(--font-serif); font-size: 5.5em; color: #fff; text-transform: uppercase; margin: 0; letter-spacing: 15px; font-weight: 400; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text p { color: var(--gold); font-family: var(--font-main); font-size: 1.2em; font-weight: 400; text-transform: uppercase; letter-spacing: 5px; margin-top: 25px; }
@@ -63,8 +88,8 @@
         .card-icons-overlay { position: absolute; top: 15px; right: 15px; display: flex; gap: 10px; z-index: 2; }
         .card-icon { background: rgba(0,0,0,0.6); color: #ccc; width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; border-radius: 50%; cursor: pointer; transition: 0.3s; border: 1px solid #444; }
         .card-icon:hover { background: #fff; color: #000; }
-        .card-icon.active-heart { color: red; border-color: red; } /* Tim đỏ */
-        .card-icon.active-scale { color: var(--gold); border-color: var(--gold); } /* Cân vàng */
+        .card-icon.active-heart { color: red; border-color: red; } 
+        .card-icon.active-scale { color: var(--gold); border-color: var(--gold); }
 
         .card-img { height: 240px; width: 100%; object-fit: cover; }
         .card-body { padding: 25px; }
@@ -79,27 +104,26 @@
         /* --- FORMS --- */
         .form-box { max-width: 700px; margin: 0 auto; border: 1px solid var(--gold); padding: 50px; background: #0a0a0a; }
         .form-section-title { color: var(--gold); font-size: 1.1em; margin-bottom: 20px; border-bottom: 1px solid #333; text-transform: uppercase; margin-top: 30px; padding-bottom: 5px;}
-        input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; color: #fff; margin-bottom: 15px; box-sizing: border-box; }
+        input, textarea { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; color: #fff; margin-bottom: 15px; box-sizing: border-box; font-family: var(--font-main); }
         .btn-gold { width: 100%; background: var(--gold); padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; }
         .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 
-        /* --- MODALS (Cart, Compare, Auth) --- */
+        /* --- MODALS --- */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
         .cart-modal-content { background: #111; width: 600px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--gold); padding: 30px; position: relative; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding: 15px 0; }
-        .cart-item img { width: 80px; height: 50px; object-fit: cover; margin-right: 15px; }
-        .cart-info { flex-grow: 1; }
-        .cart-remove { color: red; cursor: pointer; font-size: 1.2em; padding: 0 10px; }
-        .cart-total { text-align: right; font-size: 1.5em; color: var(--gold); margin-top: 20px; font-weight: bold; }
-
-        /* Compare Modal */
         .compare-modal-content { background: #111; width: 90%; max-width: 1000px; padding: 30px; border: 1px solid var(--gold); position: relative; }
         .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
         .compare-item { border: 1px solid #333; padding: 20px; text-align: center; }
         .compare-item img { width: 100%; height: 150px; object-fit: cover; margin-bottom: 15px; }
         .compare-val { font-size: 1.2em; color: #fff; margin: 10px 0; font-weight: bold; }
         .compare-label { font-size: 0.8em; color: #888; text-transform: uppercase; }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding: 15px 0; }
+        .cart-item img { width: 80px; height: 50px; object-fit: cover; margin-right: 15px; }
+        .cart-info { flex-grow: 1; }
+        .cart-remove { color: red; cursor: pointer; font-size: 1.2em; padding: 0 10px; }
+        .cart-total { text-align: right; font-size: 1.5em; color: var(--gold); margin-top: 20px; font-weight: bold; }
 
         /* --- DETAIL PAGE --- */
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 2000; display: none; overflow-y: auto; }
@@ -108,8 +132,7 @@
         .detail-info { width: 35%; padding: 60px 40px; display: flex; flex-direction: column; justify-content: center; background: #0a0a0a; border-right: 1px solid #222; }
         .detail-img { width: 65%; background: #000; position: relative; display:flex; align-items:center; }
         .detail-img img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .spec-big { font-size: 2.5em; color: #fff; line-height: 1.2; }
+        .spec-big { font-size: 2.2em; color: #fff; line-height: 1.2; }
         .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 60px; background: #0a0a0a; }
         .gallery-box img { width: 100%; height: 180px; object-fit: cover; border: 1px solid #333; transition: 0.3s; }
         .gallery-box img:hover { border-color: var(--gold); transform: scale(1.02); }
@@ -118,12 +141,16 @@
         .edit-btn { flex: 1; padding: 12px; background: #333; border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .delete-btn { flex: 1; padding: 12px; background: #500; border: 1px solid #f00; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .login-notice { color: #555; font-size: 0.8em; margin-top: 10px; font-style: italic; }
-
-        /* --- FINANCE CALCULATOR (DETAIL PAGE) --- */
+        
         .finance-box { margin-top: 40px; padding: 20px; border: 1px solid #333; background: #111; }
         .finance-result { margin-top: 15px; font-size: 0.9em; line-height: 1.5; display: none; }
-        .finance-good { color: #4caf50; }
-        .finance-bad { color: #f44336; }
+        .finance-good { color: #4caf50; } .finance-bad { color: #f44336; }
+        
+        /* AUTH STEPS */
+        .auth-step { display: none; }
+        .auth-step.active { display: block; animation: fadeIn 0.3s; }
+        .auth-back { color: #888; font-size: 0.8em; margin-bottom: 15px; cursor: pointer; display: inline-block; }
+        .auth-back:hover { color: var(--gold); }
     </style>
 </head>
 <body>
@@ -133,11 +160,32 @@
         <ul class="nav-links">
             <li><a onclick="showSection('hero')">Home</a></li>
             <li><a onclick="showSection('inventory')">Discover</a></li>
-            <li onclick="openCompareModal()" style="cursor: pointer;">COMPARE <span id="compare-count" class="badge">0</span></li>
-            <li onclick="alert('Your Wishlist (Hearted Cars)')" style="cursor:pointer;">WISHLIST <span id="wish-count" class="badge">0</span></li>
-            <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ ADD CAR</a></li>
-            <li onclick="openCart()" class="icon-btn">CART <span id="cart-count" class="badge">0</span></li>
+            
+            <li><a onclick="openCompareModal()">Compare <span id="compare-count" class="badge">0</span></a></li>
+            
+            <li>
+                <a onclick="alert('Your Wishlist')">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="red" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span id="wish-count" class="badge">0</span>
+                </a>
+            </li>
+            
+            <li id="nav-add-vehicle-li" style="display: none;"><a onclick="showSection('add-vehicle')" style="color: var(--gold);">+ Add Car</a></li>
+            
+            <li>
+                <a onclick="openCart()">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span id="cart-count" class="badge">0</span>
+                </a>
+            </li>
         </ul>
+        
         <div id="auth-ui"><button class="auth-btn" onclick="openLogin()">LOGIN</button></div>
         <div id="user-ui" style="display:none;"><span id="user-display" style="color:var(--gold); font-weight:bold; margin-right: 15px; text-transform:uppercase;">Admin</span><button class="auth-btn" onclick="logout()">LOGOUT</button></div>
     </nav>
@@ -160,10 +208,19 @@
     </div>
 
     <div id="budget" class="section">
+        <h2 class="sec-title">Budget Finder</h2>
+        <div class="form-box">
+            <p style="color:#888; margin-bottom:20px">Calculate your eligibility.</p>
+            <form id="salary-form">
+                <input type="number" id="salary" placeholder="Monthly Income (USD)" required>
+                <button type="submit" class="btn-gold">Calculate Eligibility</button>
+            </form>
+            <div id="budget-result" style="margin-top:30px; padding:20px; border:1px solid #333; display:none;"></div>
         </div>
+    </div>
 
     <div id="add-vehicle" class="section">
-        <h2 class="sec-title" id="form-title">Add Vehicle</h2>
+        <h2 class="sec-title" id="form-title">Add Vehicle to Fleet</h2>
         <div id="add-login-req" class="form-box" style="text-align: center;">
             <h3 style="color:#888;">Restricted Access</h3>
             <button class="btn-gold" onclick="openLogin()">LOGIN TO SYSTEM</button>
@@ -213,21 +270,43 @@
         <div class="compare-modal-content">
             <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="document.getElementById('compare-modal').style.display='none'">×</span>
             <h2 style="color:var(--gold); text-align:center;">Vehicle Comparison</h2>
-            <div id="compare-grid" class="compare-grid">
-                </div>
+            <div id="compare-grid" class="compare-grid"></div>
         </div>
     </div>
 
     <div id="auth-modal" class="modal">
-        <div class="form-box" style="width: 400px; position:relative;">
+        <div class="form-box" style="width: 450px; position:relative; padding: 40px;">
             <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeModal()">×</span>
-            <h3 style="color:var(--gold); text-align:center; margin-bottom:30px;">Login</h3>
-            <form id="auth-form">
-                <input type="text" id="u-name" placeholder="Username" required>
-                <input type="password" id="u-pass" placeholder="Password" required>
-                <button type="submit" class="btn-gold" id="auth-submit">LOGIN</button>
-            </form>
-            <p style="text-align:center; color:#666; margin-top:20px; cursor:pointer;" onclick="toggleAuth()">Register</p>
+            
+            <div id="login-flow" class="auth-step active">
+                <h3 style="color:var(--gold); text-align:center; margin-bottom:30px; font-size: 1.8em;">Client Login</h3>
+                <form id="auth-login-form">
+                    <input type="text" id="login-user" placeholder="Username / Phone / Email" required>
+                    <input type="password" id="login-pass" placeholder="Password" required>
+                    <button type="submit" class="btn-gold">LOGIN</button>
+                </form>
+                <p style="text-align:center; color:#666; margin-top:20px; font-size: 0.9em;">New Member? <span style="color:var(--gold); cursor:pointer; font-weight:bold" onclick="showRegisterStep1()">Create Account</span></p>
+            </div>
+
+            <div id="register-step-1" class="auth-step">
+                <div class="auth-back" onclick="showLogin()">← Back to Login</div>
+                <h3 style="color:var(--gold); text-align:center; margin-bottom:20px;">Registration</h3>
+                <form onsubmit="event.preventDefault(); showRegisterStep2();">
+                    <input type="text" id="reg-contact" placeholder="Phone Number or Email" required>
+                    <button type="submit" class="btn-gold">Next Step</button>
+                </form>
+            </div>
+
+            <div id="register-step-2" class="auth-step">
+                <div class="auth-back" onclick="showRegisterStep1()">← Back</div>
+                <h3 style="color:var(--gold); text-align:center; margin-bottom:20px;">Complete Profile</h3>
+                <form id="auth-register-final">
+                    <input type="text" id="reg-name" placeholder="Full Name" required>
+                    <input type="date" id="reg-dob" required style="color-scheme: dark;">
+                    <input type="password" id="reg-pass" placeholder="Create Password" required>
+                    <button type="submit" class="btn-gold">Complete Registration</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -244,7 +323,6 @@
         let wishlist = JSON.parse(localStorage.getItem('userWishlist')) || [];
         let compareList = JSON.parse(localStorage.getItem('userCompare')) || [];
         let currentUser = localStorage.getItem('user');
-        let isRegister = false;
         let editingCarId = null;
 
         window.addEventListener('scroll', () => {
@@ -262,12 +340,11 @@
             window.scrollTo(0,0);
         }
 
-        // RENDER GRID (CÓ ICON TIM VÀ CÂN)
+        // RENDER GRID
         function renderGrid() {
             const container = document.getElementById('car-grid'); container.innerHTML = '';
             cars.forEach(item => {
                 const cover = item.coverImage || 'https://via.placeholder.com/400';
-                // Kiểm tra trạng thái tim và cân
                 const isHeart = wishlist.includes(item.id) ? 'active-heart' : '';
                 const isScale = compareList.includes(item.id) ? 'active-scale' : '';
                 
@@ -292,7 +369,7 @@
             updateCounts();
         }
 
-        // WISHLIST & COMPARE LOGIC
+        // WISHLIST & COMPARE
         function toggleWishlist(id) {
             if (wishlist.includes(id)) wishlist = wishlist.filter(x => x !== id);
             else wishlist.push(id);
@@ -320,7 +397,6 @@
         function openCompareModal() {
             const container = document.getElementById('compare-grid'); container.innerHTML = '';
             if (compareList.length === 0) return alert("Select cars to compare first!");
-            
             compareList.forEach(id => {
                 const c = cars.find(x => x.id === id);
                 if(c) {
@@ -335,14 +411,13 @@
                             <div class="compare-val">${c.specs.power}</div>
                             <div class="compare-label">Top Speed</div>
                             <div class="compare-val">${c.specs.speed}</div>
-                        </div>
-                    `;
+                        </div>`;
                 }
             });
             document.getElementById('compare-modal').style.display = 'flex';
         }
 
-        // CART LOGIC
+        // CART
         function addToCart(id) {
             const car = cars.find(c => c.id === id);
             cart.push(car); localStorage.setItem('userCart', JSON.stringify(cart)); updateCounts(); alert("Added to cart!");
@@ -360,7 +435,7 @@
         function removeFromCart(index) { cart.splice(index, 1); localStorage.setItem('userCart', JSON.stringify(cart)); updateCounts(); openCart(); }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
 
-        // DETAIL PAGE + FINANCE ADVICE
+        // DETAIL & AUTH
         window.openDetail = (id) => {
             const c = cars.find(x => x.id === id); if(!c) return;
             const s = c.specs || {accel: "TBD", power: "TBD", speed: "TBD"};
@@ -390,7 +465,6 @@
                             <button class="btn-gold" style="margin-top:5px; padding:10px;" onclick="checkAffordability(${c.price})">CALCULATE</button>
                             <div id="detail-advice" class="finance-result"></div>
                         </div>
-
                         ${adminButtons}
                     </div>
                     <div class="detail-img"><img src="${cover}"></div>
@@ -402,111 +476,59 @@
         }
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
 
-        // LOGIC TƯ VẤN TÀI CHÍNH
+        // AUTH FUNCTIONS
+        function openLogin() { document.getElementById('auth-modal').style.display='flex'; showLogin(); }
+        function closeModal() { document.getElementById('auth-modal').style.display='none'; }
+        function showLogin() { document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('login-flow').classList.add('active'); }
+        function showRegisterStep1() { document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('register-step-1').classList.add('active'); }
+        function showRegisterStep2() { if(!document.getElementById('reg-contact').value) return alert("Enter contact info"); document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('register-step-2').classList.add('active'); }
+
+        document.getElementById('auth-login-form').addEventListener('submit', (e) => { e.preventDefault(); const u = document.getElementById('login-user').value; currentUser = u; localStorage.setItem('user', u); checkLogin(); closeModal(); alert("Welcome back, " + u); });
+        document.getElementById('auth-register-final').addEventListener('submit', (e) => { e.preventDefault(); const name = document.getElementById('reg-name').value; currentUser = name; localStorage.setItem('user', name); checkLogin(); closeModal(); alert("Registered!"); });
+
+        // FINANCE LOGIC
         window.checkAffordability = (price) => {
             const salary = parseFloat(document.getElementById('detail-salary').value);
             const adviceBox = document.getElementById('detail-advice');
-            if(!salary || salary <= 0) {
-                adviceBox.style.display = 'block';
-                adviceBox.innerHTML = "Please enter a valid salary!";
-                return;
-            }
-            const months = Math.ceil(price / salary);
-            const years = (months / 12).toFixed(1);
-            
-            let message = "";
-            let colorClass = "";
-
-            if (months <= 6) {
-                message = `Wow! You can buy this in <strong>${months} months</strong>. <br>GO FOR IT! Easy Peasy! 😎`;
-                colorClass = "finance-good";
-            } else if (months <= 24) {
-                message = `It will take <strong>${months} months</strong> (approx ${years} years). <br>Good goal, keep saving! 💪`;
-                colorClass = "finance-good";
-            } else if (months <= 60) {
-                message = `A bit tough. <strong>${years} years</strong> of salary. <br>Maybe consider a bank loan? 🤔`;
-                colorClass = "finance-bad";
-            } else {
-                message = `Ouch! <strong>${years} years</strong> to buy this. <br>Maybe too expensive for now. Keep working hard! 🚀`;
-                colorClass = "finance-bad";
-            }
-
-            adviceBox.style.display = 'block';
-            adviceBox.innerHTML = message;
-            adviceBox.className = "finance-result " + colorClass;
+            if(!salary || salary <= 0) { adviceBox.style.display = 'block'; adviceBox.innerHTML = "Invalid salary!"; return; }
+            const months = Math.ceil(price / salary); const years = (months / 12).toFixed(1);
+            let msg = "", cls = "";
+            if (months <= 6) { msg = `Buy in <strong>${months} months</strong>. GO FOR IT! 😎`; cls = "finance-good"; }
+            else if (months <= 24) { msg = `Takes <strong>${months} months</strong>. Keep saving! 💪`; cls = "finance-good"; }
+            else { msg = `Ouch! <strong>${years} years</strong>. Too expensive! 🚀`; cls = "finance-bad"; }
+            adviceBox.style.display = 'block'; adviceBox.innerHTML = msg; adviceBox.className = "finance-result " + cls;
         }
 
-        // CÁC HÀM SỬA/XÓA XE & LOGIN (GIỮ NGUYÊN)
-        function deleteCar(id) {
-            if (confirm("Delete this vehicle?")) {
-                cars = cars.filter(c => c.id !== id);
-                localStorage.setItem('cars', JSON.stringify(cars));
-                renderGrid(); closeDetail();
-            }
-        }
+        // EDIT/DELETE CAR
+        function deleteCar(id) { if (confirm("Delete vehicle?")) { cars = cars.filter(c => c.id !== id); localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); closeDetail(); } }
         function startEditCar(id) {
-            const c = cars.find(x => x.id === id); if(!c) return;
-            editingCarId = id;
-            document.getElementById('c-id').value = c.id;
-            document.getElementById('c-brand').value = c.brand;
-            document.getElementById('c-name').value = c.name;
-            document.getElementById('c-price').value = c.price;
-            document.getElementById('c-desc').value = c.description;
-            document.getElementById('c-accel').value = c.specs?.accel || '';
-            document.getElementById('c-power').value = c.specs?.power || '';
-            document.getElementById('c-speed').value = c.specs?.speed || '';
-            document.getElementById('c-img-cover').value = c.coverImage || '';
-            document.getElementById('c-img-1').value = c.galleryImages?.[0] || '';
-            document.getElementById('c-img-2').value = c.galleryImages?.[1] || '';
-            document.getElementById('c-img-3').value = c.galleryImages?.[2] || '';
-            document.getElementById('c-img-4').value = c.galleryImages?.[3] || '';
-            document.getElementById('form-submit-btn').innerText = "Update Vehicle";
-            closeDetail(); showSection('add-vehicle');
+            const c = cars.find(x => x.id === id); if(!c) return; editingCarId = id;
+            document.getElementById('c-id').value = c.id; document.getElementById('c-brand').value = c.brand; document.getElementById('c-name').value = c.name; document.getElementById('c-price').value = c.price; document.getElementById('c-desc').value = c.description; document.getElementById('c-accel').value = c.specs?.accel || ''; document.getElementById('c-power').value = c.specs?.power || ''; document.getElementById('c-speed').value = c.specs?.speed || ''; document.getElementById('c-img-cover').value = c.coverImage || '';
+            [1,2,3,4].forEach(i => document.getElementById('c-img-'+i).value = c.galleryImages?.[i-1] || '');
+            document.getElementById('form-submit-btn').innerText = "Update Vehicle"; closeDetail(); showSection('add-vehicle');
         }
-        function resetForm() {
-            editingCarId = null;
-            document.getElementById('add-car-form').reset();
-            document.getElementById('form-submit-btn').innerText = "Publish Vehicle";
-        }
+        function resetForm() { editingCarId = null; document.getElementById('add-car-form').reset(); document.getElementById('form-submit-btn').innerText = "Publish Vehicle"; }
         document.getElementById('add-car-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const coverImg = document.getElementById('c-img-cover').value;
-            const galleryImgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== '');
-            const carData = {
-                id: editingCarId || 'c_' + Date.now(),
-                brand: document.getElementById('c-brand').value,
-                name: document.getElementById('c-name').value,
-                price: parseFloat(document.getElementById('c-price').value),
-                description: document.getElementById('c-desc').value,
-                coverImage: coverImg,
-                galleryImages: galleryImgs,
-                specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value }
-            };
-            if (editingCarId) {
-                const index = cars.findIndex(c => c.id === editingCarId);
-                if (index !== -1) cars[index] = carData;
-                alert("Updated!");
-            } else {
-                cars.unshift(carData);
-                alert("Published!");
-            }
-            localStorage.setItem('cars', JSON.stringify(cars));
-            renderGrid(); resetForm(); showSection('inventory');
+            e.preventDefault(); const coverImg = document.getElementById('c-img-cover').value; const galleryImgs = [1,2,3,4].map(i => document.getElementById('c-img-'+i).value).filter(u => u.trim() !== '');
+            const carData = { id: editingCarId || 'c_' + Date.now(), brand: document.getElementById('c-brand').value, name: document.getElementById('c-name').value, price: parseFloat(document.getElementById('c-price').value), description: document.getElementById('c-desc').value, coverImage: coverImg, galleryImages: galleryImgs, specs: { accel: document.getElementById('c-accel').value, power: document.getElementById('c-power').value, speed: document.getElementById('c-speed').value } };
+            if (editingCarId) { const index = cars.findIndex(c => c.id === editingCarId); if (index !== -1) cars[index] = carData; alert("Updated!"); } else { cars.unshift(carData); alert("Published!"); }
+            localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); resetForm(); showSection('inventory');
         });
 
+        // BUDGET FINDER (MAIN PAGE)
+        document.getElementById('salary-form').addEventListener('submit', (e)=>{ e.preventDefault(); const s=parseFloat(document.getElementById('salary').value); const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0]; const div=document.getElementById('budget-result'); div.style.display='block'; div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`; });
+
+        // AUTH STATE
         function checkLogin() {
             document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block';
             document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none';
-            document.getElementById('nav-add-vehicle-li').style.display = currentUser ? 'block' : 'none';
-            document.getElementById('add-login-req').style.display = currentUser ? 'none' : 'block';
-            document.getElementById('add-form-area').style.display = currentUser ? 'block' : 'none';
+            const isAdmin = (currentUser === 'admin' || currentUser === '123');
+            document.getElementById('nav-add-vehicle-li').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('add-login-req').style.display = isAdmin ? 'none' : 'block';
+            document.getElementById('add-form-area').style.display = isAdmin ? 'block' : 'none';
             if(currentUser) document.getElementById('user-display').innerText = currentUser;
         }
-        document.getElementById('auth-form').addEventListener('submit', (e) => { e.preventDefault(); const u=document.getElementById('u-name').value; currentUser=u; localStorage.setItem('user',u); checkLogin(); closeModal(); });
-        function logout(){localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero');}
-        function openLogin(){document.getElementById('auth-modal').style.display='flex';}
-        function closeModal(){document.getElementById('auth-modal').style.display='none';}
-        function toggleAuth(){isRegister=!isRegister; document.getElementById('auth-submit').innerText=isRegister?'REGISTER':'LOGIN';}
+        function logout(){ localStorage.removeItem('user'); currentUser=null; checkLogin(); showSection('hero'); }
 
         renderGrid(); checkLogin(); updateCounts();
     </script>
