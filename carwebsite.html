@@ -19,12 +19,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg-color); color: var(--text-white); font-family: var(--font-main); overflow-x: hidden; }
         
-        /* --- MENU (ĐÃ CHỈNH SỬA FONT & ICON) --- */
+        /* --- MENU (ĐÃ THÊM BUDGET FINDER) --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 90px; 
             z-index: 9999; 
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 50px;
+            padding: 0 40px; /* Giảm padding chút cho đỡ chật */
             background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
             transition: 0.3s;
         }
@@ -32,28 +32,21 @@
         
         .logo { font-family: var(--font-serif); font-size: 2em; color: var(--gold); letter-spacing: 2px; font-weight: bold; cursor: pointer; }
 
-        .nav-links { display: flex; gap: 35px; list-style: none; align-items: center; }
+        .nav-links { display: flex; gap: 25px; list-style: none; align-items: center; }
         
-        /* Chỉnh font cho tất cả thẻ a trong menu giống nhau y đúc */
         .nav-links li a { 
             color: #fff; text-decoration: none; text-transform: uppercase; 
-            font-size: 0.85em; font-weight: 600; letter-spacing: 1px; transition: 0.3s; cursor: pointer;
+            font-size: 0.8em; font-weight: 600; letter-spacing: 1px; transition: 0.3s; cursor: pointer;
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-            display: flex; align-items: center; /* Căn giữa icon và chữ */
+            display: flex; align-items: center;
         }
         .nav-links li a:hover { color: var(--gold); }
         
-        /* Style cho các nút icon (Tim, Giỏ hàng) */
-        .icon-nav { position: relative; cursor: pointer; display: flex; align-items: center; }
-        .icon-nav svg { transition: 0.3s; }
-        .icon-nav:hover svg { transform: scale(1.1); }
-        
-        /* Số lượng trên icon (Badge) */
+        /* Badge số lượng */
         .badge { 
             background: red; color: white; border-radius: 50%; 
-            padding: 2px 5px; font-size: 10px; font-weight: bold;
-            position: absolute; top: -8px; right: -8px;
-            min-width: 16px; text-align: center;
+            padding: 2px 5px; font-size: 9px; font-weight: bold;
+            position: absolute; top: -8px; right: -8px; min-width: 15px; text-align: center;
         }
 
         .auth-btn { background: var(--gold); color: #000; padding: 8px 20px; font-weight: bold; border: none; cursor: pointer; font-size: 0.8em; margin-left: 10px;}
@@ -62,7 +55,7 @@
         .hero { 
             height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; 
-            padding-top: 220px; /* Giữ nguyên độ thấp của chữ */
+            padding-top: 220px; 
         }
         .hero video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
         .overlay-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: -1; }
@@ -84,7 +77,6 @@
         .card { background: #111; border: 1px solid #222; transition: 0.4s; position: relative; }
         .card:hover { border-color: var(--gold); transform: translateY(-5px); }
         
-        /* Icon trên ảnh */
         .card-icons-overlay { position: absolute; top: 15px; right: 15px; display: flex; gap: 10px; z-index: 2; }
         .card-icon { background: rgba(0,0,0,0.6); color: #ccc; width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; border-radius: 50%; cursor: pointer; transition: 0.3s; border: 1px solid #444; }
         .card-icon:hover { background: #fff; color: #000; }
@@ -142,8 +134,7 @@
         .delete-btn { flex: 1; padding: 12px; background: #500; border: 1px solid #f00; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .login-notice { color: #555; font-size: 0.8em; margin-top: 10px; font-style: italic; }
         
-        .finance-box { margin-top: 40px; padding: 20px; border: 1px solid #333; background: #111; }
-        .finance-result { margin-top: 15px; font-size: 0.9em; line-height: 1.5; display: none; }
+        .finance-result { margin-top: 20px; font-size: 1em; line-height: 1.6; display: none; padding: 15px; border: 1px dashed var(--gold); }
         .finance-good { color: #4caf50; } .finance-bad { color: #f44336; }
         
         /* AUTH STEPS */
@@ -160,14 +151,13 @@
         <ul class="nav-links">
             <li><a onclick="showSection('hero')">Home</a></li>
             <li><a onclick="showSection('inventory')">Discover</a></li>
+            <li><a onclick="showSection('budget')">Budget Finder</a></li>
             
             <li><a onclick="openCompareModal()">Compare <span id="compare-count" class="badge">0</span></a></li>
             
             <li>
                 <a onclick="alert('Your Wishlist')">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="red" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="red" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     <span id="wish-count" class="badge">0</span>
                 </a>
             </li>
@@ -176,11 +166,7 @@
             
             <li>
                 <a onclick="openCart()">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                     <span id="cart-count" class="badge">0</span>
                 </a>
             </li>
@@ -208,19 +194,19 @@
     </div>
 
     <div id="budget" class="section">
-        <h2 class="sec-title">Budget Finder</h2>
+        <h2 class="sec-title">Budget Finder & Advice</h2>
         <div class="form-box">
-            <p style="color:#888; margin-bottom:20px">Calculate your eligibility.</p>
+            <p style="color:#888; margin-bottom:20px; text-align:center;">Enter your monthly salary to see which cars you can afford and get advice.</p>
             <form id="salary-form">
-                <input type="number" id="salary" placeholder="Monthly Income (USD)" required>
-                <button type="submit" class="btn-gold">Calculate Eligibility</button>
+                <input type="number" id="salary" placeholder="Your Monthly Income (USD)" required>
+                <button type="submit" class="btn-gold">CHECK AFFORDABILITY</button>
             </form>
-            <div id="budget-result" style="margin-top:30px; padding:20px; border:1px solid #333; display:none;"></div>
+            <div id="budget-result" class="finance-result" style="display:none;"></div>
         </div>
     </div>
 
     <div id="add-vehicle" class="section">
-        <h2 class="sec-title" id="form-title">Add Vehicle to Fleet</h2>
+        <h2 class="sec-title" id="form-title">Add Vehicle</h2>
         <div id="add-login-req" class="form-box" style="text-align: center;">
             <h3 style="color:#888;">Restricted Access</h3>
             <button class="btn-gold" onclick="openLogin()">LOGIN TO SYSTEM</button>
@@ -277,7 +263,6 @@
     <div id="auth-modal" class="modal">
         <div class="form-box" style="width: 450px; position:relative; padding: 40px;">
             <span style="position:absolute; top:10px; right:15px; color:#fff; cursor:pointer; font-size:24px" onclick="closeModal()">×</span>
-            
             <div id="login-flow" class="auth-step active">
                 <h3 style="color:var(--gold); text-align:center; margin-bottom:30px; font-size: 1.8em;">Client Login</h3>
                 <form id="auth-login-form">
@@ -287,7 +272,6 @@
                 </form>
                 <p style="text-align:center; color:#666; margin-top:20px; font-size: 0.9em;">New Member? <span style="color:var(--gold); cursor:pointer; font-weight:bold" onclick="showRegisterStep1()">Create Account</span></p>
             </div>
-
             <div id="register-step-1" class="auth-step">
                 <div class="auth-back" onclick="showLogin()">← Back to Login</div>
                 <h3 style="color:var(--gold); text-align:center; margin-bottom:20px;">Registration</h3>
@@ -296,7 +280,6 @@
                     <button type="submit" class="btn-gold">Next Step</button>
                 </form>
             </div>
-
             <div id="register-step-2" class="auth-step">
                 <div class="auth-back" onclick="showRegisterStep1()">← Back</div>
                 <h3 style="color:var(--gold); text-align:center; margin-bottom:20px;">Complete Profile</h3>
@@ -347,7 +330,6 @@
                 const cover = item.coverImage || 'https://via.placeholder.com/400';
                 const isHeart = wishlist.includes(item.id) ? 'active-heart' : '';
                 const isScale = compareList.includes(item.id) ? 'active-scale' : '';
-                
                 container.innerHTML += `
                     <div class="card">
                         <div class="card-icons-overlay">
@@ -369,7 +351,6 @@
             updateCounts();
         }
 
-        // WISHLIST & COMPARE
         function toggleWishlist(id) {
             if (wishlist.includes(id)) wishlist = wishlist.filter(x => x !== id);
             else wishlist.push(id);
@@ -417,7 +398,6 @@
             document.getElementById('compare-modal').style.display = 'flex';
         }
 
-        // CART
         function addToCart(id) {
             const car = cars.find(c => c.id === id);
             cart.push(car); localStorage.setItem('userCart', JSON.stringify(cart)); updateCounts(); alert("Added to cart!");
@@ -434,6 +414,24 @@
         }
         function removeFromCart(index) { cart.splice(index, 1); localStorage.setItem('userCart', JSON.stringify(cart)); updateCounts(); openCart(); }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
+
+        // BUDGET FINDER LOGIC
+        document.getElementById('salary-form').addEventListener('submit', (e)=>{ 
+            e.preventDefault(); 
+            const s = parseFloat(document.getElementById('salary').value);
+            const best = cars.filter(c => c.price <= s * 24).sort((a,b) => b.price - a.price)[0];
+            const div = document.getElementById('budget-result'); 
+            div.style.display = 'block'; 
+            
+            let message = "";
+            if (best) {
+                const months = Math.ceil(best.price / s);
+                message = `Based on your salary, we recommend: <strong style="color:var(--gold); font-size:1.2em">${best.name}</strong> ($${best.price.toLocaleString()}).<br>You can afford this in approx. <strong>${months} months</strong> (2 years saving plan). <button class="btn-gold" style="margin-top:10px; padding:5px 15px;" onclick="openDetail('${best.id}')">View Car</button>`;
+            } else {
+                message = `<span class="finance-bad">Your budget is a bit tight for our collection. Keep saving! <br>Minimum car price starts at $${Math.min(...cars.map(c=>c.price)).toLocaleString()}.</span>`;
+            }
+            div.innerHTML = message;
+        });
 
         // DETAIL & AUTH
         window.openDetail = (id) => {
@@ -458,13 +456,6 @@
                         <p style="margin-top:30px; color:#ccc; line-height:1.6">${c.description}</p>
                         <h2 style="color:var(--gold); margin-top:30px; font-size:2.5em">$${c.price.toLocaleString()}</h2>
                         <button class="btn-gold" onclick="addToCart('${c.id}')">ADD TO CART</button>
-                        
-                        <div class="finance-box">
-                            <h4 style="color:var(--gold); border-bottom:1px solid #333; padding-bottom:5px;">CAN YOU AFFORD IT?</h4>
-                            <input type="number" id="detail-salary" placeholder="Your Monthly Salary ($)" style="margin-top:10px;">
-                            <button class="btn-gold" style="margin-top:5px; padding:10px;" onclick="checkAffordability(${c.price})">CALCULATE</button>
-                            <div id="detail-advice" class="finance-result"></div>
-                        </div>
                         ${adminButtons}
                     </div>
                     <div class="detail-img"><img src="${cover}"></div>
@@ -476,31 +467,8 @@
         }
         function closeDetail() { document.getElementById('product-overlay').style.display = 'none'; }
 
-        // AUTH FUNCTIONS
-        function openLogin() { document.getElementById('auth-modal').style.display='flex'; showLogin(); }
-        function closeModal() { document.getElementById('auth-modal').style.display='none'; }
-        function showLogin() { document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('login-flow').classList.add('active'); }
-        function showRegisterStep1() { document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('register-step-1').classList.add('active'); }
-        function showRegisterStep2() { if(!document.getElementById('reg-contact').value) return alert("Enter contact info"); document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('register-step-2').classList.add('active'); }
-
-        document.getElementById('auth-login-form').addEventListener('submit', (e) => { e.preventDefault(); const u = document.getElementById('login-user').value; currentUser = u; localStorage.setItem('user', u); checkLogin(); closeModal(); alert("Welcome back, " + u); });
-        document.getElementById('auth-register-final').addEventListener('submit', (e) => { e.preventDefault(); const name = document.getElementById('reg-name').value; currentUser = name; localStorage.setItem('user', name); checkLogin(); closeModal(); alert("Registered!"); });
-
-        // FINANCE LOGIC
-        window.checkAffordability = (price) => {
-            const salary = parseFloat(document.getElementById('detail-salary').value);
-            const adviceBox = document.getElementById('detail-advice');
-            if(!salary || salary <= 0) { adviceBox.style.display = 'block'; adviceBox.innerHTML = "Invalid salary!"; return; }
-            const months = Math.ceil(price / salary); const years = (months / 12).toFixed(1);
-            let msg = "", cls = "";
-            if (months <= 6) { msg = `Buy in <strong>${months} months</strong>. GO FOR IT! 😎`; cls = "finance-good"; }
-            else if (months <= 24) { msg = `Takes <strong>${months} months</strong>. Keep saving! 💪`; cls = "finance-good"; }
-            else { msg = `Ouch! <strong>${years} years</strong>. Too expensive! 🚀`; cls = "finance-bad"; }
-            adviceBox.style.display = 'block'; adviceBox.innerHTML = msg; adviceBox.className = "finance-result " + cls;
-        }
-
-        // EDIT/DELETE CAR
-        function deleteCar(id) { if (confirm("Delete vehicle?")) { cars = cars.filter(c => c.id !== id); localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); closeDetail(); } }
+        // ADMIN FUNCTIONS
+        function deleteCar(id) { if (confirm("Delete this vehicle?")) { cars = cars.filter(c => c.id !== id); localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); closeDetail(); } }
         function startEditCar(id) {
             const c = cars.find(x => x.id === id); if(!c) return; editingCarId = id;
             document.getElementById('c-id').value = c.id; document.getElementById('c-brand').value = c.brand; document.getElementById('c-name').value = c.name; document.getElementById('c-price').value = c.price; document.getElementById('c-desc').value = c.description; document.getElementById('c-accel').value = c.specs?.accel || ''; document.getElementById('c-power').value = c.specs?.power || ''; document.getElementById('c-speed').value = c.specs?.speed || ''; document.getElementById('c-img-cover').value = c.coverImage || '';
@@ -515,10 +483,16 @@
             localStorage.setItem('cars', JSON.stringify(cars)); renderGrid(); resetForm(); showSection('inventory');
         });
 
-        // BUDGET FINDER (MAIN PAGE)
-        document.getElementById('salary-form').addEventListener('submit', (e)=>{ e.preventDefault(); const s=parseFloat(document.getElementById('salary').value); const best=cars.filter(c=>c.price<=s*24).sort((a,b)=>b.price-a.price)[0]; const div=document.getElementById('budget-result'); div.style.display='block'; div.innerHTML = best ? `Recommended: <strong style="color:var(--gold)">${best.name}</strong> ($${best.price.toLocaleString()})` : `Please increase budget.`; });
+        // AUTH
+        function openLogin() { document.getElementById('auth-modal').style.display='flex'; showLogin(); }
+        function closeModal() { document.getElementById('auth-modal').style.display='none'; }
+        function showLogin() { document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('login-flow').classList.add('active'); }
+        function showRegisterStep1() { document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('register-step-1').classList.add('active'); }
+        function showRegisterStep2() { if(!document.getElementById('reg-contact').value) return alert("Enter contact info"); document.querySelectorAll('.auth-step').forEach(el => el.classList.remove('active')); document.getElementById('register-step-2').classList.add('active'); }
 
-        // AUTH STATE
+        document.getElementById('auth-login-form').addEventListener('submit', (e) => { e.preventDefault(); const u = document.getElementById('login-user').value; currentUser = u; localStorage.setItem('user', u); checkLogin(); closeModal(); alert("Welcome back, " + u); });
+        document.getElementById('auth-register-final').addEventListener('submit', (e) => { e.preventDefault(); const name = document.getElementById('reg-name').value; currentUser = name; localStorage.setItem('user', name); checkLogin(); closeModal(); alert("Registered!"); });
+
         function checkLogin() {
             document.getElementById('auth-ui').style.display = currentUser ? 'none' : 'block';
             document.getElementById('user-ui').style.display = currentUser ? 'block' : 'none';
